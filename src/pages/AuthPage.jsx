@@ -15,6 +15,9 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
+const frontendPort = window.location.port || '5180';
+const apiTarget = `localhost:${import.meta.env.VITE_PROXY_TARGET?.split(':').pop() ?? '4001'}`;
+
 export default function AuthPage() {
   const { login, register } = useAuth();
   const navigate = useNavigate();
@@ -248,6 +251,12 @@ export default function AuthPage() {
               solo en tu equipo.
             </div>
           )}
+
+          <div className="port-tag">
+            <strong>BabyTrack IA</strong>
+            <span>Frontend :{frontendPort}</span>
+            <span>API {apiTarget}</span>
+          </div>
         </div>
       </main>
     </div>

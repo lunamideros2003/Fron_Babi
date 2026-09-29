@@ -1,6 +1,6 @@
 // Verifies the frontend dev server proxies /api to the backend correctly.
 // Run with the frontend dev server active: node scripts/integration.mjs
-const WEB = 'http://localhost:5173';
+const WEB = process.env.WEB_URL ?? `http://localhost:${process.env.VITE_PORT ?? 5180}`;
 
 let passed = 0;
 let failed = 0;
@@ -34,6 +34,7 @@ const run = async () => {
   const html = await index.text();
   check('frontend sirve la app', index.status === 200 && html.includes('root'));
   check('html en espanol', html.includes('lang="es"'));
+  check('titulo de BabyTrack', html.includes('BabyTrack IA'));
 
   const health = await call('/api/health');
   check('proxy /api funciona', health.status === 200, JSON.stringify(health.json).slice(0, 120));

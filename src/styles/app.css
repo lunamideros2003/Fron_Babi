@@ -482,6 +482,26 @@
   color: var(--text-soft);
 }
 
+/* Identifies the project and its ports so another app is never mistaken for this one. */
+.port-tag {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border-strong);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+}
+
+.port-tag strong {
+  color: var(--blue-700);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
 /* --------------------------------- hero card ------------------------------- */
 
 .hero {

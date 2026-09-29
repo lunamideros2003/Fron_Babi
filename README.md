@@ -50,14 +50,15 @@ Tipografias: `Cormorant Garamond` para titulos, `Inter` para texto.
 
 ```bash
 npm install
-npm run dev      # servidor de desarrollo en :5173
+npm run dev      # servidor de desarrollo en :5180
 npm run build    # build de produccion en dist/
 npm run serve    # sirve dist/ con proxy a la API
 npm run test     # prueba de integracion contra el backend
 ```
 
-El puerto 5173 es fijo. Si ya esta ocupado, Vite avisa en vez de cambiar de
-puerto silenciiosamente, para que la URL de la aplicacion no cambie.
+El puerto 5180 es fijo y exclusivo de este proyecto. Si otro programa lo ocupa,
+el script imprime que proyecto es y como liberarlo, en vez de arrancar en un
+puerto distinto en silencio.
 
 ## Iniciar sesion
 
