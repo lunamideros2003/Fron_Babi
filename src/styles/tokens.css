@@ -1,0 +1,142 @@
+/*
+  BabyTrack IA - design tokens
+  Palette sampled from the reference artwork: dusty blue florals on cream,
+  drawn with fine navy line art.
+*/
+
+:root {
+  /* Core blues */
+  --blue-50: #f2f6fb;
+  --blue-100: #e3ecf6;
+  --blue-200: #c6d9ec;
+  --blue-300: #9dbddd;
+  --blue-400: #6f9bc8;
+  --blue-500: #4a7cae;
+  --blue-600: #37628f;
+  --blue-700: #2a4a6d;
+  --blue-800: #1f3850;
+
+  /* Warm neutrals */
+  --cream: #fdfbf7;
+  --cream-soft: #f7f3ec;
+  --sand: #efe8dc;
+  --sand-deep: #e2d8c6;
+
+  /* Line art ink */
+  --ink: #2b3a4f;
+  --ink-soft: #5a6b82;
+  --ink-muted: #8a99ad;
+  --ink-faint: #b6c1cf;
+
+  /* Accents */
+  --blush: #e6b7ae;
+  --blush-soft: #f6e3df;
+  --sage: #8fae9a;
+  --sage-soft: #e2ece5;
+  --gold: #c9a961;
+  --gold-soft: #f5ecd9;
+  --danger: #b4574f;
+  --danger-soft: #f7e4e1;
+
+  /* Semantic */
+  --bg: var(--cream);
+  --surface: #ffffff;
+  --surface-alt: var(--blue-50);
+  --border: #e4e0d8;
+  --border-strong: var(--blue-200);
+  --text: var(--ink);
+  --text-soft: var(--ink-soft);
+  --text-muted: var(--ink-muted);
+  --primary: var(--blue-500);
+  --primary-hover: var(--blue-600);
+  --primary-soft: var(--blue-100);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Shape and depth */
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(43, 58, 79, 0.05);
+  --shadow: 0 4px 16px rgba(43, 58, 79, 0.07);
+  --shadow-lg: 0 12px 40px rgba(43, 58, 79, 0.1);
+
+  --transition: 180ms ease;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+h1 { font-size: 2.1rem; line-height: 1.2; }
+h2 { font-size: 1.5rem; line-height: 1.3; }
+h3 { font-size: 1.15rem; line-height: 1.35; }
+h4 { font-size: 1rem; line-height: 1.4; }
+
+p { margin: 0 0 0.75em; }
+p:last-child { margin-bottom: 0; }
+
+a {
+  color: var(--blue-600);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover { color: var(--blue-700); }
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+ul { margin: 0; padding-left: 1.1em; }
+
+::selection {
+  background: var(--blue-200);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue-400);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
