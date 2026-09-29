@@ -56,6 +56,15 @@ npm run serve    # sirve dist/ con proxy a la API
 npm run test     # prueba de integracion contra el backend
 ```
 
+El puerto 5173 es fijo. Si ya esta ocupado, Vite avisa en vez de cambiar de
+puerto silenciiosamente, para que la URL de la aplicacion no cambie.
+
+## Iniciar sesion
+
+No hay usuario predeterminado. Presiona **Registrate** en la pantalla de
+acceso, llena nombre, correo, contrasena (6 caracteres o mas) y elige como
+calcular tu semana. La sesion queda guardada en `localStorage`.
+
 ## Conexion con el backend
 
 En desarrollo no hace falta configurar nada: `vite.config.js` redirige `/api`
@@ -92,5 +101,8 @@ Las rutas privadas exigen sesion; si no hay token, redirigen a `/entrar`.
 
 - El token se guarda en `localStorage` bajo `babytrack_token`.
 - No hay emojis en la interfaz: los iconos son SVG inline.
+- La pantalla de acceso esta dimensionada para caber completa en el viewport,
+  sin desplazamiento vertical. Los campos de registro van en dos columnas y
+  hay una regla adicional para pantallas de poca altura.
 - La app funciona sin conexion a un LLM: el backend responde con su proveedor
   local y la interfaz solo cambia la etiqueta del proveedor activo.
