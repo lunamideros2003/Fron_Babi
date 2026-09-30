@@ -15,6 +15,7 @@ src/
   pages/
     AuthPage.jsx       Registro e ingreso con calculo de semana
     DashboardPage.jsx  Resumen, progreso, recordatorios y citas
+    BotPage.jsx        Bot de preguntas guiadas con resumen final
     WeekPage.jsx       Detalle de las 40 semanas
     ChatPage.jsx       Asistente IA con categorias
     AppointmentsPage.jsx   Agenda de citas
@@ -54,6 +55,7 @@ npm run dev      # servidor de desarrollo en :5180
 npm run build    # build de produccion en dist/
 npm run serve    # sirve dist/ con proxy a la API
 npm run test     # prueba de integracion contra el backend
+npm run test:bot # prueba del bot en navegador (requiere Playwright)
 ```
 
 El puerto 5180 es fijo y exclusivo de este proyecto. Si otro programa lo ocupa,
@@ -90,6 +92,7 @@ VITE_API_URL=http://localhost:4001/api
 | --- | --- |
 | `/entrar` | Registro e ingreso |
 | `/` | Panel principal |
+| `/bot` | Bot de preguntas guiadas |
 | `/semana` | Detalle de las 40 semanas |
 | `/asistente` | Chat con la IA |
 | `/citas` | Agenda medica |

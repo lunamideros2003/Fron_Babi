@@ -199,6 +199,31 @@ export default function DashboardPage() {
         </section>
       )}
 
+      {week && (
+        <section
+          className="card"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap',
+            background: 'linear-gradient(135deg, var(--blue-50), var(--cream-soft))',
+            borderColor: 'var(--blue-200)',
+          }}
+        >
+          <SparkleIcon size={26} />
+          <div style={{ flex: 1, minWidth: '200px' }}>
+            <h3>Haz tu consulta guiada con el bot</h3>
+            <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-soft)' }}>
+              Diez preguntas cortas y el bot te da un resumen con tu puntaje de seguimiento.
+            </p>
+          </div>
+          <Link to="/bot" className="btn btn-primary">
+            Empezar la consulta
+          </Link>
+        </section>
+      )}
+
       <div className="grid grid-2">
         <section className="card">
           <div className="card-title">

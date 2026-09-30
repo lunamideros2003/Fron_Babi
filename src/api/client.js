@@ -102,6 +102,16 @@ export const api = {
     clear: () => request('/chat/history', { method: 'DELETE' }),
   },
 
+  bot: {
+    questions: () => request('/bot/questions'),
+    sessions: () => request('/bot/sessions'),
+    start: () => request('/bot/sessions', { method: 'POST' }),
+    session: (id) => request(`/bot/sessions/${id}`),
+    answer: (id, payload) => request(`/bot/sessions/${id}/answers`, { method: 'POST', body: payload }),
+    remove: (id) => request(`/bot/sessions/${id}`, { method: 'DELETE' }),
+    reset: () => request('/bot/reset', { method: 'POST' }),
+  },
+
   tracking: {
     timeline: () => request('/tracking/timeline'),
     addCheckup: (data) => request('/tracking/checkups', { method: 'POST', body: data }),

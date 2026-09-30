@@ -4,6 +4,7 @@ import { BrandMark } from './Icons.jsx';
 
 const LINKS = [
   { to: '/', label: 'Inicio', end: true },
+  { to: '/bot', label: 'Bot' },
   { to: '/semana', label: 'Mi semana' },
   { to: '/asistente', label: 'Asistente IA' },
   { to: '/citas', label: 'Citas' },

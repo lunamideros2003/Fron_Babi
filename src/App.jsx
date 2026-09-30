@@ -5,6 +5,7 @@ import AuthPage from './pages/AuthPage.jsx';
 import DashboardPage from './pages/DashboardPage.jsx';
 import WeekPage from './pages/WeekPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
+import BotPage from './pages/BotPage.jsx';
 import AppointmentsPage from './pages/AppointmentsPage.jsx';
 import RemindersPage from './pages/RemindersPage.jsx';
 import TrackingPage from './pages/TrackingPage.jsx';
@@ -73,6 +74,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <ChatPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/bot"
+            element={
+              <ProtectedRoute>
+                <BotPage />
               </ProtectedRoute>
             }
           />
