@@ -1,10 +1,19 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import api from '../api/client.js';
 import MotherIllustration from '../components/MotherIllustration.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
 import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, ShieldIcon, BrandMark } from '../components/Icons.jsx';
+
+const MASCULINO = ['aguacate', 'mango', 'melon', 'plata', 'platano', 'banano', 'maiz', 'coco'];
+
+function conArticulo(texto) {
+  if (!texto) return 'Por confirmar';
+  const bajo = String(texto).toLowerCase().trim();
+  const articulo = MASCULINO.some((m) => bajo.startsWith(m)) ? 'un' : 'una';
+  return `Como ${articulo} ${bajo}`;
+}
 
 function trimesterOf(week) {
   if (week < 13) return 'Primer trimestre';
@@ -13,9 +22,9 @@ function trimesterOf(week) {
 }
 
 function milestoneOf(week) {
-  if (week >= 40) return 'Casi el dia';
+  if (week >= 40) return 'Casi el día';
   if (week >= 37) return 'Ya es termino';
-  if (week >= 28) return 'Ultimo trimestre';
+  if (week >= 28) return 'Último trimestre';
   if (week >= 20) return 'Mitad del camino';
   if (week >= 13) return 'Segundo trimestre';
   return 'Primeros pasos';
@@ -31,7 +40,7 @@ export default function DashboardPage() {
           <div>
             <p className="home-eyebrow">Mi espacio de embarazo</p>
             <h1 className="home-title">Hola, mama</h1>
-            <p className="home-subtitle">Un dia a la vez, un paso a la vez.</p>
+            <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
           </div>
           <span className="home-mark" aria-hidden="true">
             <BrandMark size={24} />
@@ -58,8 +67,8 @@ export default function DashboardPage() {
       <header className="home-greeting">
         <div>
           <p className="home-eyebrow">Mi espacio de embarazo</p>
-          <h1 className="home-title">Hola, mama{firstName ? `, ${firstName}` : ''}</h1>
-          <p className="home-subtitle">Un dia a la vez, un paso a la vez.</p>
+          <h1 className="home-title">Hola, mamá{firstName ? `, ${firstName}` : ''}</h1>
+          <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
         </div>
         <span className="home-mark" aria-hidden="true">
           <BrandMark size={24} />
@@ -87,7 +96,7 @@ export default function DashboardPage() {
             <div className="today-progress-bar" style={{ width: `${progress}%` }} />
           </div>
           <p className="today-progress-label">
-            {current} de 40 semanas aproximadas. El calculo es orientativo.
+            {current} de 40 semanas aproximadas. El cálculo es orientativo.
           </p>
         </div>
 
@@ -96,11 +105,9 @@ export default function DashboardPage() {
             <FruitIllustration sizeComparison={week?.size_comparison} size={66} />
           </span>
           <div className="size-copy">
-            <p className="size-label">El tamano de tu bebe</p>
-            <h3 className="size-title">
-              {week?.size_comparison ? `Como ${String(week.size_comparison).toLowerCase()}` : 'Por confirmar'}
-            </h3>
-            <p className="size-text">Una comparacion visual para imaginar cuanto ha crecido.</p>
+            <p className="size-label">El tamaño de tu bebé</p>
+            <h3 className="size-title">{conArticulo(week?.size_comparison)}</h3>
+            <p className="size-text">Una comparación visual para imaginar cuánto ha crecido.</p>
           </div>
         </div>
       </section>
@@ -108,7 +115,7 @@ export default function DashboardPage() {
       {/* E. Guia para esta semana */}
       <section aria-labelledby="guide-title">
         <h2 id="guide-title" className="section-title">
-          Tu guia para esta semana
+          Tu guía para esta semana
         </h2>
         <div className="guide-links">
           <Link to="/semana" className="guide-link">
@@ -129,7 +136,7 @@ export default function DashboardPage() {
               <CalendarIcon size={20} />
             </span>
             <span className="guide-link-body">
-              <p className="guide-link-title">Tus proximos controles</p>
+              <p className="guide-link-title">Tus próximos controles</p>
               <p className="guide-link-text">Consulta tus citas y las indicaciones pendientes.</p>
             </span>
             <span className="guide-link-chevron" aria-hidden="true">
@@ -145,9 +152,9 @@ export default function DashboardPage() {
           <ShieldIcon size={17} />
         </span>
         <p>
-          Informacion orientativa. Tu profesional de salud es quien puede valorar tu embarazo
+          Información orientativa. Tu profesional de salud es quien puede valorar tu embarazo
           individualmente. Si notas{' '}
-          <Link to="/seguridad">senales de alarma</Link>, busca atencion medica sin esperar.
+          <Link to="/seguridad">señales de alarma</Link>, busca atención médica sin esperar.
         </p>
       </div>
     </div>
@@ -190,18 +197,18 @@ function WeekSetupCard({ firstName }) {
       </h2>
       <p style={{ color: 'var(--text-soft)', fontSize: '0.9rem', marginTop: '-0.4rem' }}>
         {firstName ? `${firstName}, registra` : 'Registra'} tu fecha para calcular tu semana y
-        personalizar toda la informacion.
+        personalizar toda la información.
       </p>
 
       <form onSubmit={handleSubmit} className="stack" style={{ gap: '0.9rem', marginTop: '1rem' }}>
         {error && <div className="form-error">{error}</div>}
 
         <div className="field">
-          <label htmlFor="setupMode">Como calculamos tu semana</label>
+          <label htmlFor="setupMode">Cómo calculamos tu semana</label>
           <select id="setupMode" className="select" value={mode} onChange={(e) => setMode(e.target.value)}>
             <option value="dueDate">Tengo la fecha estimada de parto</option>
-            <option value="lastPeriod">Se mi ultima menstruacion</option>
-            <option value="week">Ya se en que semana estoy</option>
+            <option value="lastPeriod">Sé mi última menstruación</option>
+            <option value="week">Ya sé en qué semana estoy</option>
           </select>
         </div>
 
@@ -230,7 +237,7 @@ function WeekSetupCard({ firstName }) {
               onChange={(e) => setLastPeriodDate(e.target.value)}
               required
             />
-            <span className="field-hint">Sumamos 280 dias a esa fecha.</span>
+            <span className="field-hint">Sumamos 280 días a esa fecha.</span>
           </div>
         )}
 

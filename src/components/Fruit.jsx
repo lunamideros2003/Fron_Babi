@@ -268,9 +268,13 @@ export function resolveFruitKey(sizeComparison) {
   return 'semilla';
 }
 
+const MASCULINO = ['aguacate', 'mango', 'melon', 'plata', 'platano', 'banano', 'maiz', 'coco'];
+
 export function fruitLabel(sizeComparison) {
-  if (!sizeComparison) return 'Por confirmar';
-  return `Como ${String(sizeComparison).toLowerCase().replace(/^una? /, 'una ')}`;
+  if (!sizeComparison) return 'Tamaño por confirmar';
+  const bajo = normalize(sizeComparison).replace(/^una?\s+/, '');
+  const articulo = MASCULINO.some((m) => bajo.startsWith(m)) ? 'un' : 'una';
+  return `Como ${articulo} ${bajo}`;
 }
 
 export default function FruitIllustration({ sizeComparison, size = 72, className = '' }) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import {
@@ -16,7 +16,7 @@ const SECTIONS = [
   { to: '/', label: 'Inicio', Icon: HomeIcon, end: true },
   { to: '/semana', label: 'Mi embarazo', Icon: BabyIcon },
   { to: '/citas', label: 'Mis controles', Icon: CalendarIcon },
-  { to: '/guia', label: 'Mi guia', Icon: BookIcon },
+  { to: '/guia', label: 'Mi guía', Icon: BookIcon },
   { to: '/diario', label: 'Mi diario', Icon: JournalIcon },
 ];
 
@@ -57,7 +57,7 @@ export default function Layout({ children }) {
             onClick={() => setCollapsed((v) => !v)}
             aria-expanded={!collapsed}
             aria-controls="sidebar-nav"
-            title={collapsed ? 'Expandir menu' : 'Contraer menu'}
+            title={collapsed ? 'Expandir menú' : 'Contraer menú'}
           >
             <MenuFoldIcon size={17} open={!collapsed} />
             <span className="sidebar-toggle-text">Contraer</span>
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
           <NavLink
             to="/seguridad"
             className={({ isActive }) => `sidebar-link sidebar-link-safety ${isActive ? 'is-active' : ''}`}
-            title={collapsed ? 'Senales de alarma' : undefined}
+            title={collapsed ? 'Señales de alarma' : undefined}
           >
             <span className="sidebar-link-icon">
               <ShieldIcon size={19} />
@@ -107,7 +107,7 @@ export default function Layout({ children }) {
 
       <main className="app-main">{children}</main>
 
-      <nav className="bottom-nav" aria-label="Navegacion principal">
+      <nav className="bottom-nav" aria-label="Navegación principal">
         {SECTIONS.map(({ to, label, Icon, end }) => (
           <NavLink
             key={to}
