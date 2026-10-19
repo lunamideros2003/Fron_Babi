@@ -11,6 +11,7 @@ import RemindersPage from './pages/RemindersPage.jsx';
 import TrackingPage from './pages/TrackingPage.jsx';
 import SafetyPage from './pages/SafetyPage.jsx';
 import GuidePage from './pages/GuidePage.jsx';
+import JournalPage from './pages/JournalPage.jsx';
 import { BrandMark } from './components/Icons.jsx';
 
 function LoadingScreen() {
@@ -108,6 +109,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <TrackingPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/diario"
+            element={
+              <ProtectedRoute>
+                <JournalPage />
               </ProtectedRoute>
             }
           />

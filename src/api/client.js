@@ -79,6 +79,12 @@ export const api = {
     get: () => request('/guide', { auth: false }),
   },
 
+  journal: {
+    list: () => request('/journal'),
+    create: (data) => request('/journal', { method: 'POST', body: data }),
+    remove: (id) => request(`/journal/${id}`, { method: 'DELETE' }),
+  },
+
   pregnancy: {
     get: () => request('/pregnancy'),
     save: (data) => request('/pregnancy', { method: 'PUT', body: data }),
