@@ -1,22 +1,19 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import { BrandMark } from '../components/Icons.jsx';
+import { BrandMark, MotherSilhouette } from '../components/Icons.jsx';
 
 const FEATURES = [
-  'Calcula tu semana desde tu fecha estimada de parto',
-  'Explica los cambios tipicos de cada semana',
-  'Asistente IA que clasifica tus preguntas por categoria',
-  'Recordatorios personalizados para tu trimestre',
-  'Historial de consultas, controles y seguimiento',
+  'Calcula tu semana desde tu fecha probable de parto',
+  'Explica los cambios habituales de cada semana',
+  'Asistente educativo que nunca hace diagnósticos',
+  'Recordatorios y controles ordenados por categoría',
+  'Tu diario personal para anotar cómo te sientes',
 ];
 
 function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
-
-const frontendPort = window.location.port || '5180';
-const apiTarget = `localhost:${import.meta.env.VITE_PROXY_TARGET?.split(':').pop() ?? '4001'}`;
 
 export default function AuthPage() {
   const { login, register } = useAuth();
@@ -74,7 +71,7 @@ export default function AuthPage() {
 
       navigate('/', { replace: true });
     } catch (err) {
-      setError(err.message ?? 'No se pudo completar la operacion.');
+      setError(err.message ?? 'No se pudo completar la operación.');
     } finally {
       setBusy(false);
     }
@@ -84,11 +81,11 @@ export default function AuthPage() {
     <div className="auth-page">
       <aside className="auth-art">
         <div className="auth-art-inner">
-          <BrandMark size={46} className="art-flourish" />
+          <BrandMark size={44} className="art-flourish" />
           <h1>Cada semana de tu embarazo, acompañada</h1>
           <p>
-            Organiza tu informacion, entiende los cambios de cada etapa y resuelve tus dudas
-            con un asistente educativo que nunca diagnostica.
+            Ordena tu información, entiende los cambios de cada etapa y resuelve tus dudas con un
+            asistente educativo que nunca diagnostica.
           </p>
           <ul className="auth-features">
             {FEATURES.map((feature) => (
@@ -96,6 +93,7 @@ export default function AuthPage() {
             ))}
           </ul>
         </div>
+        <MotherSilhouette size={210} className="auth-art-figure" />
       </aside>
 
       <main className="auth-form-wrap">
@@ -103,12 +101,16 @@ export default function AuthPage() {
           <h2>{isRegister ? 'Crea tu cuenta' : 'Bienvenida de vuelta'}</h2>
           <p className="sub">
             {isRegister
-              ? 'Registra tu fecha de parto para empezar el seguimiento.'
+              ? 'Registra tu fecha probable de parto para empezar el seguimiento.'
               : 'Ingresa para continuar tu seguimiento.'}
           </p>
 
           <form onSubmit={handleSubmit} className="stack auth-form">
-            {error && <div className="form-error">{error}</div>}
+            {error && (
+              <div className="form-error" role="alert">
+                {error}
+              </div>
+            )}
 
             <div className="field-row">
               {isRegister && (
@@ -119,7 +121,8 @@ export default function AuthPage() {
                     className="input"
                     value={form.name}
                     onChange={update('name')}
-                    placeholder="Como te llamamos"
+                    placeholder="Cómo te llamamos"
+                    autoComplete="name"
                     required
                     minLength={2}
                   />
@@ -135,6 +138,7 @@ export default function AuthPage() {
                   value={form.email}
                   onChange={update('email')}
                   placeholder="tu@correo.com"
+                  autoComplete="email"
                   required
                 />
               </div>
@@ -142,14 +146,15 @@ export default function AuthPage() {
 
             <div className="field-row">
               <div className="field">
-                <label htmlFor="password">Contrasena</label>
+                <label htmlFor="password">Contraseña</label>
                 <input
                   id="password"
                   type="password"
                   className="input"
                   value={form.password}
                   onChange={update('password')}
-                  placeholder="Minimo 6 caracteres"
+                  placeholder="Mínimo 6 caracteres"
+                  autoComplete={isRegister ? 'new-password' : 'current-password'}
                   required
                   minLength={6}
                 />
@@ -157,7 +162,7 @@ export default function AuthPage() {
 
               {isRegister && (
                 <div className="field">
-                  <label htmlFor="babyName">Nombre del bebe</label>
+                  <label htmlFor="babyName">Nombre del bebé</label>
                   <input
                     id="babyName"
                     className="input"
@@ -172,22 +177,22 @@ export default function AuthPage() {
             {isRegister && (
               <>
                 <div className="field">
-                  <label htmlFor="calcMode">Como calculamos tu semana</label>
+                  <label htmlFor="calcMode">Cómo calculamos tu semana</label>
                   <select
                     id="calcMode"
                     className="select"
                     value={form.mode}
                     onChange={update('mode')}
                   >
-                    <option value="dueDate">Tengo la fecha estimada de parto</option>
-                    <option value="lastPeriod">Se mi ultima menstruacion</option>
-                    <option value="week">Ya se en que semana estoy</option>
+                    <option value="dueDate">Tengo la fecha probable de parto</option>
+                    <option value="lastPeriod">Sé mi última menstruación</option>
+                    <option value="week">Ya sé en qué semana estoy</option>
                   </select>
                 </div>
 
                 {form.mode === 'dueDate' && (
                   <div className="field">
-                    <label htmlFor="dueDate">Fecha estimada de parto</label>
+                    <label htmlFor="dueDate">Fecha probable de parto</label>
                     <input
                       id="dueDate"
                       type="date"
@@ -201,7 +206,7 @@ export default function AuthPage() {
 
                 {form.mode === 'lastPeriod' && (
                   <div className="field">
-                    <label htmlFor="lastPeriod">Primer dia de tu ultima menstruacion</label>
+                    <label htmlFor="lastPeriod">Primer día de tu última menstruación</label>
                     <input
                       id="lastPeriod"
                       type="date"
@@ -210,7 +215,7 @@ export default function AuthPage() {
                       max={todayISO()}
                       onChange={update('lastPeriodDate')}
                     />
-                    <span className="field-hint">Sumamos 280 dias a esa fecha.</span>
+                    <span className="field-hint">Sumamos 280 días a esa fecha.</span>
                   </div>
                 )}
 
@@ -225,8 +230,9 @@ export default function AuthPage() {
                       min={1}
                       max={42}
                       onChange={update('currentWeek')}
-                      placeholder="Ej: 20"
+                      placeholder="Ej.: 20"
                     />
+                    <span className="field-hint">El cálculo se ajustará a esa semana.</span>
                   </div>
                 )}
               </>
@@ -239,23 +245,16 @@ export default function AuthPage() {
           </form>
 
           <p className="auth-switch">
-            {isRegister ? 'Ya tienes cuenta? ' : 'Aun no tienes cuenta? '}
+            {isRegister ? '¿Ya tienes cuenta? ' : '¿Aún no tienes cuenta? '}
             <button type="button" onClick={switchMode}>
-              {isRegister ? 'Ingresa' : 'Registrate'}
+              {isRegister ? 'Ingresa' : 'Regístrate'}
             </button>
           </p>
 
-          {isRegister && (
-            <div className="demo-box">
-              Usa cualquier correo y una contrasena de 6 caracteres o mas. Tus datos se guardan
-              solo en tu equipo.
-            </div>
-          )}
-
-          <div className="port-tag">
-            <strong>BabyTrack IA</strong>
-            <span>Frontend :{frontendPort}</span>
-            <span>API {apiTarget}</span>
+          <div className="demo-box">
+            {isRegister
+              ? 'Tus datos quedan asociados a tu cuenta y no se comparten con terceros.'
+              : 'BabyTrack ofrece información educativa. No sustituye tus controles prenatales ni un diagnóstico profesional.'}
           </div>
         </div>
       </main>

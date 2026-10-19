@@ -266,12 +266,33 @@
 
 .auth-art {
   position: relative;
-  background: linear-gradient(160deg, var(--blue-50) 0%, var(--blue-100) 55%, var(--blue-200) 100%);
+  background: var(--blue-50);
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 2rem 2.5rem;
   overflow: hidden;
+}
+
+.auth-art::after {
+  content: '';
+  position: absolute;
+  right: -90px;
+  bottom: -90px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: var(--cream-soft);
+  z-index: 1;
+}
+
+.auth-art-figure {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  z-index: 2;
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 .auth-art-inner {
@@ -403,26 +424,6 @@
   font-size: 0.75rem;
   line-height: 1.5;
   color: var(--text-soft);
-}
-
-/* Identifies the project and its ports so another app is never mistaken for this one. */
-.port-tag {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px dashed var(--border-strong);
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
-}
-
-.port-tag strong {
-  color: var(--ink);
-  font-weight: 700;
-  letter-spacing: 0.02em;
 }
 
 /* --------------------------------- hero card ------------------------------- */
