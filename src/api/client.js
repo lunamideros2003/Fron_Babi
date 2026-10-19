@@ -75,6 +75,10 @@ export const api = {
     calculate: (params) => request(`/weeks/calculate?${params}`, { auth: false }),
   },
 
+  guide: {
+    get: () => request('/guide', { auth: false }),
+  },
+
   pregnancy: {
     get: () => request('/pregnancy'),
     save: (data) => request('/pregnancy', { method: 'PUT', body: data }),
