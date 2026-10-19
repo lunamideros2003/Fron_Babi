@@ -1,54 +1,127 @@
+import { useEffect, useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
-import { BrandMark } from './Icons.jsx';
+import {
+  BrandMark,
+  HomeIcon,
+  BabyIcon,
+  CalendarIcon,
+  BookIcon,
+  JournalIcon,
+  MenuFoldIcon,
+  ShieldIcon,
+} from './Icons.jsx';
 
-const LINKS = [
-  { to: '/', label: 'Inicio', end: true },
-  { to: '/bot', label: 'Bot' },
-  { to: '/semana', label: 'Mi semana' },
-  { to: '/asistente', label: 'Asistente IA' },
-  { to: '/citas', label: 'Citas' },
-  { to: '/recordatorios', label: 'Recordatorios' },
-  { to: '/seguimiento', label: 'Seguimiento' },
+const SECTIONS = [
+  { to: '/', label: 'Inicio', Icon: HomeIcon, end: true },
+  { to: '/semana', label: 'Mi embarazo', Icon: BabyIcon },
+  { to: '/citas', label: 'Mis controles', Icon: CalendarIcon },
+  { to: '/guia', label: 'Mi guia', Icon: BookIcon },
+  { to: '/diario', label: 'Mi diario', Icon: JournalIcon },
 ];
+
+const COLLAPSE_KEY = 'babytrack_sidebar_collapsed';
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
+  const [collapsed, setCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem(COLLAPSE_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0');
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  }, [collapsed]);
+
   const initial = (user?.name ?? 'B').charAt(0).toUpperCase();
 
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <div className="topbar-inner">
-          <Link to="/" className="brand">
-            <BrandMark size={32} />
-            <span>BabyTrack IA</span>
+    <div className={`app-shell ${collapsed ? 'is-collapsed' : ''}`}>
+      <aside className={`sidebar ${collapsed ? 'is-collapsed' : ''}`}>
+        <div className="sidebar-top">
+          <Link to="/" className="sidebar-brand" aria-label="BabyTrack, ir al inicio">
+            <BrandMark size={28} />
+            <span className="sidebar-brand-text">BabyTrack</span>
           </Link>
 
-          <nav className="nav">
-            {LINKS.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.end}
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
+          <button
+            type="button"
+            className="sidebar-toggle"
+            onClick={() => setCollapsed((v) => !v)}
+            aria-expanded={!collapsed}
+            aria-controls="sidebar-nav"
+            title={collapsed ? 'Expandir menu' : 'Contraer menu'}
+          >
+            <MenuFoldIcon size={17} open={!collapsed} />
+            <span className="sidebar-toggle-text">Contraer</span>
+          </button>
+        </div>
 
-          <div className="topbar-user">
-            <div className="avatar">{initial}</div>
-            <span>{user?.name?.split(' ')[0]}</span>
-            <button type="button" className="btn btn-ghost btn-sm" onClick={logout}>
+        <nav id="sidebar-nav" className="sidebar-nav" aria-label="Secciones principales">
+          {SECTIONS.map(({ to, label, Icon, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) => `sidebar-link ${isActive ? 'is-active' : ''}`}
+              title={collapsed ? label : undefined}
+            >
+              <span className="sidebar-link-icon">
+                <Icon size={20} />
+              </span>
+              <span className="sidebar-link-label">{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="sidebar-foot">
+          <NavLink
+            to="/seguridad"
+            className={({ isActive }) => `sidebar-link sidebar-link-safety ${isActive ? 'is-active' : ''}`}
+            title={collapsed ? 'Senales de alarma' : undefined}
+          >
+            <span className="sidebar-link-icon">
+              <ShieldIcon size={19} />
+            </span>
+            <span className="sidebar-link-label">Senales de alarma</span>
+          </NavLink>
+
+          <div className="sidebar-user">
+            <span className="avatar" aria-hidden="true">
+              {initial}
+            </span>
+            <span className="sidebar-user-name">{user?.name?.split(' ')[0]}</span>
+            <button type="button" className="sidebar-logout" onClick={logout}>
               Salir
             </button>
           </div>
         </div>
-      </header>
+      </aside>
 
       <main className="app-main">{children}</main>
+
+      <nav className="bottom-nav" aria-label="Navegacion principal">
+        {SECTIONS.map(({ to, label, Icon, end }) => (
+          <NavLink
+            key={to}
+            to={to}
+            end={end}
+            className={({ isActive }) => `bottom-nav-link ${isActive ? 'is-active' : ''}`}
+          >
+            <span className="bottom-nav-icon">
+              <Icon size={21} />
+            </span>
+            <span className="bottom-nav-label">{label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }
