@@ -15,8 +15,8 @@ import {
 const CATEGORY_LABELS = {
   desarrollo: 'Desarrollo',
   emocional: 'Bienestar emocional',
-  sintomas: 'Sintomas',
-  alimentacion: 'Alimentacion',
+  sintomas: 'Síntomas',
+  alimentacion: 'Alimentación',
   ejercicio: 'Ejercicio',
   controles: 'Controles',
   general: 'General',
@@ -156,7 +156,7 @@ export default function BotPage() {
         <p className="eyebrow">Bot de preguntas</p>
         <h1>Consulta guiada</h1>
         <p className="lede">
-          El bot te hace una serie de preguntas sobre tu embarazo, te responde segun lo que
+          El bot te hace una serie de preguntas sobre tu embarazo, te responde según lo que
           contestas y al final te da un resumen con tu puntaje de seguimiento.
         </p>
       </div>
@@ -173,7 +173,7 @@ export default function BotPage() {
                 {phase === 'questions' && session
                   ? `Pregunta ${session.current_index + 1} de ${question?.total ?? 10}`
                   : phase === 'summary'
-                    ? 'Sesion completada'
+                    ? 'Sesión completada'
                     : 'Listo para empezar'}
                 {pregnancy ? ` - Semana ${pregnancy.current_week}` : ''}
               </div>
@@ -214,7 +214,7 @@ export default function BotPage() {
                 <MotherSilhouette size={96} className="bot-illustration" />
                 <h3>Vamos a revisar como estas</h3>
                 <p>
-                  Son 10 preguntas cortas. El bot te responde segun lo que contestas y al final
+                  Son 10 preguntas cortas. El bot te responde según lo que contestas y al final
                   te da un resumen con tu puntaje de seguimiento.
                 </p>
 
@@ -404,7 +404,7 @@ export default function BotPage() {
                     <h3>Resumen de tu consulta</h3>
                     <p>
                       {session
-                        ? `Completaste las 10 preguntas${session.pregnancy_week ? ` con informacion de tu semana ${session.pregnancy_week}` : ''}.`
+                        ? `Completaste las 10 preguntas${session.pregnancy_week ? ` con información de tu semana ${session.pregnancy_week}` : ''}.`
                         : 'Completaste las 10 preguntas.'}
                     </p>
                   </div>
@@ -429,7 +429,7 @@ export default function BotPage() {
                     Ver mis recordatorios
                   </Link>
                   <Link to="/seguimiento" className="btn btn-secondary">
-                    Registrar sintomas
+                    Registrar síntomas
                   </Link>
                 </div>
               </div>
@@ -446,7 +446,7 @@ export default function BotPage() {
 
             {history.length === 0 ? (
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: 0 }}>
-                Todavia no has hecho ninguna consulta. Cuando lo hagas aparecera aqui.
+                Todavía no has hecho ninguna consulta. Cuando lo hagas aparecerá aquí.
               </p>
             ) : (
               <div className="list">
@@ -488,14 +488,14 @@ export default function BotPage() {
               <h3>Que hace el bot</h3>
             </div>
             <ul className="summary-list good">
-              <li>Te pregunta sobre alimentacion, sintomas, ejercicio y controles</li>
+              <li>Te pregunta sobre alimentación, síntomas, ejercicio y controles</li>
               <li>Responde a cada respuesta con orientacion general</li>
               <li>Calcula un puntaje de seguimiento de 0 a 12</li>
               <li>Resume lo que haces bien y lo que te puede ayudar</li>
             </ul>
           </section>
 
-          <Disclaimer text="El bot da informacion educativa. No diagnostica enfermedades ni indica medicamentos." />
+          <Disclaimer text="El bot da información educativa. No diagnostica enfermedades ni indica medicamentos." />
         </aside>
       </div>
     </div>

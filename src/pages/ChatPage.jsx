@@ -5,13 +5,13 @@ import { SendIcon, SparkleIcon, BrandMark, TrashIcon, InfoIcon } from '../compon
 import { formatDateTime } from '../utils/format.js';
 
 const CATEGORIES = [
-  { key: 'alimentacion', label: 'Alimentacion', questions: ['Que puedo comer?', 'Cuanto peso puedo ganar?'] },
-  { key: 'sintomas', label: 'Sintomas', questions: ['Tengo nauseas, que hago?', 'Como puedo dormir mejor?'] },
-  { key: 'controles', label: 'Controles', questions: ['Que controles necesito?', 'Cuando es la ecografia?'] },
-  { key: 'ejercicio', label: 'Ejercicio', questions: ['Puedo hacer ejercicio?', 'Como hago suelo pelvico?'] },
-  { key: 'desarrollo', label: 'Desarrollo', questions: ['Que se siente cuando se mueve?', 'Como lo estimulo?'] },
-  { key: 'parto', label: 'Parto', questions: ['Que llevo al hospital?', 'Cuando es el parto?'] },
-  { key: 'emocional', label: 'Emocional', questions: ['Me siento ansiosa', 'Tengo mucho estres'] },
+  { key: 'alimentacion', label: 'Alimentación', questions: ['¿Qué puedo comer?', '¿Cuánto peso puedo ganar?'] },
+  { key: 'sintomas', label: 'Síntomas', questions: ['Tengo náuseas, ¿qué hago?', '¿Cómo puedo dormir mejor?'] },
+  { key: 'controles', label: 'Controles', questions: ['¿Qué controles necesito?', '¿Cuándo es la ecografía?'] },
+  { key: 'ejercicio', label: 'Ejercicio', questions: ['¿Puedo hacer ejercicio?', '¿Cómo hago suelo pélvico?'] },
+  { key: 'desarrollo', label: 'Desarrollo', questions: ['¿Qué se siente cuando se mueve?', '¿Cómo lo estimulo?'] },
+  { key: 'parto', label: 'Parto', questions: ['¿Qué llevo al hospital?', '¿Cuándo es el parto?'] },
+  { key: 'emocional', label: 'Emocional', questions: ['Me siento ansiosa', 'Tengo mucho estrés'] },
 ];
 
 export default function ChatPage() {
@@ -109,7 +109,7 @@ export default function ChatPage() {
         <p className="eyebrow">Asistente educativo</p>
         <h1>Pregunta lo que necesites</h1>
         <p className="lede">
-          BabyTrack IA clasifica tu pregunta por categoria y responde con informacion
+          BabyTrack IA clasifica tu pregunta por categoría y responde con información
           educativa de tu etapa. Nunca diagnostica ni receta medicamentos.
         </p>
       </div>
@@ -140,8 +140,8 @@ export default function ChatPage() {
               <div className="empty-state">
                 <BrandMark size={52} className="empty-icon" />
                 <p>
-                  Hola {user?.name?.split(' ')[0]}. Preguntame sobre alimentacion, controles,
-                  sintomas, ejercicio, desarrollo o el parto.
+                  Hola {user?.name?.split(' ')[0]}. Pregúntame sobre alimentación, controles,
+                  síntomas, ejercicio, desarrollo o el parto.
                 </p>
               </div>
             )}
@@ -253,7 +253,7 @@ export default function ChatPage() {
         <aside className="chat-aside stack" style={{ gap: '0.85rem' }}>
           <section className="card">
             <div className="card-title">
-              <h3>Categorias</h3>
+              <h3>Categorías</h3>
             </div>
             <div className="row-wrap">
               {CATEGORIES.map((category) => (
@@ -291,10 +291,10 @@ export default function ChatPage() {
             </div>
             <div className="list">
               {[
-                'Que puedo comer en el embarazo?',
+                '¿Qué puedo comer en el embarazo?',
                 'Que controles necesito y cuando?',
                 'Puedo hacer ejercicio?',
-                'Que se siente cuando se mueve el bebe?',
+                '¿Qué se siente cuando se mueve el bebé?',
                 'Que llevo al hospital?',
                 'Me siento ansiosa, que hago?',
               ].map((question) => (
@@ -314,9 +314,9 @@ export default function ChatPage() {
           <div className="disclaimer">
             <InfoIcon size={15} />
             <span>
-              Si tienes sangrado, perdida de liquido, dolor intenso o falta de movimientos,
-              contacta de inmediato a tu equipo medico. Esta herramienta no evalua tu situacion
-              clinica.
+              Si tienes sangrado, pérdida de líquido, dolor intenso o falta de movimientos,
+              contacta de inmediato a tu equipo médico. Esta herramienta no evalúa tu situación
+              clínica.
             </span>
           </div>
         </aside>
