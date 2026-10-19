@@ -1,329 +1,160 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import api from '../api/client.js';
-import Disclaimer from '../components/Disclaimer.jsx';
-import { FloralCorner, SparkleIcon, CalendarIcon, CheckIcon, MotherSilhouette } from '../components/Icons.jsx';
-import { formatDate, formatDateTime, relativeDay } from '../utils/format.js';
+import MotherIllustration from '../components/MotherIllustration.jsx';
+import FruitIllustration from '../components/Fruit.jsx';
+import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, ShieldIcon, BrandMark } from '../components/Icons.jsx';
+
+function trimesterOf(week) {
+  if (week < 13) return 'Primer trimestre';
+  if (week < 28) return 'Segundo trimestre';
+  return 'Tercer trimestre';
+}
+
+function milestoneOf(week) {
+  if (week >= 40) return 'Casi el dia';
+  if (week >= 37) return 'Ya es termino';
+  if (week >= 28) return 'Ultimo trimestre';
+  if (week >= 20) return 'Mitad del camino';
+  if (week >= 13) return 'Segundo trimestre';
+  return 'Primeros pasos';
+}
 
 export default function DashboardPage() {
-  const { user, pregnancy, refresh } = useAuth();
-  const [reminders, setReminders] = useState([]);
-  const [appointments, setAppointments] = useState([]);
-  const [health, setHealth] = useState(null);
-  const [generating, setGenerating] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    async function load() {
-      try {
-        const [reminderData, appointmentData, healthData] = await Promise.all([
-          api.reminders.list(),
-          api.appointments.list('upcoming'),
-          api.health().catch(() => null),
-        ]);
-
-        if (!active) return;
-        setReminders(reminderData.reminders ?? []);
-        setAppointments(appointmentData.appointments ?? []);
-        setHealth(healthData);
-      } catch {
-        if (active) {
-          setReminders([]);
-          setAppointments([]);
-        }
-      }
-    }
-
-    load();
-    return () => {
-      active = false;
-    };
-  }, [pregnancy?.current_week]);
-
-  async function handleGenerate() {
-    setGenerating(true);
-    try {
-      const data = await api.reminders.generate(5);
-      setReminders((prev) => [...data.reminders, ...prev]);
-    } catch {
-      /* handled by the empty state */
-    } finally {
-      setGenerating(false);
-    }
-  }
-
-  async function handleToggle(id) {
-    setReminders((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, is_completed: item.is_completed ? 0 : 1 } : item)),
-    );
-    try {
-      await api.reminders.toggle(id);
-    } catch {
-      refresh();
-    }
-  }
+  const { user, pregnancy } = useAuth();
 
   if (!pregnancy) {
     return (
-      <div className="stack">
-        <div className="page-head">
-          <p className="eyebrow">Hola {user?.name?.split(' ')[0]}</p>
-          <h1>Aun no tenemos tu fecha de parto</h1>
-          <p className="lede">
-            Registrala para que el sistema calcule tu semana y personalice toda la informacion.
-          </p>
+      <div className="home">
+        <header className="home-greeting">
+          <div>
+            <p className="home-eyebrow">Mi espacio de embarazo</p>
+            <h1 className="home-title">Hola, mama</h1>
+            <p className="home-subtitle">Un dia a la vez, un paso a la vez.</p>
+          </div>
+          <span className="home-mark" aria-hidden="true">
+            <BrandMark size={24} />
+          </span>
+        </header>
+
+        <div className="home-art">
+          <MotherIllustration height={190} />
         </div>
-        <WeekSetupCard />
-        <Disclaimer />
+
+        <WeekSetupCard firstName={user?.name?.split(' ')[0]} />
       </div>
     );
   }
 
   const week = pregnancy.week;
+  const current = pregnancy.current_week;
+  const progress = Math.max(0, Math.min(100, pregnancy.progress_percent ?? 0));
+  const firstName = user?.name?.split(' ')[0];
 
   return (
-    <div className="stack">
-      <section className="hero">
-        <FloralCorner size={230} className="hero-deco" />
-        <p className="eyebrow">
-          {pregnancy.trimester_label}
-          {pregnancy.baby_name ? ` de ${pregnancy.baby_name}` : ''}
-        </p>
-        <h1>Semana {pregnancy.current_week} de 40</h1>
-        <p className="week-sub">{week ? week.title : 'Embarazo en curso'}</p>
+    <div className="home">
+      {/* A. Encabezado de bienvenida */}
+      <header className="home-greeting">
+        <div>
+          <p className="home-eyebrow">Mi espacio de embarazo</p>
+          <h1 className="home-title">Hola, mama{firstName ? `, ${firstName}` : ''}</h1>
+          <p className="home-subtitle">Un dia a la vez, un paso a la vez.</p>
+        </div>
+        <span className="home-mark" aria-hidden="true">
+          <BrandMark size={24} />
+        </span>
+      </header>
 
-        <div className="hero-stats">
+      {/* B. Ilustracion principal */}
+      <div className="home-art">
+        <MotherIllustration height={210} />
+      </div>
+
+      {/* C y D. Tarjeta principal con el tamano del bebe */}
+      <section className="today-card" aria-label="Tu embarazo hoy">
+        <div className="today-head">
           <div>
-            <div className="hero-stat-value">{pregnancy.days_left}</div>
-            <div className="hero-stat-label">Dias restantes</div>
+            <p className="today-label">Tu embarazo hoy</p>
+            <h2 className="today-week">Semana {current}</h2>
+            <p className="today-trimester">{pregnancy.trimester_label || trimesterOf(current)}</p>
           </div>
-          <div>
-            <div className="hero-stat-value">
-              {pregnancy.current_day}/{280}
-            </div>
-            <div className="hero-stat-label">Dia de embarazo</div>
-          </div>
-          <div>
-            <div className="hero-stat-value">{week?.size_comparison ?? '...'}</div>
-            <div className="hero-stat-label">Tamano aproximado</div>
-          </div>
+          <span className="today-badge">{milestoneOf(current)}</span>
         </div>
 
-        <div className="progress">
-          <div className="progress-bar" style={{ width: `${pregnancy.progress_percent}%` }} />
+        <div>
+          <div className="today-progress">
+            <div className="today-progress-bar" style={{ width: `${progress}%` }} />
+          </div>
+          <p className="today-progress-label">
+            {current} de 40 semanas aproximadas. El calculo es orientativo.
+          </p>
         </div>
 
-        {pregnancy.is_overdue && (
-          <div className="hero-alert">
-            Tu fecha estimada ya paso. La mayoria de los bebes llegan hasta la semana 42. Tu
-            obstetra te indicara los siguientes pasos.
+        <div className="size-block">
+          <span className="size-art">
+            <FruitIllustration sizeComparison={week?.size_comparison} size={66} />
+          </span>
+          <div className="size-copy">
+            <p className="size-label">El tamano de tu bebe</p>
+            <h3 className="size-title">
+              {week?.size_comparison ? `Como ${String(week.size_comparison).toLowerCase()}` : 'Por confirmar'}
+            </h3>
+            <p className="size-text">Una comparacion visual para imaginar cuanto ha crecido.</p>
           </div>
-        )}
+        </div>
       </section>
 
-      <div className="grid grid-4">
-        <div className="stat-tile">
-          <div className="value">{pregnancy.current_week}</div>
-          <div className="label">Semana actual</div>
-        </div>
-        <div className="stat-tile">
-          <div className="value">{week?.typical_weight ?? '...'}</div>
-          <div className="label">Peso estimado</div>
-        </div>
-        <div className="stat-tile">
-          <div className="value">{week?.typical_length ?? '...'}</div>
-          <div className="label">Longitud</div>
-        </div>
-        <div className="stat-tile">
-          <div className="value">{reminders.filter((r) => !r.is_completed).length}</div>
-          <div className="label">Recordatorios</div>
-        </div>
-      </div>
-
-      {week && (
-        <section className="week-card">
-          <div className="row" style={{ alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-            <div className="week-number-badge">
-              <div>
-                <span className="num">{week.week_number}</span>
-                <span className="lbl">semana</span>
-              </div>
-            </div>
-            <div style={{ flex: 1 }}>
-              <h3>{week.title}</h3>
-              <p style={{ color: 'var(--text-soft)', fontSize: '0.9rem', margin: '0.2rem 0 0' }}>
-                {week.summary}
-              </p>
-            </div>
-            <Link to="/semana" className="btn btn-secondary btn-sm">
-              Ver detalle
-            </Link>
-          </div>
-
-          <div className="grid grid-2" style={{ gap: '1rem' }}>
-            <div className="info-block">
-              <div className="info-label">Tu bebe</div>
-              <p>{week.baby_development}</p>
-            </div>
-            <div className="info-block">
-              <div className="info-label">En ti</div>
-              <p>{week.mother_changes}</p>
-            </div>
-            <div className="info-block">
-              <div className="info-label">Alimentacion</div>
-              <p>{week.food_focus}</p>
-            </div>
-            <div className="info-block">
-              <div className="info-label">Ejercicio</div>
-              <p>{week.exercise_tip}</p>
-            </div>
-          </div>
-
-          {week.tips && (
-            <div
-              style={{
-                marginTop: '1.25rem',
-                padding: '0.85rem 1rem',
-                background: 'var(--gold-soft)',
-                borderRadius: 'var(--radius-sm)',
-                fontSize: '0.88rem',
-                color: '#7a6020',
-              }}
-            >
-              <strong>Consejo: </strong>
-              {week.tips}
-            </div>
-          )}
-        </section>
-      )}
-
-      {week && (
-        <section
-          className="card"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            flexWrap: 'wrap',
-            background: 'linear-gradient(135deg, var(--blue-50), var(--cream-soft))',
-            borderColor: 'var(--blue-200)',
-          }}
-        >
-          <SparkleIcon size={26} />
-          <div style={{ flex: 1, minWidth: '200px' }}>
-            <h3>Haz tu consulta guiada con el bot</h3>
-            <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-soft)' }}>
-              Diez preguntas cortas y el bot te da un resumen con tu puntaje de seguimiento.
-            </p>
-          </div>
-          <Link to="/bot" className="btn btn-primary">
-            Empezar la consulta
+      {/* E. Guia para esta semana */}
+      <section aria-labelledby="guide-title">
+        <h2 id="guide-title" className="section-title">
+          Tu guia para esta semana
+        </h2>
+        <div className="guide-links">
+          <Link to="/semana" className="guide-link">
+            <span className="guide-link-icon" aria-hidden="true">
+              <HeartPulseIcon size={21} />
+            </span>
+            <span className="guide-link-body">
+              <p className="guide-link-title">Cambios en tu cuerpo</p>
+              <p className="guide-link-text">Conoce los cambios y las molestias de esta etapa.</p>
+            </span>
+            <span className="guide-link-chevron" aria-hidden="true">
+              <ChevronRightIcon size={16} />
+            </span>
           </Link>
-        </section>
-      )}
 
-      <div className="grid grid-2">
-        <section className="card">
-          <div className="card-title">
-            <h3>Proximos recordatorios</h3>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              onClick={handleGenerate}
-              disabled={generating}
-            >
-              {generating ? <span className="loader" style={{ width: 13, height: 13 }} /> : <SparkleIcon size={14} />}
-              Generar con IA
-            </button>
-          </div>
-
-          {reminders.length === 0 ? (
-            <div className="empty-state">
-              <MotherSilhouette size={70} className="empty-icon" />
-              <p>Aun no tienes recordatorios. Genera algunos personalizados para tu semana.</p>
-              <button type="button" className="btn btn-primary" onClick={handleGenerate}>
-                Generar recordatorios
-              </button>
-            </div>
-          ) : (
-            <div className="list">
-              {reminders.slice(0, 5).map((item) => (
-                <div key={item.id} className={`list-item ${item.is_completed ? 'is-done' : ''}`}>
-                  <button
-                    type="button"
-                    className={`checkbox ${item.is_completed ? 'checked' : ''}`}
-                    onClick={() => handleToggle(item.id)}
-                    aria-label={item.is_completed ? 'Marcar pendiente' : 'Marcar completada'}
-                  >
-                    {item.is_completed && <CheckIcon />}
-                  </button>
-                  <div className="list-item-main">
-                    <div className="list-item-title">{item.title}</div>
-                    {item.description && <div className="list-item-meta">{item.description}</div>}
-                  </div>
-                  <span className="badge badge-sand">{item.category}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          <Link to="/recordatorios" className="btn btn-ghost btn-sm" style={{ marginTop: '0.75rem' }}>
-            Ver todos
+          <Link to="/citas" className="guide-link">
+            <span className="guide-link-icon" aria-hidden="true">
+              <CalendarIcon size={20} />
+            </span>
+            <span className="guide-link-body">
+              <p className="guide-link-title">Tus proximos controles</p>
+              <p className="guide-link-text">Consulta tus citas y las indicaciones pendientes.</p>
+            </span>
+            <span className="guide-link-chevron" aria-hidden="true">
+              <ChevronRightIcon size={16} />
+            </span>
           </Link>
-        </section>
+        </div>
+      </section>
 
-        <section className="card">
-          <div className="card-title">
-            <h3>Tus proximas citas</h3>
-            <Link to="/citas" className="btn btn-secondary btn-sm">
-              <CalendarIcon size={14} />
-              Agendar
-            </Link>
-          </div>
-
-          {appointments.length === 0 ? (
-            <div className="empty-state">
-              <FloralCorner size={64} className="empty-icon" />
-              <p>No tienes citas agendadas. Registra tus controles para no perder ninguno.</p>
-              <Link to="/citas" className="btn btn-primary">
-                Agregar cita
-              </Link>
-            </div>
-          ) : (
-            <div className="list">
-              {appointments.slice(0, 4).map((item) => (
-                <div key={item.id} className="list-item">
-                  <div className="item-dot gold" />
-                  <div className="list-item-main">
-                    <div className="list-item-title">{item.title}</div>
-                    <div className="list-item-meta">
-                      {formatDateTime(item.scheduled_at)}
-                      {item.location ? ` - ${item.location}` : ''}
-                    </div>
-                  </div>
-                  <span className="badge badge-gold">{relativeDay(item.scheduled_at)}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {pregnancy.next_appointment && (
-            <div className="row" style={{ marginTop: '0.85rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-              <CalendarIcon size={14} />
-              Proxima: {pregnancy.next_appointment.title} ({formatDate(pregnancy.next_appointment.scheduled_at)})
-            </div>
-          )}
-        </section>
+      {/* F. Informacion de seguridad */}
+      <div className="safety-note">
+        <span className="safety-note-icon" aria-hidden="true">
+          <ShieldIcon size={17} />
+        </span>
+        <p>
+          Informacion orientativa. Tu profesional de salud es quien puede valorar tu embarazo
+          individualmente. Si notas{' '}
+          <Link to="/seguridad">senales de alarma</Link>, busca atencion medica sin esperar.
+        </p>
       </div>
-
-      <Disclaimer />
     </div>
   );
 }
 
-function WeekSetupCard() {
+function WeekSetupCard({ firstName }) {
   const { refresh } = useAuth();
   const [mode, setMode] = useState('dueDate');
   const [dueDate, setDueDate] = useState('');
@@ -353,12 +184,16 @@ function WeekSetupCard() {
   }
 
   return (
-    <section className="card" style={{ maxWidth: 520 }}>
-      <div className="card-title">
-        <h3>Configura tu embarazo</h3>
-      </div>
+    <section className="setup-card">
+      <h2 className="section-title" style={{ marginTop: 0 }}>
+        Configura tu embarazo
+      </h2>
+      <p style={{ color: 'var(--text-soft)', fontSize: '0.9rem', marginTop: '-0.4rem' }}>
+        {firstName ? `${firstName}, registra` : 'Registra'} tu fecha para calcular tu semana y
+        personalizar toda la informacion.
+      </p>
 
-      <form onSubmit={handleSubmit} className="stack" style={{ gap: '0.9rem' }}>
+      <form onSubmit={handleSubmit} className="stack" style={{ gap: '0.9rem', marginTop: '1rem' }}>
         {error && <div className="form-error">{error}</div>}
 
         <div className="field">
