@@ -249,3 +249,168 @@ export function CalendarIcon({ size = 15 }) {
     </svg>
   );
 }
+
+/* --------------------------- iconos de navegacion --------------------------- */
+
+export function HomeIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M3.2 8.4 10 3l6.8 5.4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.8 9.6V16a1 1 0 001 1h8.4a1 1 0 001-1V9.6"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M8.2 17v-4.2h3.6V17" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function BabyIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="10" cy="10" r="7.2" stroke="currentColor" strokeWidth="1.4" />
+      <path
+        d="M10 13.6c-2.2-1.5-3.4-2.9-3.4-4.3a1.9 1.9 0 013.4-1.1 1.9 1.9 0 013.4 1.1c0 1.4-1.2 2.8-3.4 4.3z"
+        fill="currentColor"
+        opacity="0.25"
+      />
+      <path
+        d="M10 13.6c-2.2-1.5-3.4-2.9-3.4-4.3a1.9 1.9 0 013.4-1.1 1.9 1.9 0 013.4 1.1c0 1.4-1.2 2.8-3.4 4.3z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function BookIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M10 5.4C8.6 4.3 6.8 3.8 4 3.8v10.1c2.8 0 4.6.5 6 1.6 1.4-1.1 3.2-1.6 6-1.6V3.8c-2.8 0-4.6.5-6 1.6z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M10 5.4v10.1" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function JournalIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M5.4 3.2h8.2a1.2 1.2 0 011.2 1.2v11.2a1.2 1.2 0 01-1.2 1.2H5.4a1.6 1.6 0 01-1.6-1.6V4.8a1.6 1.6 0 011.6-1.6z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M7.6 3.2v13.6" stroke="currentColor" strokeWidth="1.3" />
+      <path
+        d="M10.2 7.4h2.6M10.2 10.2h2.6M10.2 13h1.8"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+export function HeartPulseIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M10 16.4c-3.4-2.3-5.4-4.4-5.4-6.7A2.9 2.9 0 0110 8.1a2.9 2.9 0 015.4 1.6c0 2.3-2 4.4-5.4 6.7z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.6 10.6h2.2l1.1-2 1.6 3.6 1.3-2.4.9 1.2h3.7"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ChevronRightIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M6 3.5L10.5 8 6 12.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ChevronLeftIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M10 3.5L5.5 8l4.5 4.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function MenuFoldIcon({ size = 18, open = true }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <rect x="2.2" y="3.4" width="13.6" height="11.2" rx="2" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M6.6 3.4v11.2" stroke="currentColor" strokeWidth="1.3" />
+      <path
+        d={open ? 'M11 7.2 9.2 9l1.8 1.8' : 'M9.4 7.2 11.2 9l-1.8 1.8'}
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function ShieldIcon({ size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path
+        d="M9 2.2l5.4 2v4.3c0 3.3-2.2 6.2-5.4 7.3-3.2-1.1-5.4-4-5.4-7.3V4.2L9 2.2z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path d="M9 6.6v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="9" cy="11.9" r="0.85" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function SearchIcon({ size = 16 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="7.2" cy="7.2" r="4.4" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M10.6 10.6 13.5 13.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
