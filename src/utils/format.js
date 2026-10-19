@@ -37,10 +37,10 @@ export function relativeDay(value) {
   const diff = daysUntil(value);
   if (diff === null) return '';
   if (diff === 0) return 'Hoy';
-  if (diff === 1) return 'Manana';
+  if (diff === 1) return 'Mañana';
   if (diff === -1) return 'Ayer';
-  if (diff > 1 && diff <= 7) return `En ${diff} dias`;
-  if (diff < -1) return `Hace ${Math.abs(diff)} dias`;
+  if (diff > 1 && diff <= 7) return `En ${diff} días`;
+  if (diff < -1) return `Hace ${Math.abs(diff)} días`;
   return formatShortDate(value);
 }
 
