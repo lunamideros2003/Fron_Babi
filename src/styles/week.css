@@ -1,0 +1,201 @@
+/*
+  Mi embarazo: selector compacto y bloques separados por separadores sutiles.
+*/
+
+.week-page {
+  max-width: 720px;
+}
+
+/* ------------------------------- selector ---------------------------------- */
+
+.week-selector {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.week-arrow {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-soft);
+  display: grid;
+  place-items: center;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.week-arrow:hover:not(:disabled) {
+  background: var(--blue-50);
+  border-color: var(--border-strong);
+  color: var(--ink);
+}
+
+.week-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.week-selector-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.week-select-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.week-selector .select {
+  width: 100%;
+}
+
+/* --------------------------------- cabecera -------------------------------- */
+
+.week-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.3rem 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+}
+
+.week-hero-title {
+  font-size: 1.9rem;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.week-hero-sub {
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  margin: 0.2rem 0 0;
+}
+
+.week-hero-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0.3rem 0 0;
+}
+
+.week-hero-fruit {
+  flex-shrink: 0;
+  width: 84px;
+  height: 84px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.week-orientative {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  background: var(--blue-50);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* -------------------------------- bloques ---------------------------------- */
+
+.week-blocks {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.week-block {
+  padding: 1.25rem 1.4rem;
+}
+
+.week-block + .week-block {
+  border-top: 1px solid var(--border);
+}
+
+.week-block h3 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--blue-500);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.week-block p {
+  font-size: 0.93rem;
+  color: var(--text-soft);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.week-block p + p {
+  margin-top: 0.6rem;
+}
+
+.week-facts {
+  list-style: none;
+  padding: 0;
+  margin: 0.9rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.week-facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.5rem 0.8rem;
+  background: var(--cream-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.week-facts span {
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.week-facts strong {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.week-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 520px) {
+  .week-hero { padding: 1.1rem; }
+  .week-hero-title { font-size: 1.6rem; }
+  .week-hero-fruit { width: 68px; height: 68px; }
+  .week-block { padding: 1.1rem; }
+}

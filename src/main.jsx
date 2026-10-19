@@ -7,6 +7,7 @@ import './styles/layout.css';
 import './styles/home.css';
 import './styles/guide.css';
 import './styles/journal.css';
+import './styles/week.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
