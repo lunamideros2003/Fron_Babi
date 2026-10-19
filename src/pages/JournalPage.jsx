@@ -78,7 +78,7 @@ export default function JournalPage() {
         <p className="eyebrow">Mi diario</p>
         <h1>Un espacio para ti</h1>
         <p className="lede">
-          Anota como te sientes, algo que quieras recordar o una duda para tu próxima consulta.
+          Anota cómo te sientes, algo que quieras recordar o una duda para tu próxima consulta.
           Solo tú puedes ver estas entradas.
           {pregnancy?.current_week ? ` Vas por la semana ${pregnancy.current_week}.` : ''}
         </p>

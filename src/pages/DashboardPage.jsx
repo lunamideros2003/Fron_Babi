@@ -228,7 +228,7 @@ function WeekSetupCard({ firstName }) {
 
         {mode === 'lastPeriod' && (
           <div className="field">
-            <label htmlFor="setupLmp">Primer dia de tu ultima menstruacion</label>
+                <label htmlFor="setupLmp">Primer día de tu última menstruación</label>
             <input
               id="setupLmp"
               type="date"

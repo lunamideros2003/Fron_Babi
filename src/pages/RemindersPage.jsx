@@ -5,9 +5,9 @@ import { CheckIcon, SparkleIcon, TrashIcon, PlusIcon, MotherSilhouette } from '.
 import { relativeDay, toLocalInputValue } from '../utils/format.js';
 
 const CATEGORIES = [
-  { value: 'alimentacion', label: 'Alimentacion' },
+  { value: 'alimentacion', label: 'Alimentación' },
   { value: 'ejercicio', label: 'Ejercicio' },
-  { value: 'medicacion', label: 'Medicacion' },
+  { value: 'medicacion', label: 'Medicación' },
   { value: 'controles', label: 'Controles' },
   { value: 'parto', label: 'Parto' },
   { value: 'emocional', label: 'Emocional' },
@@ -119,10 +119,10 @@ export default function RemindersPage() {
   return (
     <div className="stack">
       <div className="page-head">
-        <p className="eyebrow">Organizacion diaria</p>
+        <p className="eyebrow">Organización diaria</p>
         <h1>Recordatorios</h1>
         <p className="lede">
-          Crea tus propias tareas o deja que la IA las genere segun tu trimestre actual.
+          Crea tus propias tareas o deja que la IA las genere según tu trimestre actual.
         </p>
       </div>
 
@@ -234,7 +234,7 @@ export default function RemindersPage() {
             </div>
 
             <div className="field">
-              <label htmlFor="remCategory">Categoria</label>
+              <label htmlFor="remCategory">Categoría</label>
               <select id="remCategory" className="select" value={form.category} onChange={update('category')}>
                 {CATEGORIES.map((option) => (
                   <option key={option.value} value={option.value}>
