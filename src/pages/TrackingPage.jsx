@@ -5,9 +5,9 @@ import { PlusIcon, CalendarIcon, TrashIcon, FloralCorner } from '../components/I
 import { formatDate, formatDateTime } from '../utils/format.js';
 
 const COMMON_CHECKUPS = [
-  { week: 12, focus: 'Ecografia del primer trimestre' },
+  { week: 12, focus: 'Ecografía del primer trimestre' },
   { week: 14, focus: 'Translucencia nucal' },
-  { week: 20, focus: 'Ecografia anatomica' },
+  { week: 20, focus: 'Ecografía anatómica' },
   { week: 26, focus: 'Tamizaje de diabetes gestacional' },
   { week: 28, focus: 'Crecimiento fetal' },
   { week: 36, focus: 'Prueba de estreptococo grupo B' },
@@ -16,14 +16,14 @@ const COMMON_CHECKUPS = [
 ];
 
 const COMMON_SYMPTOMS = [
-  'Nauseas',
+  'Náuseas',
   'Reflujo',
   'Estreñimiento',
   'Dolor de espalda',
   'Cansancio',
   'Dolor de cabeza',
   'Insomnio',
-  'Hinchazon',
+  'Hinchazón',
 ];
 
 export default function TrackingPage() {
@@ -91,7 +91,7 @@ export default function TrackingPage() {
         notes: symptomForm.notes || undefined,
       });
       setSymptomForm((prev) => ({ ...prev, symptom: '', notes: '' }));
-      flash('Sintoma registrado.');
+      flash('Síntoma registrado.');
       await load();
     } catch (err) {
       setError(err.message);
@@ -107,8 +107,8 @@ export default function TrackingPage() {
         <p className="eyebrow">Historial</p>
         <h1>Controles y seguimiento</h1>
         <p className="lede">
-          Guarda cada consulta, peso, presion y sintoma. Este registro te sirve a ti y a tu
-          obstetra en la proxima visita.
+          Guarda cada consulta, peso, presión y síntoma. Este registro te sirve a ti y a tu
+          obstetra en la próxima visita.
         </p>
       </div>
 
@@ -153,7 +153,7 @@ export default function TrackingPage() {
             </div>
 
             <div className="field">
-              <label htmlFor="ckPressure">Presion arterial</label>
+              <label htmlFor="ckPressure">Presión arterial</label>
               <input
                 id="ckPressure"
                 className="input"
@@ -171,7 +171,7 @@ export default function TrackingPage() {
                 rows={3}
                 value={checkupForm.notes}
                 onChange={(e) => setCheckupForm((p) => ({ ...p, notes: e.target.value }))}
-                placeholder="Resultados, indicaciones del medico..."
+                placeholder="Resultados, indicaciones del médico..."
               />
             </div>
 
@@ -184,19 +184,19 @@ export default function TrackingPage() {
 
         <section className="card">
           <div className="card-title">
-            <h3>Registrar sintoma</h3>
+            <h3>Registrar síntoma</h3>
             <PlusIcon size={16} />
           </div>
 
           <form onSubmit={handleSymptom} className="stack" style={{ gap: '0.85rem' }}>
             <div className="field">
-              <label htmlFor="symName">Sintoma</label>
+              <label htmlFor="symName">Síntoma</label>
               <input
                 id="symName"
                 className="input"
                 value={symptomForm.symptom}
                 onChange={(e) => setSymptomForm((p) => ({ ...p, symptom: e.target.value }))}
-                placeholder="Ej: Nauseas matutinas"
+                placeholder="Ej.: Náuseas matutinas"
                 required
               />
               <div className="row-wrap" style={{ marginTop: '0.4rem' }}>
@@ -226,8 +226,8 @@ export default function TrackingPage() {
                 style={{ accentColor: 'var(--blue-500)' }}
               />
               <span className="field-hint">
-                1 es leve, 5 es muy intenso. Si es intenso o acompanado de sangrado, dolor fuerte o
-                perdida de liquido, contacta a tu medico.
+                1 es leve, 5 es muy intenso. Si es intenso o acompañado de sangrado, dolor fuerte o
+                pérdida de líquido, contacta a tu médico.
               </span>
             </div>
 
@@ -245,7 +245,7 @@ export default function TrackingPage() {
 
             <button type="submit" className="btn btn-primary">
               <PlusIcon size={15} />
-              Guardar sintoma
+              Guardar síntoma
             </button>
           </form>
         </section>
@@ -261,7 +261,7 @@ export default function TrackingPage() {
           {checkups.length === 0 ? (
             <div className="empty-state">
               <FloralCorner size={56} className="empty-icon" />
-              <p>Aun no registras controles. Anota peso y presion en cada consulta.</p>
+              <p>Aún no registras controles. Anota peso y presión en cada consulta.</p>
             </div>
           ) : (
             <div className="list">
@@ -292,14 +292,14 @@ export default function TrackingPage() {
 
         <section className="card">
           <div className="card-title">
-            <h3>Sintomas registrados</h3>
+            <h3>Síntomas registrados</h3>
             <span className="badge">{symptoms.length}</span>
           </div>
 
           {symptoms.length === 0 ? (
             <div className="empty-state">
               <FloralCorner size={56} className="empty-icon" />
-              <p>Sin registro de sintomas. Llevar este historial ayuda mucho en la consulta.</p>
+              <p>Sin registro de síntomas. Llevar este historial ayuda mucho en la consulta.</p>
             </div>
           ) : (
             <div className="list">
@@ -332,8 +332,8 @@ export default function TrackingPage() {
           <span className="badge badge-sand">Referencia general</span>
         </div>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
-          Estos son los momentos que la guia general sugiere. Tu clinica define el calendario real
-          segun tu caso.
+          Estos son los momentos que la guía general sugiere. Tu clínica define el calendario real
+          según tu caso.
         </p>
         <div className="grid grid-4" style={{ gap: '0.75rem' }}>
           {COMMON_CHECKUPS.map((item) => (
