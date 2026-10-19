@@ -1,0 +1,174 @@
+/*
+  Mis controles: lista con fecha visible y formulario plegable.
+*/
+
+.appointments-page {
+  max-width: 720px;
+}
+
+.appointments-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.appointments-head .btn {
+  flex-shrink: 0;
+}
+
+/* -------------------------------- formulario ------------------------------- */
+
+.appointments-form {
+  padding: 1.25rem 1.3rem;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.25rem;
+}
+
+.appointments-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.appointments-form-wide {
+  grid-column: 1 / -1;
+}
+
+.appointments-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* --------------------------------- filtros --------------------------------- */
+
+.appointments-scopes {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ---------------------------------- lista ---------------------------------- */
+
+.appointments-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.appointment-item {
+  display: flex;
+  gap: 0.9rem;
+  padding: 1rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--transition);
+}
+
+.appointment-item:hover { border-color: var(--border-strong); }
+
+.appointment-item.is-done { opacity: 0.66; }
+
+.appointment-date {
+  width: 52px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0.45rem 0;
+  background: var(--blue-50);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  align-self: flex-start;
+}
+
+.appointment-day {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.appointment-month {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.appointment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.appointment-topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.appointment-title {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.appointment-when {
+  font-size: 0.76rem;
+  color: var(--blue-600);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.appointment-meta {
+  font-size: 0.83rem;
+  color: var(--text-soft);
+  margin: 0.2rem 0 0;
+}
+
+.appointment-notes {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  background: var(--cream-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.7rem;
+  margin: 0.55rem 0 0;
+}
+
+.appointment-item.is-done .appointment-title { text-decoration: line-through; }
+
+.appointment-actions {
+  display: flex;
+  gap: 0.2rem;
+  margin-top: 0.4rem;
+}
+
+.appointments-empty {
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+.appointments-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 1.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 620px) {
+  .appointments-form-grid { grid-template-columns: 1fr; }
+  .appointment-item { padding: 0.9rem; }
+}

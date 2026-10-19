@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import api from '../api/client.js';
-import { CalendarIcon, PlusIcon, TrashIcon, FloralCorner } from '../components/Icons.jsx';
+import { CalendarIcon, PlusIcon, TrashIcon, ChevronLeftIcon } from '../components/Icons.jsx';
 import { formatDateTime, relativeDay, toLocalInputValue } from '../utils/format.js';
 
 const CATEGORIES = [
   { value: 'checkup', label: 'Control prenatal' },
-  { value: 'ultrasound', label: 'Ecografia' },
-  { value: 'lab', label: 'Analisis de laboratorio' },
+  { value: 'ultrasound', label: 'Ecografía' },
+  { value: 'lab', label: 'Análisis de laboratorio' },
   { value: 'specialist', label: 'Especialista' },
   { value: 'vaccine', label: 'Vacuna' },
   { value: 'birth_class', label: 'Clase de parto' },
   { value: 'other', label: 'Otro' },
+];
+
+const SCOPES = [
+  { key: 'upcoming', label: 'Próximas' },
+  { key: 'past', label: 'Pasadas' },
+  { key: 'all', label: 'Todas' },
 ];
 
 const EMPTY = {
@@ -22,10 +28,21 @@ const EMPTY = {
   notes: '',
 };
 
+function dateParts(value) {
+  if (!value) return { day: '--', month: '' };
+  const date = new Date(String(value).replace(' ', 'T'));
+  if (Number.isNaN(date.getTime())) return { day: '--', month: '' };
+  return {
+    day: String(date.getDate()).padStart(2, '0'),
+    month: date.toLocaleDateString('es-ES', { month: 'short' }).replace('.', ''),
+  };
+}
+
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [scope, setScope] = useState('upcoming');
   const [form, setForm] = useState(EMPTY);
+  const [openForm, setOpenForm] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -40,6 +57,7 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scope]);
 
   function update(field) {
@@ -57,6 +75,7 @@ export default function AppointmentsPage() {
         scheduled_at: toLocalInputValue(form.scheduled_at),
       });
       setForm(EMPTY);
+      setOpenForm(false);
       await load();
     } catch (err) {
       setError(err.message);
@@ -84,99 +103,31 @@ export default function AppointmentsPage() {
   }
 
   return (
-    <div className="stack">
-      <div className="page-head">
-        <p className="eyebrow">Agenda medica</p>
-        <h1>Mis citas</h1>
-        <p className="lede">
-          Registra tus controles, ecografias y analisis para no perder ninguno. BabyTrack te
-          avisa de los proximos.
-        </p>
+    <div className="appointments-page">
+      <div className="page-head appointments-head">
+        <div>
+          <p className="eyebrow">Seguimiento prenatal</p>
+          <h1>Mis controles</h1>
+          <p className="lede">
+            Consulta tus próximas citas y regístralas según las indique tu equipo de salud.
+          </p>
+        </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => setOpenForm((v) => !v)}
+          aria-expanded={openForm}
+        >
+          {openForm ? <ChevronLeftIcon size={15} /> : <PlusIcon size={15} />}
+          {openForm ? 'Cerrar formulario' : 'Nueva cita'}
+        </button>
       </div>
 
-      <div className="grid grid-2" style={{ gridTemplateColumns: 'minmax(0, 1fr) 340px' }}>
-        <div className="stack">
-          <div className="row-wrap">
-            {[
-              { key: 'upcoming', label: 'Proximas' },
-              { key: 'past', label: 'Pasadas' },
-              { key: 'all', label: 'Todas' },
-            ].map((option) => (
-              <button
-                key={option.key}
-                type="button"
-                className={`chip ${scope === option.key ? 'active' : ''}`}
-                onClick={() => setScope(option.key)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-
-          {error && <div className="form-error">{error}</div>}
-
-          {appointments.length === 0 ? (
-            <div className="card empty-state">
-              <FloralCorner size={64} className="empty-icon" />
-              <p>
-                No hay citas en esta vista. Agrega una con el formulario o recuerda que tu
-                obstetra define el calendario final.
-              </p>
-            </div>
-          ) : (
-            <div className="list">
-              {appointments.map((item) => (
-                <div key={item.id} className="list-item">
-                  <div className="item-dot gold" />
-                  <div className="list-item-main">
-                    <div className="list-item-title">{item.title}</div>
-                    <div className="list-item-meta">
-                      {formatDateTime(item.scheduled_at)}
-                      {item.location ? ` - ${item.location}` : ''}
-                      {item.provider_name ? ` - ${item.provider_name}` : ''}
-                    </div>
-                    {item.notes && (
-                      <div className="list-item-meta" style={{ marginTop: '0.25rem' }}>
-                        {item.notes}
-                      </div>
-                    )}
-                  </div>
-                  <div className="stack" style={{ gap: '0.3rem', alignItems: 'flex-end' }}>
-                    <span className="badge badge-gold">{relativeDay(item.scheduled_at)}</span>
-                    <div className="row" style={{ gap: '0.3rem' }}>
-                      <button
-                        type="button"
-                        className="btn btn-ghost btn-sm"
-                        onClick={() => handleStatus(item.id, item.status === 'done' ? 'scheduled' : 'done')}
-                      >
-                        {item.status === 'done' ? 'Reabrir' : 'Completada'}
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-ghost btn-sm"
-                        onClick={() => handleDelete(item.id)}
-                        aria-label="Eliminar cita"
-                        style={{ color: 'var(--danger)' }}
-                      >
-                        <TrashIcon size={14} />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <section className="card" style={{ position: 'sticky', top: 80, alignSelf: 'start' }}>
-          <div className="card-title">
-            <h3>Nueva cita</h3>
-            <PlusIcon size={16} />
-          </div>
-
-          <form onSubmit={handleSubmit} className="stack" style={{ gap: '0.85rem' }}>
+      {openForm && (
+        <section className="appointments-form" aria-label="Nueva cita">
+          <form onSubmit={handleSubmit} className="appointments-form-grid">
             <div className="field">
-              <label htmlFor="apptTitle">Titulo</label>
+              <label htmlFor="apptTitle">Título</label>
               <input
                 id="apptTitle"
                 className="input"
@@ -189,7 +140,12 @@ export default function AppointmentsPage() {
 
             <div className="field">
               <label htmlFor="apptCategory">Tipo</label>
-              <select id="apptCategory" className="select" value={form.category} onChange={update('category')}>
+              <select
+                id="apptCategory"
+                className="select"
+                value={form.category}
+                onChange={update('category')}
+              >
                 {CATEGORIES.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
@@ -217,7 +173,7 @@ export default function AppointmentsPage() {
                 className="input"
                 value={form.location}
                 onChange={update('location')}
-                placeholder="Clinica u hospital"
+                placeholder="Clínica u hospital"
               />
             </div>
 
@@ -232,25 +188,108 @@ export default function AppointmentsPage() {
               />
             </div>
 
-            <div className="field">
-              <label htmlFor="apptNotes">Notas</label>
+            <div className="field appointments-form-wide">
+              <label htmlFor="apptNotes">Notas o preguntas</label>
               <textarea
                 id="apptNotes"
                 className="textarea"
                 value={form.notes}
                 onChange={update('notes')}
-                placeholder="Examenes que te pediran, preguntas..."
+                placeholder="Exámenes que te pedirán, preguntas para la consulta..."
                 rows={3}
               />
             </div>
 
-            <button type="submit" className="btn btn-primary btn-block" disabled={busy}>
-              {busy ? <span className="loader" style={{ width: 15, height: 15 }} /> : <CalendarIcon size={15} />}
-              Guardar cita
-            </button>
+            <div className="appointments-form-actions">
+              <button type="submit" className="btn btn-primary" disabled={busy}>
+                {busy && <span className="loader" style={{ width: 15, height: 15 }} />}
+                Guardar cita
+              </button>
+            </div>
           </form>
         </section>
+      )}
+
+      <div className="appointments-scopes" role="tablist" aria-label="Filtrar citas">
+        {SCOPES.map((option) => (
+          <button
+            key={option.key}
+            type="button"
+            role="tab"
+            aria-selected={scope === option.key}
+            className={`chip ${scope === option.key ? 'active' : ''}`}
+            onClick={() => setScope(option.key)}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
+
+      {error && <div className="form-error">{error}</div>}
+
+      {appointments.length === 0 ? (
+        <div className="empty-state appointments-empty">
+          <CalendarIcon size={40} className="empty-icon" />
+          <p>
+            No hay citas en esta vista. El calendario final lo define tu profesional de salud;
+            aquí puedes apuntarlo para no perderlo.
+          </p>
+        </div>
+      ) : (
+        <ul className="appointments-list">
+          {appointments.map((item) => {
+            const { day, month } = dateParts(item.scheduled_at);
+            const done = item.status === 'done';
+
+            return (
+              <li key={item.id} className={`appointment-item ${done ? 'is-done' : ''}`}>
+                <div className="appointment-date" aria-hidden="true">
+                  <span className="appointment-day">{day}</span>
+                  <span className="appointment-month">{month}</span>
+                </div>
+
+                <div className="appointment-body">
+                  <div className="appointment-topline">
+                    <h3 className="appointment-title">{item.title}</h3>
+                    <span className="appointment-when">{relativeDay(item.scheduled_at)}</span>
+                  </div>
+
+                  <p className="appointment-meta">
+                    {formatDateTime(item.scheduled_at)}
+                    {item.location ? ` · ${item.location}` : ''}
+                    {item.provider_name ? ` · ${item.provider_name}` : ''}
+                  </p>
+
+                  {item.notes && <p className="appointment-notes">{item.notes}</p>}
+
+                  <div className="appointment-actions">
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => handleStatus(item.id, done ? 'scheduled' : 'done')}
+                    >
+                      {done ? 'Reabrir' : 'Marcar como realizada'}
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => handleDelete(item.id)}
+                      aria-label={`Eliminar ${item.title}`}
+                    >
+                      <TrashIcon size={14} />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+
+      <p className="appointments-note">
+        No marcamos ningún control como obligatorio. La frecuencia de revisiones y exámenes la
+        fija tu equipo de salud según tu caso.
+      </p>
     </div>
   );
 }

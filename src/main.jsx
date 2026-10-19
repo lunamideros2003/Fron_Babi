@@ -8,6 +8,7 @@ import './styles/home.css';
 import './styles/guide.css';
 import './styles/journal.css';
 import './styles/week.css';
+import './styles/appointments.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
