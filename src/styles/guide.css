@@ -1,0 +1,199 @@
+/*
+  Mi guia: categorias, listado de articulos y detalle.
+*/
+
+.guide-page {
+  max-width: 720px;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 0.75rem;
+}
+
+.guide-cat {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.1rem;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.guide-cat:hover {
+  background: var(--blue-50);
+  border-color: var(--border-strong);
+}
+
+.guide-cat-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: var(--blue-50);
+  border: 1px solid var(--border-strong);
+  display: grid;
+  place-items: center;
+  color: var(--blue-500);
+}
+
+.guide-cat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.guide-cat-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.guide-cat-text {
+  font-size: 0.84rem;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.guide-cat-count {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.guide-cat-chevron {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-top: 0.4rem;
+}
+
+/* -------------------------------- detalle --------------------------------- */
+
+.guide-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--text-soft);
+  font-size: 0.84rem;
+  margin-bottom: 0.9rem;
+  transition: color var(--transition);
+}
+
+.guide-back:hover { color: var(--ink); }
+
+.guide-detail-desc {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  margin: -0.35rem 0 1rem;
+}
+
+.guide-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.guide-search:focus-within {
+  border-color: var(--blue-200);
+}
+
+.guide-search-icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.guide-search .input {
+  border: none;
+  background: none;
+  padding: 0.6rem 0;
+}
+
+.guide-search .input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.guide-articles {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.guide-article {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--transition);
+}
+
+.guide-article.is-open { border-color: var(--border-strong); }
+
+.guide-article-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--ink);
+}
+
+.guide-article-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.guide-article-chevron {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+
+.guide-article.is-open .guide-article-chevron { transform: rotate(90deg); }
+
+.guide-article-body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.85rem;
+}
+
+.guide-article-body p {
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.65;
+}
+
+.guide-article-tags {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.6rem;
+}
+
+.guide-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 1.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
