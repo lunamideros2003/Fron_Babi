@@ -187,6 +187,34 @@ export default function GuidePage() {
             Ante dudas o síntomas nuevos, coméntalo en tu próxima consulta. Si aparece una señal de
             alarma, no esperes: revisa la sección de <Link to="/seguridad">señales de alarma</Link>.
           </p>
+
+          <section className="extra-block" aria-label="Hablar con el asistente">
+            <h2 className="section-title">¿No encuentras tu duda?</h2>
+            <div className="extra-links">
+              <Link to="/asistente" className="extra-link">
+                <span className="extra-link-body">
+                  <span className="extra-link-title">Preguntar al asistente</span>
+                  <span className="extra-link-text">
+                    Escríbele lo que te preocupa y te responde en español.
+                  </span>
+                </span>
+                <span className="extra-link-chevron" aria-hidden="true">
+                  <ChevronRightIcon size={16} />
+                </span>
+              </Link>
+              <Link to="/bot" className="extra-link">
+                <span className="extra-link-body">
+                  <span className="extra-link-title">Consulta guiada</span>
+                  <span className="extra-link-text">
+                    Diez preguntas cortas y un resumen de tu seguimiento.
+                  </span>
+                </span>
+                <span className="extra-link-chevron" aria-hidden="true">
+                  <ChevronRightIcon size={16} />
+                </span>
+              </Link>
+            </div>
+          </section>
         </div>
       )}
     </div>

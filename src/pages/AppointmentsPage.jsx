@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../api/client.js';
-import { CalendarIcon, PlusIcon, TrashIcon, ChevronLeftIcon } from '../components/Icons.jsx';
+import {
+  CalendarIcon,
+  PlusIcon,
+  TrashIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from '../components/Icons.jsx';
 import { formatDateTime, relativeDay, toLocalInputValue } from '../utils/format.js';
 
 const CATEGORIES = [
@@ -285,6 +292,34 @@ export default function AppointmentsPage() {
           })}
         </ul>
       )}
+
+      <section className="extra-block" aria-label="Otras herramientas de seguimiento">
+        <h2 className="section-title">Complementa tu seguimiento</h2>
+        <div className="extra-links">
+          <Link to="/recordatorios" className="extra-link">
+            <span className="extra-link-body">
+              <span className="extra-link-title">Recordatorios</span>
+              <span className="extra-link-text">
+                Anota qué te han indicado y actívalos cuando toque.
+              </span>
+            </span>
+            <span className="extra-link-chevron" aria-hidden="true">
+              <ChevronRightIcon size={16} />
+            </span>
+          </Link>
+          <Link to="/seguimiento" className="extra-link">
+            <span className="extra-link-body">
+              <span className="extra-link-title">Síntomas y analíticas</span>
+              <span className="extra-link-text">
+                Registra cómo te sientes y tus últimos controles.
+              </span>
+            </span>
+            <span className="extra-link-chevron" aria-hidden="true">
+              <ChevronRightIcon size={16} />
+            </span>
+          </Link>
+        </div>
+      </section>
 
       <p className="appointments-note">
         No marcamos ningún control como obligatorio. La frecuencia de revisiones y exámenes la
