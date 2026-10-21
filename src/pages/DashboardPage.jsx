@@ -35,23 +35,27 @@ export default function DashboardPage() {
 
   if (!pregnancy) {
     return (
-      <div className="home">
-        <header className="home-greeting">
-          <div>
-            <p className="home-eyebrow">Mi espacio de embarazo</p>
-            <h1 className="home-title">Hola, mama</h1>
-            <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
-          </div>
-          <span className="home-mark" aria-hidden="true">
-            <BrandMark size={24} />
-          </span>
-        </header>
+      <div className="home home-setup">
+        <div className="home-col home-col-main">
+          <header className="home-greeting">
+            <div>
+              <p className="home-eyebrow">Mi espacio de embarazo</p>
+              <h1 className="home-title">Hola, mamá</h1>
+              <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
+            </div>
+            <span className="home-mark" aria-hidden="true">
+              <BrandMark size={24} />
+            </span>
+          </header>
 
-        <div className="home-art">
-          <MotherIllustration height={190} />
+          <WeekSetupCard firstName={user?.name?.split(' ')[0]} />
         </div>
 
-        <WeekSetupCard firstName={user?.name?.split(' ')[0]} />
+        <div className="home-col home-col-side">
+          <div className="home-art">
+            <MotherIllustration height={230} />
+          </div>
+        </div>
       </div>
     );
   }
@@ -63,99 +67,103 @@ export default function DashboardPage() {
 
   return (
     <div className="home">
-      {/* A. Encabezado de bienvenida */}
-      <header className="home-greeting">
-        <div>
-          <p className="home-eyebrow">Mi espacio de embarazo</p>
-          <h1 className="home-title">Hola, mamá{firstName ? `, ${firstName}` : ''}</h1>
-          <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
-        </div>
-        <span className="home-mark" aria-hidden="true">
-          <BrandMark size={24} />
-        </span>
-      </header>
+      <div className="home-col home-col-main">
+        {/* A. Encabezado de bienvenida */}
+        <header className="home-greeting">
+          <div>
+            <p className="home-eyebrow">Mi espacio de embarazo</p>
+            <h1 className="home-title">Hola, mamá{firstName ? `, ${firstName}` : ''}</h1>
+            <p className="home-subtitle">Un día a la vez, un paso a la vez.</p>
+          </div>
+          <span className="home-mark" aria-hidden="true">
+            <BrandMark size={24} />
+          </span>
+        </header>
 
-      {/* B. Ilustracion principal */}
-      <div className="home-art">
-        <MotherIllustration height={210} />
+        {/* C y D. Tarjeta principal con el tamano del bebe */}
+        <section className="today-card" aria-label="Tu embarazo hoy">
+          <div className="today-head">
+            <div>
+              <p className="today-label">Tu embarazo hoy</p>
+              <h2 className="today-week">Semana {current}</h2>
+              <p className="today-trimester">{pregnancy.trimester_label || trimesterOf(current)}</p>
+            </div>
+            <span className="today-badge">{milestoneOf(current)}</span>
+          </div>
+
+          <div>
+            <div className="today-progress">
+              <div className="today-progress-bar" style={{ width: `${progress}%` }} />
+            </div>
+            <p className="today-progress-label">
+              {current} de 40 semanas aproximadas. El cálculo es orientativo.
+            </p>
+          </div>
+
+          <div className="size-block">
+            <span className="size-art">
+              <FruitIllustration sizeComparison={week?.size_comparison} size={58} />
+            </span>
+            <div className="size-copy">
+              <p className="size-label">El tamaño de tu bebé</p>
+              <h3 className="size-title">{conArticulo(week?.size_comparison)}</h3>
+              <p className="size-text">Una comparación visual para imaginar cuánto ha crecido.</p>
+            </div>
+          </div>
+        </section>
       </div>
 
-      {/* C y D. Tarjeta principal con el tamano del bebe */}
-      <section className="today-card" aria-label="Tu embarazo hoy">
-        <div className="today-head">
-          <div>
-            <p className="today-label">Tu embarazo hoy</p>
-            <h2 className="today-week">Semana {current}</h2>
-            <p className="today-trimester">{pregnancy.trimester_label || trimesterOf(current)}</p>
-          </div>
-          <span className="today-badge">{milestoneOf(current)}</span>
+      <div className="home-col home-col-side">
+        {/* B. Ilustracion principal */}
+        <div className="home-art">
+          <MotherIllustration height={200} />
         </div>
 
-        <div>
-          <div className="today-progress">
-            <div className="today-progress-bar" style={{ width: `${progress}%` }} />
+        {/* E. Guia para esta semana */}
+        <section className="home-guide" aria-labelledby="guide-title">
+          <h2 id="guide-title" className="section-title">
+            Tu guía para esta semana
+          </h2>
+          <div className="guide-links">
+            <Link to="/semana" className="guide-link">
+              <span className="guide-link-icon" aria-hidden="true">
+                <HeartPulseIcon size={21} />
+              </span>
+              <span className="guide-link-body">
+                <p className="guide-link-title">Cambios en tu cuerpo</p>
+                <p className="guide-link-text">Conoce los cambios y las molestias de esta etapa.</p>
+              </span>
+              <span className="guide-link-chevron" aria-hidden="true">
+                <ChevronRightIcon size={16} />
+              </span>
+            </Link>
+
+            <Link to="/citas" className="guide-link">
+              <span className="guide-link-icon" aria-hidden="true">
+                <CalendarIcon size={20} />
+              </span>
+              <span className="guide-link-body">
+                <p className="guide-link-title">Tus próximos controles</p>
+                <p className="guide-link-text">Consulta tus citas y las indicaciones pendientes.</p>
+              </span>
+              <span className="guide-link-chevron" aria-hidden="true">
+                <ChevronRightIcon size={16} />
+              </span>
+            </Link>
           </div>
-          <p className="today-progress-label">
-            {current} de 40 semanas aproximadas. El cálculo es orientativo.
+        </section>
+
+        {/* F. Informacion de seguridad */}
+        <div className="safety-note">
+          <span className="safety-note-icon" aria-hidden="true">
+            <ShieldIcon size={17} />
+          </span>
+          <p>
+            Información orientativa. Tu profesional de salud es quien puede valorar tu embarazo
+            individualmente. Si notas{' '}
+            <Link to="/seguridad">señales de alarma</Link>, busca atención médica sin esperar.
           </p>
         </div>
-
-        <div className="size-block">
-          <span className="size-art">
-            <FruitIllustration sizeComparison={week?.size_comparison} size={66} />
-          </span>
-          <div className="size-copy">
-            <p className="size-label">El tamaño de tu bebé</p>
-            <h3 className="size-title">{conArticulo(week?.size_comparison)}</h3>
-            <p className="size-text">Una comparación visual para imaginar cuánto ha crecido.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* E. Guia para esta semana */}
-      <section aria-labelledby="guide-title">
-        <h2 id="guide-title" className="section-title">
-          Tu guía para esta semana
-        </h2>
-        <div className="guide-links">
-          <Link to="/semana" className="guide-link">
-            <span className="guide-link-icon" aria-hidden="true">
-              <HeartPulseIcon size={21} />
-            </span>
-            <span className="guide-link-body">
-              <p className="guide-link-title">Cambios en tu cuerpo</p>
-              <p className="guide-link-text">Conoce los cambios y las molestias de esta etapa.</p>
-            </span>
-            <span className="guide-link-chevron" aria-hidden="true">
-              <ChevronRightIcon size={16} />
-            </span>
-          </Link>
-
-          <Link to="/citas" className="guide-link">
-            <span className="guide-link-icon" aria-hidden="true">
-              <CalendarIcon size={20} />
-            </span>
-            <span className="guide-link-body">
-              <p className="guide-link-title">Tus próximos controles</p>
-              <p className="guide-link-text">Consulta tus citas y las indicaciones pendientes.</p>
-            </span>
-            <span className="guide-link-chevron" aria-hidden="true">
-              <ChevronRightIcon size={16} />
-            </span>
-          </Link>
-        </div>
-      </section>
-
-      {/* F. Informacion de seguridad */}
-      <div className="safety-note">
-        <span className="safety-note-icon" aria-hidden="true">
-          <ShieldIcon size={17} />
-        </span>
-        <p>
-          Información orientativa. Tu profesional de salud es quien puede valorar tu embarazo
-          individualmente. Si notas{' '}
-          <Link to="/seguridad">señales de alarma</Link>, busca atención médica sin esperar.
-        </p>
       </div>
     </div>
   );
