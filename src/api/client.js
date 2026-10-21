@@ -100,6 +100,21 @@ async function request(path, { method = 'GET', body, auth = true, retried = fals
 
   if (!response.ok || payload.ok === false) {
     if (response.status === 401 && token) setToken(null);
+
+    // Cuando se pasan demasiadas preguntas seguidas, el servidor indica
+    // cuantos segundos hay que esperar.
+    if (response.status === 429) {
+      const espera = Number(response.headers.get('Retry-After'));
+      throw new ApiError(
+        Number.isFinite(espera) && espera > 0
+          ? `Has hecho demasiadas preguntas seguidas. Espera ${espera} segundos y vuelve a intentarlo.`
+          : 'Has hecho demasiadas preguntas seguidas. Espera un momento y vuelve a intentarlo.',
+        429,
+        'RATE_LIMITED',
+        Number.isFinite(espera) ? espera : null,
+      );
+    }
+
     throw new ApiError(
       payload?.error?.message ?? 'Ocurrió un error inesperado.',
       response.status,
