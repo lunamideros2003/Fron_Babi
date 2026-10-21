@@ -13,6 +13,7 @@ import SafetyPage from './pages/SafetyPage.jsx';
 import GuidePage from './pages/GuidePage.jsx';
 import JournalPage from './pages/JournalPage.jsx';
 import { BrandMark } from './components/Icons.jsx';
+import PageTitle from './components/PageTitle.jsx';
 
 function LoadingScreen() {
   return (
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <PageTitle />
         <Routes>
           <Route
             path="/entrar"
