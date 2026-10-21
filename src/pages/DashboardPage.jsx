@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import api from '../api/client.js';
 import MotherIllustration from '../components/MotherIllustration.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
-import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, ShieldIcon, BrandMark } from '../components/Icons.jsx';
+import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, BrandMark } from '../components/Icons.jsx';
 
 const MASCULINO = ['aguacate', 'mango', 'melon', 'plata', 'platano', 'banano', 'maiz', 'coco'];
 
@@ -152,18 +152,6 @@ export default function DashboardPage() {
             </Link>
           </div>
         </section>
-
-        {/* F. Informacion de seguridad */}
-        <div className="safety-note">
-          <span className="safety-note-icon" aria-hidden="true">
-            <ShieldIcon size={17} />
-          </span>
-          <p>
-            Información orientativa. Tu profesional de salud es quien puede valorar tu embarazo
-            individualmente. Si notas{' '}
-            <Link to="/seguridad">señales de alarma</Link>, busca atención médica sin esperar.
-          </p>
-        </div>
       </div>
     </div>
   );
