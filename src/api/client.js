@@ -21,12 +21,36 @@ export class ApiError extends Error {
   }
 }
 
-async function request(path, { method = 'GET', body, auth = true } = {}) {
+// El backend vive en el plan gratuito de Render, que se apaga cuando no
+// recibe visitas. Cuando vuelve a encenderse la primera peticion puede tardar
+// medio minuto, asi que se espera bastante antes de rendirse.
+const TIMEOUT_MS = 90_000;
+const RETRY_DELAY_MS = 4000;
+
+const NETWORK_MESSAGE =
+  'No se pudo conectar con el servidor. Revisa tu conexión a internet e inténtalo de nuevo.';
+const TIMEOUT_MESSAGE =
+  'El servidor tardó mucho en responder. Es su primer arranque tras un rato sin visitas: prueba otra vez en unos segundos.';
+
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function fetchWithTimeout(url, options) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function request(path, { method = 'GET', body, auth = true, retried = false } = {}) {
   const token = auth ? getToken() : null;
 
   let response;
   try {
-    response = await fetch(`${BASE_URL}${path}`, {
+    response = await fetchWithTimeout(`${BASE_URL}${path}`, {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -34,11 +58,20 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-  } catch {
+  } catch (error) {
+    const timedOut = error?.name === 'AbortError';
+
+    // Un fallo de red al primer intento suele ser el servidor despertando.
+    // Se reintenta una vez antes de avisar a la persona.
+    if (!retried) {
+      await wait(RETRY_DELAY_MS);
+      return await request(path, { method, body, auth, retried: true });
+    }
+
     throw new ApiError(
-      'No se pudo conectar con el servidor. Verifica que el backend este corriendo.',
+      timedOut ? TIMEOUT_MESSAGE : NETWORK_MESSAGE,
       0,
-      'NETWORK_ERROR',
+      timedOut ? 'TIMEOUT' : 'NETWORK_ERROR',
     );
   }
 
@@ -49,7 +82,7 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
   if (!response.ok || payload.ok === false) {
     if (response.status === 401 && token) setToken(null);
     throw new ApiError(
-      payload?.error?.message ?? 'Ocurrio un error inesperado.',
+      payload?.error?.message ?? 'Ocurrió un error inesperado.',
       response.status,
       payload?.error?.code ?? 'UNKNOWN',
       payload?.error?.details ?? null,
