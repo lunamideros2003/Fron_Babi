@@ -8,6 +8,30 @@
   align-items: stretch;
 }
 
+/* Enlace para saltar al contenido con el teclado: solo se ve al enfocarlo. */
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.55rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: top var(--transition);
+}
+
+.skip-link:focus-visible {
+  top: 0.75rem;
+}
+
+.app-main:focus {
+  outline: none;
+}
+
 /* --------------------------------- lateral --------------------------------- */
 
 .sidebar {

@@ -48,6 +48,10 @@ export default function Layout({ children }) {
 
   return (
     <div className={`app-shell ${collapsed ? 'is-collapsed' : ''}`}>
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+
       <aside className={`sidebar ${collapsed ? 'is-collapsed' : ''}`}>
         <div className="sidebar-top">
           <Link to="/" className="sidebar-brand" aria-label="BabyTrack, ir al inicio">
@@ -115,7 +119,9 @@ export default function Layout({ children }) {
         </div>
       </aside>
 
-      <main className="app-main">{children}</main>
+      <main className="app-main" id="contenido" tabIndex={-1}>
+        {children}
+      </main>
 
       <nav className="bottom-nav" aria-label="Navegación principal">
         {SECTIONS.map(({ to, label, Icon, end }) => (
