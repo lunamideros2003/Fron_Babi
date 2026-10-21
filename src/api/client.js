@@ -1,5 +1,10 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? '/api';
 
+// Si la direccion principal no responde, se prueba la ruta /api del propio
+// dominio, que el servidor de despliegue redirige al backend. Asi una URL
+// mal configurada no deja la app sin funcionar.
+const FALLBACK_URL = '/api';
+
 const TOKEN_KEY = 'babytrack_token';
 
 export function getToken() {
@@ -48,31 +53,45 @@ async function fetchWithTimeout(url, options) {
 async function request(path, { method = 'GET', body, auth = true, retried = false } = {}) {
   const token = auth ? getToken() : null;
 
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: body ? JSON.stringify(body) : undefined,
+  };
+
   let response;
   try {
-    response = await fetchWithTimeout(`${BASE_URL}${path}`, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: body ? JSON.stringify(body) : undefined,
-    });
+    response = await fetchWithTimeout(`${BASE_URL}${path}`, options);
   } catch (error) {
     const timedOut = error?.name === 'AbortError';
 
-    // Un fallo de red al primer intento suele ser el servidor despertando.
-    // Se reintenta una vez antes de avisar a la persona.
-    if (!retried) {
-      await wait(RETRY_DELAY_MS);
-      return await request(path, { method, body, auth, retried: true });
+    // La direccion principal puede estar mal configurada. Antes de rendirse
+    // se prueba la ruta /api del propio dominio.
+    if (BASE_URL !== FALLBACK_URL && !retried) {
+      try {
+        response = await fetchWithTimeout(`${FALLBACK_URL}${path}`, options);
+      } catch {
+        response = null;
+      }
     }
 
-    throw new ApiError(
-      timedOut ? TIMEOUT_MESSAGE : NETWORK_MESSAGE,
-      0,
-      timedOut ? 'TIMEOUT' : 'NETWORK_ERROR',
-    );
+    if (response === null) {
+      // Un fallo de red al primer intento suele ser el servidor despertando.
+      // Se reintenta una vez antes de avisar a la persona.
+      if (!retried) {
+        await wait(RETRY_DELAY_MS);
+        return await request(path, { method, body, auth, retried: true });
+      }
+
+      throw new ApiError(
+        timedOut ? TIMEOUT_MESSAGE : NETWORK_MESSAGE,
+        0,
+        timedOut ? 'TIMEOUT' : 'NETWORK_ERROR',
+      );
+    }
   }
 
   if (response.status === 204) return null;
