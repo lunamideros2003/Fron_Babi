@@ -62,7 +62,6 @@
 
   /* ---- Layout ---- */
   --sidebar-w: 244px;
-  --sidebar-w-collapsed: 72px;
   --content-max: 720px;
 
   --transition: 180ms ease;
