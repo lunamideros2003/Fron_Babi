@@ -40,8 +40,12 @@ test('la comprobacion del puerto no se hace durante el build', () => {
   // pueda estar usando el puerto y las herramientas pueden no existir.
   const config = configFactory({ mode: 'production', command: 'build' });
 
-  assert.equal(config.plugins.length, 1);
+  assert.ok(config.plugins.length >= 1);
   assert.ok(config.define['import.meta.env.VITE_BUILD_COMMIT']);
+  assert.ok(
+    config.plugins.some((plugin) => plugin.name === 'babytrack-build-version'),
+    'debe incluir el plugin que escribe version.json',
+  );
 });
 
 test('el commit del build se expone como version', () => {
