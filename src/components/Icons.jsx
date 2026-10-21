@@ -375,22 +375,6 @@ export function ChevronLeftIcon({ size = 16 }) {
   );
 }
 
-export function MenuFoldIcon({ size = 18, open = true }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      <rect x="2.2" y="3.4" width="13.6" height="11.2" rx="2" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M6.6 3.4v11.2" stroke="currentColor" strokeWidth="1.3" />
-      <path
-        d={open ? 'M11 7.2 9.2 9l1.8 1.8' : 'M9.4 7.2 11.2 9l-1.8 1.8'}
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export function ShieldIcon({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
