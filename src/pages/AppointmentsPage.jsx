@@ -10,16 +10,6 @@ import {
 } from '../components/Icons.jsx';
 import { formatDateTime, relativeDay, toLocalInputValue } from '../utils/format.js';
 
-const CATEGORIES = [
-  { value: 'checkup', label: 'Control prenatal' },
-  { value: 'ultrasound', label: 'Ecografía' },
-  { value: 'lab', label: 'Análisis de laboratorio' },
-  { value: 'specialist', label: 'Especialista' },
-  { value: 'vaccine', label: 'Vacuna' },
-  { value: 'birth_class', label: 'Clase de parto' },
-  { value: 'other', label: 'Otro' },
-];
-
 const SCOPES = [
   { key: 'upcoming', label: 'Próximas' },
   { key: 'past', label: 'Pasadas' },
@@ -47,6 +37,7 @@ function dateParts(value) {
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [scope, setScope] = useState('upcoming');
   const [form, setForm] = useState(EMPTY);
   const [openForm, setOpenForm] = useState(false);
@@ -66,6 +57,14 @@ export default function AppointmentsPage() {
     load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scope]);
+
+  // Las categorias las define el backend, para que no se desincronicen.
+  useEffect(() => {
+    api.appointments
+      .categories()
+      .then((data) => setCategories(data.categories ?? []))
+      .catch(() => setCategories([]));
+  }, []);
 
   function update(field) {
     return (event) => setForm((prev) => ({ ...prev, [field]: event.target.value }));
@@ -153,7 +152,7 @@ export default function AppointmentsPage() {
                 value={form.category}
                 onChange={update('category')}
               >
-                {CATEGORIES.map((option) => (
+                {categories.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
