@@ -361,23 +361,3 @@
   color: var(--text-soft);
   margin: 0.1rem 0 0;
 }
-
-@media (max-width: 900px) {
-  .home {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  .app-main:has(.home) {
-    max-width: calc(var(--content-max) + 3rem);
-  }
-}
-
-@media (max-width: 520px) {
-  .today-week { font-size: 1.9rem; }
-  .today-head { flex-direction: column; gap: 0.6rem; }
-  .today-badge { max-width: none; align-self: flex-start; }
-  .size-block { align-items: flex-start; }
-  .size-art { width: 60px; height: 60px; }
-  .home-title { font-size: 1.6rem; }
-}
