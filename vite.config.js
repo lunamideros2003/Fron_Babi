@@ -77,12 +77,15 @@ export function describePortOwner(port) {
   return null;
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const port = Number(env.VITE_PORT ?? DEFAULT_PORT);
   const apiTarget = env.VITE_PROXY_TARGET ?? DEFAULT_API;
 
-  const owner = describePortOwner(port);
+  // El puerto solo importa al arrancar el servidor de desarrollo. Durante el
+  // build no hay nada que pueda estar ocupando nada, y en Linux las
+  // herramientas para comprobarlo pueden ni siquiera existir.
+  const owner = command === 'build' ? null : describePortOwner(port);
 
   if (owner) {
     console.error('');
@@ -100,6 +103,13 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    define: {
+      // Se incrusta el commit con el que se compila para poder identificar la
+      // version desplegada. Vercel lo publica como VERCEL_GIT_COMMIT_SHA.
+      'import.meta.env.VITE_BUILD_COMMIT': JSON.stringify(
+        process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? '',
+      ),
+    },
     server: {
       port,
       strictPort: true,

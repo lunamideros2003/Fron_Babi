@@ -158,6 +158,16 @@
   border-top: 1px solid var(--border);
 }
 
+.sidebar-build {
+  margin: 0;
+  padding-left: 0.3rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  opacity: 0.7;
+}
+
 .sidebar-link-safety {
   font-size: 0.84rem;
   color: var(--text-muted);

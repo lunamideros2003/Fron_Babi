@@ -22,6 +22,10 @@ const SECTIONS = [
 
 const COLLAPSE_KEY = 'babytrack_sidebar_collapsed';
 
+// Vercel publica el commit con el que se compilo. Se muestra en el pie del
+// menu para saber con certeza que version esta desplegada.
+const BUILD_COMMIT = import.meta.env.VITE_BUILD_COMMIT ?? '';
+
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const [collapsed, setCollapsed] = useState(() => {
@@ -102,6 +106,12 @@ export default function Layout({ children }) {
               Salir
             </button>
           </div>
+
+          {BUILD_COMMIT && (
+            <p className="sidebar-build" title="Version desplegada">
+              v{BUILD_COMMIT}
+            </p>
+          )}
         </div>
       </aside>
 
