@@ -77,6 +77,29 @@ export function describePortOwner(port) {
   return null;
 }
 
+/**
+ * Escribe un version.json con el commit de la compilacion.
+ *
+ * El navegador lo compara con el commit que lleva incrustado para saber si
+ * esta usando una version vieja, y recargar solo si hace falta.
+ */
+function buildVersion() {
+  return {
+    name: 'babytrack-build-version',
+    apply: 'build',
+    generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: 'version.json',
+        source: JSON.stringify({
+          commit: process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ?? 'local',
+          builtAt: new Date().toISOString(),
+        }),
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const port = Number(env.VITE_PORT ?? DEFAULT_PORT);
@@ -102,7 +125,7 @@ export default defineConfig(({ mode, command }) => {
   }
 
   return {
-    plugins: [react()],
+    plugins: [react(), buildVersion()],
     define: {
       // Se incrusta el commit con el que se compila para poder identificar la
       // version desplegada. Vercel lo publica como VERCEL_GIT_COMMIT_SHA.

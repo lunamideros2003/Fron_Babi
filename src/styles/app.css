@@ -426,6 +426,16 @@
   color: var(--text-soft);
 }
 
+.auth-build {
+  margin: 0.9rem 0 0;
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  font-family: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  opacity: 0.75;
+}
+
 /* --------------------------------- hero card ------------------------------- */
 
 .hero {

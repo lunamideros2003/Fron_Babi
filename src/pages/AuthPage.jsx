@@ -15,6 +15,10 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
+// Vercel publica el commit con el que se compilo. Se muestra en la pantalla
+// de acceso para saber con certeza que version esta abierta.
+const BUILD_COMMIT = import.meta.env.VITE_BUILD_COMMIT ?? '';
+
 export default function AuthPage() {
   const { login, register } = useAuth();
   const navigate = useNavigate();
@@ -256,6 +260,12 @@ export default function AuthPage() {
               ? 'Tus datos quedan asociados a tu cuenta y no se comparten con terceros.'
               : 'BabyTrack ofrece información educativa. No sustituye tus controles prenatales ni un diagnóstico profesional.'}
           </div>
+
+          {BUILD_COMMIT && (
+            <p className="auth-build" title="Versión desplegada">
+              BabyTrack IA · v{BUILD_COMMIT}
+            </p>
+          )}
         </div>
       </main>
     </div>
