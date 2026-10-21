@@ -14,14 +14,13 @@
     max-width: calc(var(--content-max) + 3rem);
   }
 
-  /* En una sola columna la guia y el aviso pasan por delante de la
-     ilustracion: son lo que la persona busca primero. */
+  /* En una sola columna la guia pasa por delante de la ilustracion: es lo que
+     la persona busca primero. */
   .home-col-side {
     display: contents;
   }
 
   .home-guide { order: 1; }
-  .safety-note { order: 2; }
   .home-art { order: 3; }
 }
 
