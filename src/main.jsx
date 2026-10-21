@@ -13,6 +13,14 @@ import './styles/home-responsive.css';
 
 const BUILD_COMMIT = import.meta.env.VITE_BUILD_COMMIT ?? '';
 const RECHECK_KEY = 'babytrack_version_reload';
+const OLD_COLLAPSE_KEY = 'babytrack_sidebar_collapsed';
+
+// El menu ya no se pliega, asi que se limpia la preferencia que se guardaba.
+try {
+  localStorage.removeItem(OLD_COLLAPSE_KEY);
+} catch {
+  /* almacenamiento no disponible */
+}
 
 /**
  * Si el servidor ya tiene una version mas nueva que la que esta corriendo el
