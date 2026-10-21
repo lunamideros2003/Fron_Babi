@@ -12,7 +12,7 @@ function conArticulo(texto) {
   if (!texto) return 'Por confirmar';
   const bajo = String(texto).toLowerCase().trim();
   const articulo = MASCULINO.some((m) => bajo.startsWith(m)) ? 'un' : 'una';
-  return `Como ${articulo} ${bajo}`;
+  return `Cómo ${articulo} ${bajo}`;
 }
 
 function trimesterOf(week) {
