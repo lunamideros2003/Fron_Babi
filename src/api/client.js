@@ -144,6 +144,7 @@ export const api = {
 
   appointments: {
     list: (scope = 'all') => request(`/appointments?scope=${scope}`),
+    categories: () => request('/appointments/categories', { auth: false }),
     create: (data) => request('/appointments', { method: 'POST', body: data }),
     update: (id, data) => request(`/appointments/${id}`, { method: 'PUT', body: data }),
     remove: (id) => request(`/appointments/${id}`, { method: 'DELETE' }),
