@@ -7,40 +7,69 @@ import { execSync } from 'node:child_process';
 const DEFAULT_PORT = 5180;
 const DEFAULT_API = 'http://localhost:4001';
 
-function describePortOwner(port) {
+// Los errores de estos comandos no interesting: si la herramienta no existe,
+// simplemente no hay forma de saber quien ocupa el puerto.
+const SILENT = { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] };
+
+function readCommand(command) {
   try {
-    const isWindows = process.platform === 'win32';
-    const output = execSync(
-      isWindows ? `netstat -ano | findstr :${port}` : `lsof -ti :${port}`,
-      { encoding: 'utf8' },
-    );
+    return execSync(command, SILENT);
+  } catch {
+    return '';
+  }
+}
 
-    const pids = isWindows
-      ? output
-          .split('\n')
-          .filter((line) => line.includes('LISTENING'))
-          .map((line) => Number(line.trim().split(/\s+/).pop()))
-          .filter(Boolean)
-      : output.split('\n').map((n) => Number(n.trim())).filter(Boolean);
+function describePids(pids) {
+  for (const pid of [...new Set(pids)].filter(Boolean)) {
+    const command =
+      readCommand(`wmic process where processid=${pid} get CommandLine /value`) ||
+      readCommand(`ps -p ${pid} -o command=`);
 
-    for (const pid of [...new Set(pids)]) {
-      let command = '';
-      try {
-        command = execSync(`wmic process where processid=${pid} get CommandLine /value`, {
-          encoding: 'utf8',
-        });
-      } catch {
-        try {
-          command = execSync(`ps -p ${pid} -o command=`, { encoding: 'utf8' });
-        } catch {
-          continue;
-        }
-      }
+    // Aunque no se pueda leer la linea de comandos, saber que el puerto esta
+    // ocupado ya es motivo suficiente para avisar.
+    if (!command) return `un proceso (PID ${pid})`;
 
-      const match = command.match(/Proyectos_Mideros[\\/]([^\\"]+?)[\\/]+([^\\"\s]+)/);
-      if (match) return `PID ${pid} de ${match[1]}/${match[2]}`;
-      return `PID ${pid}`;
+    const match = command.match(/Proyectos_Mideros[\\/]([^\\"]+?)[\\/]+([^\\"\s]+)/);
+    if (match) return `PID ${pid} de ${match[1]}/${match[2]}`;
+    return `PID ${pid}`;
+  }
+
+  return null;
+}
+
+/**
+ * Busca quien esta escuchando en un puerto.
+ *
+ * Windows usa netstat. En Linux `lsof` no siempre esta instalado (Vercel y
+ * Docker no lo traen), por eso se prueban varias herramientas y, si ninguna
+ * esta disponible, se sigue adelante sin avisar de nada.
+ */
+export function describePortOwner(port) {
+  if (process.env.VERCEL || process.env.CI) return null;
+
+  try {
+    if (process.platform === 'win32') {
+      const output = readCommand(`netstat -ano | findstr :${port}`);
+      const pids = output
+        .split('\n')
+        .filter((line) => line.includes('LISTENING'))
+        .map((line) => Number(line.trim().split(/\s+/).pop()))
+        .filter(Boolean);
+
+      return describePids(pids);
     }
+
+    const lsof = readCommand(`lsof -ti :${port}`);
+    if (lsof.trim()) {
+      return describePids(lsof.split('\n').map((n) => Number(n.trim())).filter(Boolean));
+    }
+
+    const ss = readCommand(`ss -ltnp 2>/dev/null | grep ":${port}"`);
+    if (ss.trim()) {
+      return describePids([...ss.matchAll(/pid=(\d+)/g)].map((m) => Number(m[1])));
+    }
+
+    return null;
   } catch {
     /* nothing listening or the tool is unavailable */
   }
