@@ -86,8 +86,7 @@ export default function GuidePage() {
         <p className="eyebrow">Mi guía</p>
         <h1>Información para acompañar tu embarazo</h1>
         <p className="lede">
-          {data.total} artículos organizados en cuatro bloques. Contenido educativo: no sustituye
-          la consulta con tu profesional de salud.
+          {data.total} artículos organizados en cuatro bloques.
         </p>
       </div>
 
