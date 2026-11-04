@@ -60,6 +60,30 @@ const run = async () => {
   check('clasifico como controles', chat.json.reply?.category === 'controles', chat.json.reply?.category);
   check('respuesta en espanol', /control|ecografia|trimestre/i.test(chat.json.reply?.content ?? ''));
 
+  const welcome = await call('/api/chat/welcome', { token });
+  check(
+    'saludo de la burbuja',
+    welcome.status === 200 && welcome.json.greeting?.includes('Hazme preguntas'),
+    JSON.stringify(welcome.json).slice(0, 150),
+  );
+  check('saludo con el nombre', welcome.json.greeting?.includes('Ana'), welcome.json.greeting);
+  check('cuatro sugerencias', welcome.json.suggestions?.length === 4);
+
+  const quick = await call('/api/chat/quick', {
+    method: 'POST',
+    token,
+    body: { message: 'Que puedo comer?' },
+  });
+  check('chat rapido responde', quick.status === 200 && quick.json.quick === true);
+  check('chat rapido con proveedor', Boolean(quick.json.reply?.provider), quick.json.reply?.provider);
+
+  const quickShort = await call('/api/chat/quick', {
+    method: 'POST',
+    token,
+    body: { message: 'x' },
+  });
+  check('chat rapido valida la pregunta', quickShort.status === 422, String(quickShort.status));
+
   const weeks = await call('/api/weeks/24');
   check('detalle de semana 24', weeks.json.week?.week_number === 24);
 
