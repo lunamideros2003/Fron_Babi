@@ -1,5 +1,4 @@
 ﻿import { Link } from 'react-router-dom';
-import { ShieldIcon } from '../components/Icons.jsx';
 
 const SENALES = [
   {
@@ -56,16 +55,6 @@ export default function SafetyPage() {
           contacta a tu equipo médico o acude a urgencias.
         </p>
       </div>
-
-      <section className="safety-banner">
-        <span className="safety-banner-icon" aria-hidden="true">
-          <ShieldIcon size={22} />
-        </span>
-        <p>
-          Esta página es educativa y no sustituye la valoración de un profesional de salud. Ante
-          cualquier duda, llamar siempre es mejor que esperar.
-        </p>
-      </section>
 
       <section className="card">
         <div className="card-title">
