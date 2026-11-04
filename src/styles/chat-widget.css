@@ -337,3 +337,35 @@
   color: var(--text-muted);
   font-size: 0.65rem;
 }
+
+/* ------------------------------- pantallas -------------------------------- */
+
+/* En movil la ventana se abre por encima de la barra inferior y casi a lo ancho. */
+@media (max-width: 640px) {
+  .cw-bubble {
+    right: 16px;
+    bottom: 84px;
+    width: 54px;
+    height: 54px;
+  }
+
+  .cw-panel {
+    right: 10px;
+    left: 10px;
+    bottom: 148px;
+    width: auto;
+    max-width: none;
+    height: min(70vh, 560px);
+  }
+
+  .cw-chip {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .cw-panel {
+    bottom: 142px;
+    height: min(66vh, 500px);
+  }
+}
