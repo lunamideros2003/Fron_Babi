@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import api from '../../api/client.js';
 import { useAuth } from '../../context/AuthContext.jsx';
-import {
-  ChatBubbleIcon,
-  MinimizeIcon,
-  SendIcon,
-} from '../Icons.jsx';
+import { ChatBubbleIcon, MinimizeIcon } from '../Icons.jsx';
 import ChatHeader from './ChatHeader.jsx';
+import ChatComposer from './ChatComposer.jsx';
 import ChatMessage from './ChatMessage.jsx';
 import ChatSuggestions from './ChatSuggestions.jsx';
 import TypingDots from './TypingDots.jsx';
@@ -197,33 +194,19 @@ export default function ChatWidget() {
             </p>
           )}
 
-          <form className="cw-form" onSubmit={handleSubmit}>
-            <textarea
-              ref={inputRef}
-              className="cw-input"
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' && !event.shiftKey) {
-                  event.preventDefault();
-                  send(input);
-                }
-              }}
-              placeholder="Escribe tu pregunta..."
-              rows={1}
-              maxLength={500}
-              aria-label="Escribe tu pregunta sobre el embarazo"
-            />
-
-            <button
-              type="submit"
-              className="cw-send"
-              disabled={!input.trim() || sending}
-              aria-label="Enviar pregunta"
-            >
-              <SendIcon size={17} />
-            </button>
-          </form>
+          <ChatComposer
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            onSubmit={handleSubmit}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                send(input);
+              }
+            }}
+            sending={sending}
+            inputRef={inputRef}
+          />
 
           <p className="cw-foot">No sustituye la consulta médica.</p>
         </section>
