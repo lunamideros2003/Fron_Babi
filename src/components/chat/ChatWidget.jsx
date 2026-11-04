@@ -125,6 +125,8 @@ export default function ChatWidget() {
           id: data.reply.id,
           role: 'assistant',
           content: data.reply.content,
+          category: data.reply.category,
+          category_label: data.reply.category_label,
           is_emergency: data.reply.is_emergency,
           is_redirect: data.reply.is_redirect,
         },
@@ -181,6 +183,7 @@ export default function ChatWidget() {
                 key={message.id}
                 role={message.role}
                 content={message.content}
+                categoryLabel={message.category_label}
                 isEmergency={message.is_emergency}
                 isRedirect={message.is_redirect}
               />

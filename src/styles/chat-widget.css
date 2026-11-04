@@ -208,6 +208,14 @@ a.cw-icon-btn {
   color: #7a6020;
 }
 
+.cw-msg-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--purple-600);
+}
+
 .cw-msg-flag {
   font-size: 0.6rem;
   letter-spacing: 0.06em;

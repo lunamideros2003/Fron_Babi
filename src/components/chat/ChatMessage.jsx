@@ -4,7 +4,13 @@ import { SparkleIcon } from '../Icons.jsx';
  * Una burbuja de la conversación. Sirve tanto para la usuaria como para el
  * asistente, y marca los dos casos especiales: urgencia y derivación médica.
  */
-export default function ChatMessage({ role, content, isEmergency = false, isRedirect = false }) {
+export default function ChatMessage({
+  role,
+  content,
+  categoryLabel,
+  isEmergency = false,
+  isRedirect = false,
+}) {
   const isUser = role === 'user';
 
   const classes = [
@@ -24,6 +30,10 @@ export default function ChatMessage({ role, content, isEmergency = false, isRedi
 
       <div className="cw-msg-body">
         <div className="cw-msg-bubble">{content}</div>
+
+        {!isUser && categoryLabel && (
+          <span className="cw-msg-tag">{categoryLabel}</span>
+        )}
 
         {(isEmergency || isRedirect) && (
           <span className="cw-msg-flag">{isEmergency ? 'Urgente' : 'Orientación'}</span>
