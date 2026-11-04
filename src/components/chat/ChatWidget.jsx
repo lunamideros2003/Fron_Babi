@@ -15,6 +15,15 @@ const SEEN_KEY = 'babytrack_chat_seen';
 const WELCOME_FALLBACK =
   'Hola. Hazme preguntas sobre tu embarazo y resolvámoslas juntas.';
 
+/** Saludo inmediato, sin esperar al servidor, para que la ventana abra calida. */
+function localGreeting(name) {
+  const firstName = String(name ?? '').trim().split(/\s+/)[0];
+
+  return firstName
+    ? `Hola, ${firstName}. Hazme preguntas sobre tu embarazo y resolvámoslas juntas.`
+    : WELCOME_FALLBACK;
+}
+
 /**
  * Asistente flotante.
  *
@@ -24,7 +33,7 @@ const WELCOME_FALLBACK =
  * la semana, asi que abrir la ventana no gasta tokens.
  */
 export default function ChatWidget() {
-  const { pregnancy, isAuthenticated } = useAuth();
+  const { user, pregnancy, isAuthenticated } = useAuth();
 
   const [open, setOpen] = useState(() => {
     try {
@@ -42,7 +51,7 @@ export default function ChatWidget() {
     }
   });
 
-  const [greeting, setGreeting] = useState(WELCOME_FALLBACK);
+  const [greeting, setGreeting] = useState(() => localGreeting(user?.name));
   const [suggestions, setSuggestions] = useState([]);
   const [mode, setMode] = useState(null);
   const [week, setWeek] = useState(pregnancy?.current_week ?? null);
