@@ -5,15 +5,7 @@ import api from '../api/client.js';
 import MotherIllustration from '../components/MotherIllustration.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
 import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, BrandMark } from '../components/Icons.jsx';
-
-const MASCULINO = ['aguacate', 'mango', 'melon', 'plata', 'platano', 'banano', 'maiz', 'coco'];
-
-function conArticulo(texto) {
-  if (!texto) return 'Por confirmar';
-  const bajo = String(texto).toLowerCase().trim();
-  const articulo = MASCULINO.some((m) => bajo.startsWith(m)) ? 'un' : 'una';
-  return `Cómo ${articulo} ${bajo}`;
-}
+import { sizeLabel } from '../utils/size.js';
 
 function trimesterOf(week) {
   if (week < 13) return 'Primer trimestre';
@@ -106,7 +98,7 @@ export default function DashboardPage() {
             </span>
             <div className="size-copy">
               <p className="size-label">El tamaño de tu bebé</p>
-              <h3 className="size-title">{conArticulo(week?.size_comparison)}</h3>
+              <h3 className="size-title">{sizeLabel(week?.size_comparison)}</h3>
               <p className="size-text">Una comparación visual para imaginar cuánto ha crecido.</p>
             </div>
           </div>
