@@ -213,7 +213,13 @@ export default function ChatWidget() {
             }}
           />
 
-          <div className="cw-body" ref={bodyRef} aria-live="polite">
+          <div
+            className="cw-body"
+            ref={bodyRef}
+            aria-live="polite"
+            aria-busy={sending}
+            aria-label="Conversación con el asistente"
+          >
             <ChatMessage role="assistant" content={greeting} />
 
             {messages.length === 0 && (
