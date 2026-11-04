@@ -1,7 +1,8 @@
-import { BrandMark, CloseIcon } from '../Icons.jsx';
+import { Link } from 'react-router-dom';
+import { BrandMark, ChevronRightIcon, CloseIcon } from '../Icons.jsx';
 
 /** Cabecera de la ventana: marca, estado del modelo y botón de cerrar. */
-export default function ChatHeader({ status, week, onClose }) {
+export default function ChatHeader({ status, week, onClose, onOpenFull }) {
   return (
     <header className="cw-head">
       <BrandMark size={26} />
@@ -13,6 +14,16 @@ export default function ChatHeader({ status, week, onClose }) {
           {week ? ` · Semana ${week}` : ''}
         </p>
       </div>
+
+      <Link
+        to="/asistente"
+        className="cw-icon-btn"
+        onClick={onOpenFull}
+        aria-label="Abrir el chat completo"
+        title="Ver el chat completo"
+      >
+        <ChevronRightIcon size={16} />
+      </Link>
 
       <button
         type="button"

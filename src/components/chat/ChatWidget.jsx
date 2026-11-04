@@ -158,6 +158,7 @@ export default function ChatWidget() {
           <ChatHeader
             status={status}
             week={week}
+            onOpenFull={() => setOpen(false)}
             onClose={() => {
               setOpen(false);
               bubbleRef.current?.focus();
