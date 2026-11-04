@@ -2,12 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import api from '../../api/client.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import {
-  BrandMark,
   ChatBubbleIcon,
-  CloseIcon,
   MinimizeIcon,
   SendIcon,
 } from '../Icons.jsx';
+import ChatHeader from './ChatHeader.jsx';
 import ChatMessage from './ChatMessage.jsx';
 import ChatSuggestions from './ChatSuggestions.jsx';
 import TypingDots from './TypingDots.jsx';
@@ -159,29 +158,14 @@ export default function ChatWidget() {
           role="dialog"
           aria-label="Asistente BabyTrack IA"
         >
-          <header className="cw-head">
-            <BrandMark size={26} />
-
-            <div className="cw-head-text">
-              <h3>BabyTrack IA</h3>
-              <p>
-                {status}
-                {week ? ` · Semana ${week}` : ''}
-              </p>
-            </div>
-
-            <button
-              type="button"
-              className="cw-icon-btn"
-              onClick={() => {
-                setOpen(false);
-                bubbleRef.current?.focus();
-              }}
-              aria-label="Cerrar el asistente"
-            >
-              <CloseIcon size={16} />
-            </button>
-          </header>
+          <ChatHeader
+            status={status}
+            week={week}
+            onClose={() => {
+              setOpen(false);
+              bubbleRef.current?.focus();
+            }}
+          />
 
           <div className="cw-body" ref={bodyRef} aria-live="polite">
             <ChatMessage role="assistant" content={greeting} />
