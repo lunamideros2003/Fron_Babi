@@ -1,5 +1,6 @@
 ﻿import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import ChatWidget from './chat/ChatWidget.jsx';
 import {
   BrandMark,
   HomeIcon,
@@ -103,6 +104,8 @@ export default function Layout({ children }) {
           </NavLink>
         ))}
       </nav>
+
+      <ChatWidget />
     </div>
   );
 }
