@@ -9,6 +9,7 @@ import ChatSuggestions from './ChatSuggestions.jsx';
 import TypingDots from './TypingDots.jsx';
 
 const OPEN_KEY = 'babytrack_chat_open';
+const DRAFT_KEY = 'babytrack_chat_draft';
 
 const WELCOME_FALLBACK =
   'Hola. Hazme preguntas sobre tu embarazo y resolvámoslas juntas.';
@@ -37,7 +38,13 @@ export default function ChatWidget() {
   const [mode, setMode] = useState(null);
   const [week, setWeek] = useState(pregnancy?.current_week ?? null);
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState(() => {
+    try {
+      return sessionStorage.getItem(DRAFT_KEY) ?? '';
+    } catch {
+      return '';
+    }
+  });
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
 
@@ -53,6 +60,16 @@ export default function ChatWidget() {
       /* almacenamiento no disponible */
     }
   }, [open]);
+
+  // Lo que se estaba escribiendo no se pierde al cambiar de pantalla.
+  useEffect(() => {
+    try {
+      if (input) sessionStorage.setItem(DRAFT_KEY, input);
+      else sessionStorage.removeItem(DRAFT_KEY);
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  }, [input]);
 
   const load = useCallback(async () => {
     if (loadedRef.current) return;
