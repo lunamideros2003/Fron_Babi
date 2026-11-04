@@ -51,3 +51,167 @@
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.25); opacity: 0.7; }
 }
+
+/* --------------------------------- panel --------------------------------- */
+
+.cw-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  z-index: 60;
+  width: 372px;
+  max-width: calc(100vw - 32px);
+  height: min(560px, calc(100vh - 140px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--purple-200);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 24px 60px rgba(76, 29, 149, 0.22);
+  animation: cw-in 200ms ease;
+}
+
+@keyframes cw-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.cw-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 0.95rem;
+  color: #fff;
+  background: linear-gradient(135deg, var(--purple-700), var(--purple-500));
+}
+
+.cw-head h3 {
+  font-size: 0.98rem;
+  color: #fff;
+}
+
+.cw-head-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.cw-head-text p {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--purple-200);
+}
+
+.cw-icon-btn {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  transition: background var(--transition);
+}
+
+.cw-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ------------------------------- mensajes -------------------------------- */
+
+.cw-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 0.9rem;
+  overflow-y: auto;
+  background: var(--purple-50);
+  scroll-behavior: smooth;
+}
+
+.cw-msg {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 92%;
+}
+
+.cw-msg.is-user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.cw-msg-avatar {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--purple-200);
+  color: var(--purple-800);
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.cw-msg.is-user .cw-msg-avatar {
+  background: var(--purple-600);
+  color: #fff;
+}
+
+.cw-msg-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.cw-msg-bubble {
+  padding: 0.55rem 0.78rem;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid var(--purple-100);
+  color: var(--ink);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  box-shadow: 0 1px 2px rgba(76, 29, 149, 0.05);
+}
+
+.cw-msg.is-bot .cw-msg-bubble {
+  border-bottom-left-radius: 5px;
+}
+
+.cw-msg.is-user .cw-msg-bubble {
+  background: linear-gradient(135deg, var(--purple-600), var(--purple-500));
+  border-color: transparent;
+  color: #fff;
+  border-bottom-right-radius: 5px;
+}
+
+.cw-msg.is-emergency .cw-msg-bubble {
+  background: var(--danger-soft);
+  border-color: rgba(180, 87, 79, 0.25);
+  color: #8e3f38;
+}
+
+.cw-msg.is-redirect .cw-msg-bubble {
+  background: #fff7e6;
+  border-color: rgba(201, 169, 97, 0.35);
+  color: #7a6020;
+}
+
+.cw-msg-flag {
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.cw-msg.is-redirect .cw-msg-flag {
+  color: #8a6a1f;
+}
