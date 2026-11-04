@@ -10,6 +10,7 @@ import TypingDots from './TypingDots.jsx';
 
 const OPEN_KEY = 'babytrack_chat_open';
 const DRAFT_KEY = 'babytrack_chat_draft';
+const SEEN_KEY = 'babytrack_chat_seen';
 
 const WELCOME_FALLBACK =
   'Hola. Hazme preguntas sobre tu embarazo y resolvámoslas juntas.';
@@ -28,6 +29,14 @@ export default function ChatWidget() {
   const [open, setOpen] = useState(() => {
     try {
       return sessionStorage.getItem(OPEN_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  const [seen, setSeen] = useState(() => {
+    try {
+      return sessionStorage.getItem(SEEN_KEY) === '1';
     } catch {
       return false;
     }
@@ -60,6 +69,17 @@ export default function ChatWidget() {
       /* almacenamiento no disponible */
     }
   }, [open]);
+
+  useEffect(() => {
+    if (!open || seen) return;
+
+    setSeen(true);
+    try {
+      sessionStorage.setItem(SEEN_KEY, '1');
+    } catch {
+      /* almacenamiento no disponible */
+    }
+  }, [open, seen]);
 
   // Lo que se estaba escribiendo no se pierde al cambiar de pantalla.
   useEffect(() => {
@@ -242,7 +262,7 @@ export default function ChatWidget() {
         aria-label={open ? 'Cerrar el asistente' : 'Abrir el asistente'}
       >
         {open ? <MinimizeIcon size={18} /> : <ChatBubbleIcon size={26} />}
-        {!open && <span className="cw-bubble-dot" aria-hidden="true" />}
+        {!open && !seen && <span className="cw-bubble-dot" aria-hidden="true" />}
       </button>
     </>
   );
