@@ -206,9 +206,19 @@ const SHAPES = {
       </g>
     </>
   ),
+  manzana: (
+    <>
+      <circle cx="32" cy="35" r="14" fill="#D98B84" stroke={TONES.line} strokeWidth="1.1" />
+      <path d="M32 22c0-4 2-6 5-7" stroke={TONES.line} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M32 20c3-3 6-3 8-1-1 3-4 4-8 1z" fill="#A8BFA0" stroke={TONES.line} strokeWidth="0.9" />
+      <path d="M27 30c1-2 3-3 5-3" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.45" />
+    </>
+  ),
 };
 
 const ALIASES = {
+  'semilla de amapola': 'semilla',
+  'semilla de sesamo': 'semilla',
   'grano de sal': 'semilla',
   'grano de arena': 'semilla',
   lenteja: 'semilla',
@@ -216,37 +226,37 @@ const ALIASES = {
   'mano cerrada': 'semilla',
   'papa dulce': 'semilla',
   'mano pequena': 'semilla',
-  lima: 'lima',
-  'lima pequena': 'lima',
-  platano: 'platano',
-  banana: 'platano',
-  fresa: 'fresa',
-  'fresa grande': 'fresa',
-  'fresas grandes': 'fresa',
+  arandano: 'uva',
+  frambuesa: 'fresa',
   uva: 'uva',
-  mandarina: 'mandarina',
+  fresa: 'fresa',
+  higo: 'pera',
+  lima: 'lima',
+  limon: 'lima',
+  melocoton: 'mandarina',
+  manzana: 'manzana',
   aguacate: 'aguacate',
   pera: 'pera',
+  pimiento: 'berenjena',
   mango: 'mango',
+  papaya: 'mango',
+  platano: 'platano',
+  banana: 'platano',
   zanahoria: 'zanahoria',
-  'zanahoria grande': 'zanahoria',
-  coco: 'coco',
+  pomelo: 'naranja',
   naranja: 'naranja',
+  'mazorca de maiz': 'maiz',
   'maiz dulce': 'maiz',
-  berenjena: 'berenjena',
-  'calabaza butternut': 'calabaza',
-  'calabaza pequena': 'calabaza',
-  repollo: 'repollo',
-  'repollo grande': 'repollo',
-  'pina': 'pina',
-  melon: 'melon',
   coliflor: 'coliflor',
-  'lechuga romana': 'lechuga',
-  'lechuga romana grande': 'lechuga',
-  'sandia pequena': 'sandia',
-  'nabate chino': 'semilla',
-  'colinabo': 'semilla',
-  'rutabaga': 'semilla',
+  calabacin: 'berenjena',
+  repollo: 'repollo',
+  berenjena: 'berenjena',
+  calabaza: 'calabaza',
+  coco: 'coco',
+  pina: 'pina',
+  melon: 'melon',
+  lechuga: 'lechuga',
+  sandia: 'sandia',
 };
 
 function normalize(value) {
@@ -259,7 +269,7 @@ function normalize(value) {
 
 export function resolveFruitKey(sizeComparison) {
   if (!sizeComparison) return 'semilla';
-  const key = normalize(sizeComparison);
+  const key = normalize(sizeComparison).replace(/^(un|una)\s+/, '');
   if (ALIASES[key]) return ALIASES[key];
 
   for (const [alias, shape] of Object.entries(ALIASES)) {
@@ -268,13 +278,9 @@ export function resolveFruitKey(sizeComparison) {
   return 'semilla';
 }
 
-const MASCULINO = ['aguacate', 'mango', 'melon', 'plata', 'platano', 'banano', 'maiz', 'coco'];
-
 export function fruitLabel(sizeComparison) {
   if (!sizeComparison) return 'Tamaño por confirmar';
-  const bajo = normalize(sizeComparison).replace(/^una?\s+/, '');
-  const articulo = MASCULINO.some((m) => bajo.startsWith(m)) ? 'un' : 'una';
-  return `Como ${articulo} ${bajo}`;
+  return `Del tamaño de ${sizeComparison}`;
 }
 
 export default function FruitIllustration({ sizeComparison, size = 72, className = '' }) {
