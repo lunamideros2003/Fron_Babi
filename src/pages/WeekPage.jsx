@@ -185,11 +185,6 @@ export default function WeekPage() {
           <p>{current.checkup_focus || 'Apunta tus dudas para llevarlas a tu próxima consulta.'}</p>
         </section>
       </div>
-
-      <p className="week-note">
-        La información de cada semana describe lo más habitual, no lo que necesariamente te va a
-        ocurrir. Ante cualquier molestia nueva, coméntalo con tu profesional de salud.
-      </p>
     </div>
   );
 }

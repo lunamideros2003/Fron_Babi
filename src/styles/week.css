@@ -185,14 +185,6 @@
   color: var(--ink);
 }
 
-.week-note {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  margin-top: 1.3rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
 @media (max-width: 520px) {
   .week-hero { padding: 1.1rem; }
   .week-hero-title { font-size: 1.6rem; }
