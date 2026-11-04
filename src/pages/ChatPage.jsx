@@ -310,15 +310,6 @@ export default function ChatPage() {
               ))}
             </div>
           </section>
-
-          <div className="disclaimer">
-            <InfoIcon size={15} />
-            <span>
-              Si tienes sangrado, pérdida de líquido, dolor intenso o falta de movimientos,
-              contacta de inmediato a tu equipo médico. Esta herramienta no evalúa tu situación
-              clínica.
-            </span>
-          </div>
         </aside>
       </div>
     </div>
