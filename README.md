@@ -101,6 +101,20 @@ VITE_API_URL=http://localhost:4001/api
 
 Las rutas privadas exigen sesion; si no hay token, redirigen a `/entrar`.
 
+## Burbuja del asistente
+
+En todas las pantallas privadas hay una burbuja morada abajo a la derecha.
+Al pulsarla se abre una ventana pequeña para preguntar sobre el embarazo sin
+salir de la pagina. El saludo y las sugerencias llegan de
+`GET /api/chat/welcome` (adaptadas al trimestre) y las respuestas de
+`POST /api/chat/quick`, que comparte el historial y el limite de preguntas con
+`/asistente`.
+
+- Se cierra con el boton de la cabecera, con `Escape` o con la misma burbuja.
+- Recuerda en `sessionStorage` si estaba abierta y el borrador escrito.
+- En movil se abre por encima de la barra inferior, casi a todo el ancho.
+- Los estilos viven en `src/styles/chat-widget.css` y usan `--purple-*`.
+
 ## Notas
 
 - El token se guarda en `localStorage` bajo `babytrack_token`.
