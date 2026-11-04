@@ -9,6 +9,7 @@ import './styles/guide.css';
 import './styles/journal.css';
 import './styles/week.css';
 import './styles/appointments.css';
+import './styles/chat-widget.css';
 import './styles/home-responsive.css';
 
 const BUILD_COMMIT = import.meta.env.VITE_BUILD_COMMIT ?? '';
