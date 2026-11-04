@@ -4,6 +4,7 @@ import api from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
 import { ChevronLeftIcon, ChevronRightIcon } from '../components/Icons.jsx';
+import { capitalize } from '../utils/size.js';
 
 function trimesterOf(week) {
   if (week < 13) return 'Primer trimestre';
@@ -147,7 +148,7 @@ export default function WeekPage() {
           <ul className="week-facts">
             <li>
               <span>Tamaño aproximado</span>
-              <strong>{current.size_comparison}</strong>
+              <strong>{capitalize(current.size_comparison)}</strong>
             </li>
             {current.typical_weight && (
               <li>
