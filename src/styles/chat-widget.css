@@ -1,0 +1,53 @@
+/*
+  Burbuja flotante del asistente (BabyTrack IA).
+  Usa la paleta morada propia para distinguirla del resto de la aplicación,
+  que sigue en azul y crema.
+*/
+
+.cw-bubble {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: 58px;
+  height: 58px;
+  border: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--purple-600), var(--purple-400));
+  box-shadow: 0 10px 26px rgba(109, 40, 217, 0.34);
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+.cw-bubble:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 14px 32px rgba(109, 40, 217, 0.42);
+}
+
+.cw-bubble:active {
+  transform: scale(0.97);
+}
+
+.cw-bubble.is-open {
+  background: linear-gradient(135deg, var(--purple-800), var(--purple-600));
+}
+
+/* Puntito que invita a abrir el chat. */
+.cw-bubble-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--purple-200);
+  border: 2px solid var(--purple-600);
+  animation: cw-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes cw-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.25); opacity: 0.7; }
+}
