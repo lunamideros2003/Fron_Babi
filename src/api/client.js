@@ -175,7 +175,9 @@ export const api = {
 
   chat: {
     send: (message) => request('/chat', { method: 'POST', body: { message } }),
-    history: () => request('/chat/history'),
+    quick: (message) => request('/chat/quick', { method: 'POST', body: { message } }),
+    welcome: () => request('/chat/welcome'),
+    history: (limit = 50) => request(`/chat/history?limit=${limit}`),
     categories: () => request('/chat/categories'),
     clear: () => request('/chat/history', { method: 'DELETE' }),
   },
