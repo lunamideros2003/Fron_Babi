@@ -5,19 +5,15 @@ import { useAuth } from '../context/AuthContext.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
 import { ChevronLeftIcon, ChevronRightIcon } from '../components/Icons.jsx';
 import { capitalize } from '../utils/size.js';
-
-function trimesterOf(week) {
-  if (week < 13) return 'Primer trimestre';
-  if (week < 28) return 'Segundo trimestre';
-  return 'Tercer trimestre';
-}
+import { trimesterOf } from '../utils/trimester.js';
+import { resolveWeek } from '../utils/week.js';
 
 export default function WeekPage() {
   const { pregnancy } = useAuth();
   const [params, setParams] = useSearchParams();
   const [weeks, setWeeks] = useState([]);
-  const [selected, setSelected] = useState(
-    Number(params.get('w')) || pregnancy?.current_week || 20,
+  const [selected, setSelected] = useState(() =>
+    resolveWeek({ param: params.get('w'), currentWeek: pregnancy?.current_week }),
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -54,6 +50,15 @@ export default function WeekPage() {
   const esActual = actual === current?.week_number;
   const esFutura = actual !== null && current && current.week_number > actual;
 
+  useEffect(() => {
+    if (!current) return undefined;
+
+    document.title = `Semana ${current.week_number} · ${current.title} · BabyTrack`;
+    return () => {
+      document.title = 'BabyTrack IA';
+    };
+  }, [current]);
+
   if (loading) {
     return (
       <div className="stack">
@@ -73,8 +78,8 @@ export default function WeekPage() {
         <h1>Mi embarazo</h1>
         {actual && (
           <p className="lede">
-            Vas por la semana {actual}. Puedes mirar cualquier semana de las 37 que tenemos
-            guardadas.
+            Vas por la semana {actual}. Puedes mirar cualquier semana de las {weeks.length} que
+            tenemos guardadas.
           </p>
         )}
       </div>
@@ -172,7 +177,7 @@ export default function WeekPage() {
 
         <section className="week-block">
           <h3>Cuidados de esta semana</h3>
-          <p>{current.tips || 'Descansa, hidratate y avisa a tu equipo de salud si algo te preocupa.'}</p>
+          <p>{current.tips || 'Descansa, hidrátate y avisa a tu equipo de salud si algo te preocupa.'}</p>
         </section>
 
         <section className="week-block">
