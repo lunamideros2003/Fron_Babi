@@ -193,6 +193,21 @@
   margin: 0;
 }
 
+.size-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.7rem;
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.size-metrics span + span::before {
+  content: '·';
+  margin-right: 0.7rem;
+  color: var(--border-strong);
+}
+
 /* --------------------------- E. guia de la semana -------------------------- */
 
 .section-title {
