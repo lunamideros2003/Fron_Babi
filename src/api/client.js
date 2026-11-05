@@ -1,8 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? '/api';
 
-// Si la direccion principal no responde, se prueba la ruta /api del propio
-// dominio, que el servidor de despliegue redirige al backend. Asi una URL
-// mal configurada no deja la app sin funcionar.
 const FALLBACK_URL = '/api';
 
 const TOKEN_KEY = 'babytrack_token';
@@ -26,9 +23,6 @@ export class ApiError extends Error {
   }
 }
 
-// El backend vive en el plan gratuito de Render, que se apaga cuando no
-// recibe visitas. Cuando vuelve a encenderse la primera peticion puede tardar
-// medio minuto, asi que se espera bastante antes de rendirse.
 const TIMEOUT_MS = 90_000;
 const RETRY_DELAY_MS = 4000;
 
@@ -68,8 +62,6 @@ async function request(path, { method = 'GET', body, auth = true, retried = fals
   } catch (error) {
     const timedOut = error?.name === 'AbortError';
 
-    // La direccion principal puede estar mal configurada. Antes de rendirse
-    // se prueba la ruta /api del propio dominio.
     if (BASE_URL !== FALLBACK_URL && !retried) {
       try {
         response = await fetchWithTimeout(`${FALLBACK_URL}${path}`, options);
@@ -79,8 +71,7 @@ async function request(path, { method = 'GET', body, auth = true, retried = fals
     }
 
     if (response === null) {
-      // Un fallo de red al primer intento suele ser el servidor despertando.
-      // Se reintenta una vez antes de avisar a la persona.
+
       if (!retried) {
         await wait(RETRY_DELAY_MS);
         return await request(path, { method, body, auth, retried: true });
@@ -101,17 +92,15 @@ async function request(path, { method = 'GET', body, auth = true, retried = fals
   if (!response.ok || payload.ok === false) {
     if (response.status === 401 && token) setToken(null);
 
-    // Cuando se pasan demasiadas preguntas seguidas, el servidor indica
-    // cuantos segundos hay que esperar.
     if (response.status === 429) {
-      const espera = Number(response.headers.get('Retry-After'));
+      const retryAfter = Number(response.headers.get('Retry-After'));
       throw new ApiError(
-        Number.isFinite(espera) && espera > 0
-          ? `Has hecho demasiadas preguntas seguidas. Espera ${espera} segundos y vuelve a intentarlo.`
+        Number.isFinite(retryAfter) && retryAfter > 0
+          ? `Has hecho demasiadas preguntas seguidas. Espera ${retryAfter} segundos y vuelve a intentarlo.`
           : 'Has hecho demasiadas preguntas seguidas. Espera un momento y vuelve a intentarlo.',
         429,
         'RATE_LIMITED',
-        Number.isFinite(espera) ? espera : null,
+        Number.isFinite(retryAfter) ? retryAfter : null,
       );
     }
 
