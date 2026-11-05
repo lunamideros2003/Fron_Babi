@@ -55,7 +55,7 @@ export default function DashboardPage() {
   return (
     <div className="home">
       <div className="home-col home-col-main">
-        {/* A. Encabezado de bienvenida */}
+
         <header className="home-greeting">
           <div>
             <p className="home-eyebrow">Mi espacio de embarazo</p>
@@ -67,7 +67,6 @@ export default function DashboardPage() {
           </span>
         </header>
 
-        {/* C y D. Tarjeta principal con el tamano del bebe */}
         <section className="today-card" aria-label="Tu embarazo hoy">
           <div className="today-head">
             <div>
@@ -114,12 +113,11 @@ export default function DashboardPage() {
       </div>
 
       <div className="home-col home-col-side">
-        {/* B. Ilustracion principal */}
+
         <div className="home-art">
           <MotherIllustration height={200} />
         </div>
 
-        {/* E. Guia para esta semana */}
         <section className="home-guide" aria-labelledby="guide-title">
           <h2 id="guide-title" className="section-title">
             Tu guía para esta semana
