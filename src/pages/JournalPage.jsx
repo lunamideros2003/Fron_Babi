@@ -26,22 +26,22 @@ export default function JournalPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    let vivo = true;
+    let alive = true;
 
     api.journal
       .list()
       .then((res) => {
-        if (vivo) setEntries(res.entries ?? []);
+        if (alive) setEntries(res.entries ?? []);
       })
       .catch((err) => {
-        if (vivo) setError(err.message);
+        if (alive) setError(err.message);
       })
       .finally(() => {
-        if (vivo) setLoading(false);
+        if (alive) setLoading(false);
       });
 
     return () => {
-      vivo = false;
+      alive = false;
     };
   }, []);
 
@@ -68,7 +68,7 @@ export default function JournalPage() {
     try {
       await api.journal.remove(id);
     } catch {
-      /* se recarga al volver a entrar */
+
     }
   }
 
