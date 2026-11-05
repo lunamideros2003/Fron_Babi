@@ -1,9 +1,3 @@
-/*
-  Comprueba que los avisos que se quitaron no vuelven a aparecer en las
-  pantallas donde estaban. Es una prueba de texto: si alguien restaura el
-  bloque por error, falla.
-*/
-
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
@@ -20,35 +14,35 @@ function walk(dir) {
   });
 }
 
-test('seguridad no tiene el cartel educativo', () => {
+test('safety has no educational banner', () => {
   const page = read('../src/pages/SafetyPage.jsx');
 
   assert.doesNotMatch(page, /safety-banner/);
   assert.doesNotMatch(page, /no sustituye la valoración de un profesional de salud/);
 });
 
-test('la semana no tiene la nota sobre lo habitual', () => {
+test('the week page has no note about what is usual', () => {
   const page = read('../src/pages/WeekPage.jsx');
 
   assert.doesNotMatch(page, /week-note/);
   assert.doesNotMatch(page, /describe lo más habitual/);
 });
 
-test('el chat no tiene el aviso clinico del panel lateral', () => {
+test('the chat has no clinical notice in the side panel', () => {
   const page = read('../src/pages/ChatPage.jsx');
 
   assert.doesNotMatch(page, /Esta herramienta no evalúa tu situación clínica/);
   assert.doesNotMatch(page, /contacta de inmediato a tu equipo médico\. Esta herramienta/);
 });
 
-test('la guia no repite el aviso en la introduccion', () => {
+test('the guide does not repeat the notice in the intro', () => {
   const page = read('../src/pages/GuidePage.jsx');
 
   assert.doesNotMatch(page, /Contenido educativo: no sustituye/);
 });
 
-test('los avisos eliminados no reaparecen en ninguna pantalla', () => {
-  const frases = [
+test('removed notices do not reappear on any screen', () => {
+  const phrases = [
     /no sustituye la valoración de un profesional de salud/,
     /llamar siempre es mejor que esperar/,
     /describe lo más habitual/,
@@ -57,15 +51,15 @@ test('los avisos eliminados no reaparecen en ninguna pantalla', () => {
 
   for (const file of walk(SRC)) {
     if (!/\.(jsx?|css)$/.test(file)) continue;
-    const texto = readFileSync(file, 'utf8');
+    const text = readFileSync(file, 'utf8');
 
-    for (const frase of frases) {
-      assert.doesNotMatch(texto, frase, `aviso restaurado en ${file}`);
+    for (const phrase of phrases) {
+      assert.doesNotMatch(text, phrase, `notice restored in ${file}`);
     }
   }
 });
 
-test('el inicio no vuelve a la formula "Como una fruta"', () => {
+test('the home page does not return to the "Like a fruit" wording', () => {
   const page = read('../src/pages/DashboardPage.jsx');
 
   assert.doesNotMatch(page, /Cómo \$\{/);
