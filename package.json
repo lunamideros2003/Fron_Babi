@@ -11,6 +11,8 @@
     "test": "node scripts/integration.mjs",
     "test:bot": "node scripts/integration-bot.mjs",
     "test:layout": "node --test \"tests/layout.test.mjs\"",
+    "test:copy": "node --test tests/copy.test.mjs tests/size.test.mjs",
+    "test:size": "node --test tests/size.test.mjs tests/fruit.test.mjs tests/trimester.test.mjs",
     "test:all": "node --test \"tests/*.test.mjs\""
   },
   "dependencies": {
