@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const TITULOS = {
+const PAGE_TITLES = {
   '/': 'Inicio',
   '/semana': 'Mi embarazo',
   '/citas': 'Mis controles',
@@ -14,16 +14,12 @@ const TITULOS = {
   '/seguimiento': 'Controles y seguimiento',
 };
 
-/**
- * Mantiene el titulo de la pestana del navegador al dia con la seccion
- * abierta. Ayuda a saber donde se esta, sobre todo con varias pestanas.
- */
 export default function PageTitle() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const seccion = TITULOS[pathname];
-    document.title = seccion ? `${seccion} · BabyTrack IA` : 'BabyTrack IA';
+    const title = PAGE_TITLES[pathname];
+    document.title = title ? `${title} · BabyTrack IA` : 'BabyTrack IA';
   }, [pathname]);
 
   return null;
