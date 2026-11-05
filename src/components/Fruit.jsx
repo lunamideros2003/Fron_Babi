@@ -1,8 +1,10 @@
 /*
   Ilustraciones de frutas y verduras para comparar el tamano del bebe.
   Estilo uniforme: trazos suaves, tonos apagados y un disco de fondo crema-azul.
-  Cada semana se mapea a su comparacion segun el campo size_comparison.
+  La comparacion se traduce a una clave de `SHAPES` en `utils/fruit.js`.
 */
+
+import { fruitLabel, resolveFruitKey } from '../utils/fruit.js';
 
 const TONES = {
   bg: '#E7F1F8',
@@ -214,74 +216,103 @@ const SHAPES = {
       <path d="M27 30c1-2 3-3 5-3" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.45" />
     </>
   ),
+  arandano: (
+    <>
+      <circle cx="32" cy="35" r="13" fill="#7C82AC" stroke={TONES.line} strokeWidth="1.1" />
+      <path d="M32 22c0-3 2-5 5-5" stroke={TONES.line} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M28 24h8l-2 4h-4z" fill="#A8BFA0" stroke={TONES.line} strokeWidth="0.9" />
+      <path d="M26 32c3-2 9-2 12 1" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.45" />
+    </>
+  ),
+  frambuesa: (
+    <>
+      <path
+        d="M32 20c8 0 13 4 13 11 0 8-7 16-13 19-6-3-13-11-13-19 0-7 5-11 13-11z"
+        fill="#C98B9B"
+        stroke={TONES.line}
+        strokeWidth="1.1"
+      />
+      <path d="M24 19h16l-4 4h-8z" fill="#A8BFA0" stroke={TONES.line} strokeWidth="0.9" />
+      <g fill="#F3EEE4" opacity="0.85">
+        <circle cx="27" cy="32" r="1.2" />
+        <circle cx="32" cy="30" r="1.2" />
+        <circle cx="37" cy="32" r="1.2" />
+        <circle cx="29" cy="37" r="1.2" />
+        <circle cx="35" cy="37" r="1.2" />
+        <circle cx="32" cy="43" r="1.2" />
+      </g>
+    </>
+  ),
+  higo: (
+    <>
+      <path
+        d="M32 22c7 0 12 6 12 13 0 8-6 14-12 14s-12-6-12-14c0-7 5-13 12-13z"
+        fill="#A9A3C9"
+        stroke={TONES.line}
+        strokeWidth="1.1"
+      />
+      <path d="M32 22c-1-4 1-6 4-7" stroke={TONES.line} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M28 22h8l-2 4h-4z" fill="#A8BFA0" stroke={TONES.line} strokeWidth="0.9" />
+      <path d="M27 34c3-2 7-2 10 0" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.45" />
+    </>
+  ),
+  melocoton: (
+    <>
+      <circle cx="32" cy="35" r="14" fill="#E8B07A" stroke={TONES.line} strokeWidth="1.1" />
+      <path d="M32 21c1-4 4-6 7-6" stroke={TONES.line} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M32 22c3-3 6-3 8-1-1 3-4 4-8 1z" fill="#A8BFA0" stroke={TONES.line} strokeWidth="0.9" />
+      <path d="M32 24c-2 7-2 15 0 22" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.4" />
+    </>
+  ),
+  pimiento: (
+    <>
+      <path
+        d="M32 26c6 0 11 4 11 10 0 5-4 9-11 9s-11-4-11-9c0-6 5-10 11-10z"
+        fill="#D98B84"
+        stroke={TONES.line}
+        strokeWidth="1.1"
+      />
+      <path d="M32 26v-5M32 22c-2-3-5-4-8-3M32 22c2-3 5-4 8-3" stroke="#A8BFA0" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      <path d="M27 34c2-2 5-2 7 0" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.4" />
+    </>
+  ),
+  papaya: (
+    <>
+      <path
+        d="M32 22c7 0 12 6 12 14s-5 14-12 14-12-6-12-14 5-14 12-14z"
+        fill="#E5C48C"
+        stroke={TONES.line}
+        strokeWidth="1.1"
+      />
+      <path d="M32 22v-5" stroke={TONES.line} strokeWidth="1.1" strokeLinecap="round" />
+      <ellipse cx="32" cy="37" rx="4" ry="6" fill="#E7A878" stroke={TONES.line} strokeWidth="0.9" />
+      <g fill={TONES.line} opacity="0.5">
+        <circle cx="30" cy="35" r="0.8" />
+        <circle cx="34" cy="35" r="0.8" />
+        <circle cx="32" cy="39" r="0.8" />
+      </g>
+    </>
+  ),
+  pomelo: (
+    <>
+      <circle cx="32" cy="34" r="15" fill="#E7B07A" stroke={TONES.line} strokeWidth="1.1" />
+      <circle cx="32" cy="34" r="10" fill="none" stroke={TONES.line} strokeWidth="0.7" opacity="0.45" />
+      <path d="M32 24v20M22 34h20M25 27l14 14M39 27L25 41" stroke={TONES.line} strokeWidth="0.6" opacity="0.4" />
+    </>
+  ),
+  calabacin: (
+    <>
+      <path
+        d="M24 26c6-6 18-4 20 4 2 8-6 18-16 20-6 1-8-4-8-10s1-11 4-14z"
+        fill="#A8BFA0"
+        stroke={TONES.line}
+        strokeWidth="1.1"
+      />
+      <path d="M24 26c-3-2-4-5-3-8" stroke={TONES.line} strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M26 34c4-2 9-1 12 2" stroke={TONES.line} strokeWidth="0.8" fill="none" opacity="0.4" />
+    </>
+  ),
 };
-
-const ALIASES = {
-  'semilla de amapola': 'semilla',
-  'semilla de sesamo': 'semilla',
-  'grano de sal': 'semilla',
-  'grano de arena': 'semilla',
-  lenteja: 'semilla',
-  arroz: 'semilla',
-  'mano cerrada': 'semilla',
-  'papa dulce': 'semilla',
-  'mano pequena': 'semilla',
-  arandano: 'uva',
-  frambuesa: 'fresa',
-  uva: 'uva',
-  fresa: 'fresa',
-  higo: 'pera',
-  lima: 'lima',
-  limon: 'lima',
-  melocoton: 'mandarina',
-  manzana: 'manzana',
-  aguacate: 'aguacate',
-  pera: 'pera',
-  pimiento: 'berenjena',
-  mango: 'mango',
-  papaya: 'mango',
-  platano: 'platano',
-  banana: 'platano',
-  zanahoria: 'zanahoria',
-  pomelo: 'naranja',
-  naranja: 'naranja',
-  'mazorca de maiz': 'maiz',
-  'maiz dulce': 'maiz',
-  coliflor: 'coliflor',
-  calabacin: 'berenjena',
-  repollo: 'repollo',
-  berenjena: 'berenjena',
-  calabaza: 'calabaza',
-  coco: 'coco',
-  pina: 'pina',
-  melon: 'melon',
-  lechuga: 'lechuga',
-  sandia: 'sandia',
-};
-
-function normalize(value) {
-  return String(value ?? '')
-    .toLowerCase()
-    .trim()
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '');
-}
-
-export function resolveFruitKey(sizeComparison) {
-  if (!sizeComparison) return 'semilla';
-  const key = normalize(sizeComparison).replace(/^(un|una)\s+/, '');
-  if (ALIASES[key]) return ALIASES[key];
-
-  for (const [alias, shape] of Object.entries(ALIASES)) {
-    if (key.includes(alias) || alias.includes(key)) return shape;
-  }
-  return 'semilla';
-}
-
-export function fruitLabel(sizeComparison) {
-  if (!sizeComparison) return 'Tamaño por confirmar';
-  return `Del tamaño de ${sizeComparison}`;
-}
 
 export default function FruitIllustration({ sizeComparison, size = 72, className = '' }) {
   const key = resolveFruitKey(sizeComparison);
