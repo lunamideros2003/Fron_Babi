@@ -30,90 +30,90 @@ const run = async () => {
 
   const index = await fetch(WEB);
   const html = await index.text();
-  check('frontend sirve la app', index.status === 200 && html.includes('root'));
-  check('html en espanol', html.includes('lang="es"'));
-  check('titulo de BabyTrack', html.includes('BabyTrack IA'));
+  check('frontend serves the app', index.status === 200 && html.includes('root'));
+  check('html in Spanish', html.includes('lang="es"'));
+  check('BabyTrack title', html.includes('BabyTrack IA'));
 
   const health = await call('/api/health');
-  check('proxy /api funciona', health.status === 200, JSON.stringify(health.json).slice(0, 120));
-  check('IA disponible', ['openai', 'local'].includes(health.json.ai?.active), health.json.ai?.active);
+  check('/api proxy works', health.status === 200, JSON.stringify(health.json).slice(0, 120));
+  check('AI available', ['openai', 'local'].includes(health.json.ai?.active), health.json.ai?.active);
 
   const email = `front${Date.now()}@babytrack.dev`;
   const register = await call('/api/auth/register', {
     method: 'POST',
     body: { name: 'Ana', email, password: 'clave123', currentWeek: 24 },
   });
-  check('registro via proxy', register.status === 201, JSON.stringify(register.json).slice(0, 150));
+  check('registration via proxy', register.status === 201, JSON.stringify(register.json).slice(0, 150));
   const token = register.json.token;
 
   const me = await call('/api/auth/me', { token });
-  check('sesion activa', me.json.pregnancy?.current_week === 24, JSON.stringify(me.json.pregnancy).slice(0, 100));
+  check('active session', me.json.pregnancy?.current_week === 24, JSON.stringify(me.json.pregnancy).slice(0, 100));
 
   const chat = await call('/api/chat', {
     method: 'POST',
     token,
     body: { message: 'Que controles necesito en el segundo trimestre?' },
   });
-  check('chat responde', chat.status === 200);
-  check('clasifico como controles', chat.json.reply?.category === 'controles', chat.json.reply?.category);
-  check('respuesta en espanol', /control|ecografia|trimestre/i.test(chat.json.reply?.content ?? ''));
+  check('chat responds', chat.status === 200);
+  check('classified as checkups', chat.json.reply?.category === 'controles', chat.json.reply?.category);
+  check('response in Spanish', /control|ecografia|trimestre/i.test(chat.json.reply?.content ?? ''));
 
   const welcome = await call('/api/chat/welcome', { token });
   check(
-    'saludo de la burbuja',
+    'bubble greeting',
     welcome.status === 200 && welcome.json.greeting?.includes('Hazme preguntas'),
     JSON.stringify(welcome.json).slice(0, 150),
   );
-  check('saludo con el nombre', welcome.json.greeting?.includes('Ana'), welcome.json.greeting);
-  check('cuatro sugerencias', welcome.json.suggestions?.length === 4);
+  check('greeting with the name', welcome.json.greeting?.includes('Ana'), welcome.json.greeting);
+  check('four suggestions', welcome.json.suggestions?.length === 4);
 
   const quick = await call('/api/chat/quick', {
     method: 'POST',
     token,
     body: { message: 'Que puedo comer?' },
   });
-  check('chat rapido responde', quick.status === 200 && quick.json.quick === true);
-  check('chat rapido con proveedor', Boolean(quick.json.reply?.provider), quick.json.reply?.provider);
+  check('quick chat responds', quick.status === 200 && quick.json.quick === true);
+  check('quick chat with provider', Boolean(quick.json.reply?.provider), quick.json.reply?.provider);
 
   const quickShort = await call('/api/chat/quick', {
     method: 'POST',
     token,
     body: { message: 'x' },
   });
-  check('chat rapido valida la pregunta', quickShort.status === 422, String(quickShort.status));
+  check('quick chat validates the question', quickShort.status === 422, String(quickShort.status));
 
   const weeks = await call('/api/weeks/24');
-  check('detalle de semana 24', weeks.json.week?.week_number === 24);
+  check('week 24 detail', weeks.json.week?.week_number === 24);
 
   const week37 = await call('/api/weeks/37');
   check(
-    'semana 37 con sandia pequena',
+    'week 37 with a small watermelon',
     week37.json.week?.size_comparison === 'una sandía pequeña',
     week37.json.week?.size_comparison,
   );
   check(
-    'semana 37 en el tercer trimestre',
+    'week 37 in the third trimester',
     week37.json.trimester === 'Tercer trimestre',
     week37.json.trimester,
   );
-  check('semana 37 pesa 2859 g', week37.json.week?.typical_weight === '2859 g');
+  check('week 37 weighs 2859 g', week37.json.week?.typical_weight === '2859 g');
 
   const outOfRange = await call('/api/weeks/41');
-  check('semana fuera de rango da 404', outOfRange.status === 404, String(outOfRange.status));
+  check('out-of-range week returns 404', outOfRange.status === 404, String(outOfRange.status));
 
   const list = await call('/api/weeks');
-  check('listado de 37 semanas', list.json.total === 37, String(list.json.total));
+  check('list of 37 weeks', list.json.total === 37, String(list.json.total));
   check(
-    'el listado trae el trimestre',
+    'the list includes the trimester',
     list.json.weeks?.[0]?.trimester === 'Primer trimestre',
     list.json.weeks?.[0]?.trimester,
   );
 
   const gen = await call('/api/reminders/generate', { method: 'POST', token, body: { count: 3 } });
-  check('recordatorios generados', gen.json.reminders?.length === 3);
+  check('reminders generated', gen.json.reminders?.length === 3);
 
   const timeline = await call('/api/tracking/timeline', { token });
-  check('timeline completo', Boolean(timeline.json.week && timeline.json.pregnancy));
+  check('complete timeline', Boolean(timeline.json.week && timeline.json.pregnancy));
 
   console.log(`\nResult: ${passed} passed, ${failed} failed\n`);
   process.exit(failed === 0 ? 0 : 1);

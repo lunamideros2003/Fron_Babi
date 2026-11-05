@@ -45,38 +45,38 @@ await page.addInitScript((value) => {
 console.log('\nBabyTrack IA - browser bot test\n');
 
 await page.goto(`${WEB}/bot`, { waitUntil: 'networkidle' });
-check('ruta /bot carga', await page.locator('h1').first().textContent().then((t) => t.includes('Consulta guiada')));
-check('enlace Bot en la navegacion', (await page.locator('nav a', { hasText: 'Bot' }).count()) > 0);
-check('pantalla de inicio visible', (await page.getByText('Empezar la consulta').count()) > 0);
+check('/bot route loads', await page.locator('h1').first().textContent().then((t) => t.includes('Consulta guiada')));
+check('Bot link in navigation', (await page.locator('nav a', { hasText: 'Bot' }).count()) > 0);
+check('start screen visible', (await page.getByText('Empezar la consulta').count()) > 0);
 
 await page.getByRole('button', { name: 'Empezar la consulta' }).click();
 await page.waitForTimeout(700);
 
-check('abre la primera pregunta', (await page.getByText('A que semana estas ahora mismo?').count()) > 0);
-check('muestra progreso', (await page.getByText('Pregunta 1 de 10').count()) > 0);
-check('barra de progreso', (await page.locator('.progress-bar').count()) > 0);
+check('opens the first question', (await page.getByText('A que semana estas ahora mismo?').count()) > 0);
+check('shows progress', (await page.getByText('Pregunta 1 de 10').count()) > 0);
+check('progress bar', (await page.locator('.progress-bar').count()) > 0);
 
 await page.getByRole('button', { name: /Segundo trimestre/ }).click();
 await page.waitForTimeout(700);
-check('responde y avanza', (await page.getByText('Es tu primer embarazo?').count()) > 0);
-check('muestra feedback del bot', (await page.locator('.bot-feedback').count()) > 0);
+check('answers and advances', (await page.getByText('Es tu primer embarazo?').count()) > 0);
+check('shows bot feedback', (await page.locator('.bot-feedback').count()) > 0);
 
 await page.getByRole('button', { name: /Si, es el primero/ }).click();
 await page.waitForTimeout(700);
-check('llega a la escala', (await page.getByText('Como ha estado tu energia').count()) > 0);
+check('reaches the scale', (await page.getByText('Como ha estado tu energia').count()) > 0);
 
 const scaleButtons = page.locator('.bot-scale button');
-check('escala con 5 opciones', (await scaleButtons.count()) === 5);
+check('scale with 5 options', (await scaleButtons.count()) === 5);
 await scaleButtons.nth(1).click();
 await page.waitForTimeout(700);
-check('escala responde y avanza', (await page.getByText('Que sintomas has tenido').count()) > 0);
+check('scale answers and advances', (await page.getByText('Que sintomas has tenido').count()) > 0);
 
 const multiOptions = page.locator('.bot-option');
-check('opciones multiple', (await multiOptions.count()) === 6);
+check('multiple options', (await multiOptions.count()) === 6);
 await multiOptions.nth(0).click();
 await page.getByRole('button', { name: 'Confirmar' }).click();
 await page.waitForTimeout(700);
-check('multiple avanza', (await page.getByText('Cuantas comidas al dia haces').count()) > 0);
+check('multiple advances', (await page.getByText('Cuantas comidas al dia haces').count()) > 0);
 
 await page.getByRole('button', { name: 'Tres' }).click();
 await page.waitForTimeout(600);
@@ -92,30 +92,30 @@ await page.waitForTimeout(600);
 await page.getByRole('button', { name: 'No, todavia no' }).click();
 await page.waitForTimeout(600);
 
-check('llega a la pregunta abierta', (await page.locator('textarea').count()) > 0);
+check('reaches the open question', (await page.locator('textarea').count()) > 0);
 await page.locator('textarea').fill('Me cuesta dormir por las noches');
 await page.getByRole('button', { name: 'Enviar' }).click();
 await page.waitForTimeout(900);
 
-check('muestra el resumen', (await page.getByText('Resumen de tu consulta').count()) > 0);
-check('muestra el puntaje', (await page.locator('.score-circle').count()) > 0);
-check('ofrece otro check-in', (await page.getByText('Hacer otra consulta').count()) > 0);
+check('shows the summary', (await page.getByText('Resumen de tu consulta').count()) > 0);
+check('shows the score', (await page.locator('.score-circle').count()) > 0);
+check('offers another check-in', (await page.getByText('Hacer otra consulta').count()) > 0);
 
 const summaryText = await page.locator('.bot-feedback p').last().textContent();
-check('resumen con contenido', (summaryText?.length ?? 0) > 40, `${summaryText?.length} chars`);
-check('resumen sin diagnosticos', !/diagnostic|recet|medicament/i.test(summaryText ?? ''));
-check('menciona puntaje de 12', /de 12/.test(summaryText ?? ''));
+check('summary with content', (summaryText?.length ?? 0) > 40, `${summaryText?.length} chars`);
+check('summary without diagnoses', !/diagnostic|recet|medicament/i.test(summaryText ?? ''));
+check('mentions score out of 12', /de 12/.test(summaryText ?? ''));
 
 const feedbackTexts = await page.locator('.bot-feedback p').allTextContents();
 const allFeedback = feedbackTexts.join(' ');
-check('ningun feedback con diagnosticos', !/diagnostic|recet|medicament/i.test(allFeedback));
+check('no feedback with diagnoses', !/diagnostic|recet|medicament/i.test(allFeedback));
 
 await page.screenshot({ path: 'bot-summary.png', fullPage: true });
 
 await page.getByRole('button', { name: 'Hacer otra consulta' }).click();
 await page.waitForTimeout(800);
-check('reinicia el flujo', (await page.getByText('A que semana estas ahora mismo?').count()) > 0);
-check('sidebar lista sesiones', (await page.getByText('Consulta completada').count()) > 0);
+check('restarts the flow', (await page.getByText('A que semana estas ahora mismo?').count()) > 0);
+check('sidebar lists sessions', (await page.getByText('Consulta completada').count()) > 0);
 
 await page.screenshot({ path: 'bot-questions.png', fullPage: true });
 
@@ -123,7 +123,7 @@ const overflow = await page.evaluate(() => {
   const el = document.querySelector('.bot-panel');
   return el ? el.scrollHeight - el.clientHeight : 0;
 });
-check('panel del bot sin desbordes', overflow <= 2, `desborde ${overflow}px`);
+check('bot panel without overflow', overflow <= 2, `overflow ${overflow}px`);
 
 await browser.close();
 
