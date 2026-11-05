@@ -1,12 +1,6 @@
-/*
-  Mi embarazo: selector compacto y bloques separados por separadores sutiles.
-*/
-
 .week-page {
   max-width: 720px;
 }
-
-/* ------------------------------- selector ---------------------------------- */
 
 .week-selector {
   display: flex;
@@ -59,8 +53,6 @@
   width: 100%;
 }
 
-/* --------------------------------- cabecera -------------------------------- */
-
 .week-hero {
   display: flex;
   align-items: center;
@@ -112,8 +104,6 @@
   padding: 0.75rem 0.95rem;
   margin-bottom: 1rem;
 }
-
-/* -------------------------------- bloques ---------------------------------- */
 
 .week-blocks {
   display: flex;
