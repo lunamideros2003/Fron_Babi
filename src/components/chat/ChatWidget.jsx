@@ -15,7 +15,6 @@ const SEEN_KEY = 'babytrack_chat_seen';
 const WELCOME_FALLBACK =
   'Hola. Hazme preguntas sobre tu embarazo y resolvámoslas juntas.';
 
-/** Saludo inmediato, sin esperar al servidor, para que la ventana abra calida. */
 function localGreeting(name) {
   const firstName = String(name ?? '').trim().split(/\s+/)[0];
 
@@ -24,14 +23,6 @@ function localGreeting(name) {
     : WELCOME_FALLBACK;
 }
 
-/**
- * Asistente flotante.
- *
- * La conversación se guarda en el servidor igual que la del chat completo,
- * pero aqui se piden respuestas cortas (`/chat/quick`) y solo se cargan los
- * ultimos mensajes. El saludo y las sugerencias los prepara el backend segun
- * la semana, asi que abrir la ventana no gasta tokens.
- */
 export default function ChatWidget() {
   const { user, pregnancy, isAuthenticated } = useAuth();
 
@@ -75,7 +66,7 @@ export default function ChatWidget() {
     try {
       sessionStorage.setItem(OPEN_KEY, open ? '1' : '0');
     } catch {
-      /* almacenamiento no disponible */
+
     }
   }, [open]);
 
@@ -86,17 +77,16 @@ export default function ChatWidget() {
     try {
       sessionStorage.setItem(SEEN_KEY, '1');
     } catch {
-      /* almacenamiento no disponible */
+
     }
   }, [open, seen]);
 
-  // Lo que se estaba escribiendo no se pierde al cambiar de pantalla.
   useEffect(() => {
     try {
       if (input) sessionStorage.setItem(DRAFT_KEY, input);
       else sessionStorage.removeItem(DRAFT_KEY);
     } catch {
-      /* almacenamiento no disponible */
+
     }
   }, [input]);
 
@@ -116,7 +106,7 @@ export default function ChatWidget() {
       setWeek(welcome.week ?? pregnancy?.current_week ?? null);
       setMessages((history.messages ?? []).slice(-12));
     } catch {
-      // El saludo local sigue sirviendo aunque el servidor no responda.
+
     }
   }, [pregnancy?.current_week]);
 
