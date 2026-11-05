@@ -25,6 +25,9 @@ src/
     tokens.css         Paleta y variables de diseno
     app.css            Componentes y responsive
   utils/format.js      Fechas en espanol
+  utils/size.js        Frases del tamano ("Del tamano de una sandia")
+  utils/fruit.js       Traduce la comparacion a la forma dibujable
+  utils/trimester.js   Etiqueta del trimestre a partir de la semana
 ```
 
 ## Paleta
@@ -100,6 +103,33 @@ VITE_API_URL=http://localhost:4001/api
 | `/seguimiento` | Controles y sintomas |
 
 Las rutas privadas exigen sesion; si no hay token, redirigen a `/entrar`.
+
+## Tamaños de comparación
+
+El backend guarda el tamaño ya redactado y con artículo (`una sandía pequeña`,
+`un melón`). El frontend no adivina género ni número: `utils/size.js` compone la
+frase (`Del tamaño de una sandía pequeña`) y `utils/fruit.js` resuelve qué
+ilustración dibujar.
+
+| Semana | Comparación |
+| --- | --- |
+| 4 | una semilla de amapola |
+| 8 | una frambuesa |
+| 12 | una lima |
+| 16 | un aguacate |
+| 20 | un plátano |
+| 24 | una mazorca de maíz |
+| 28 | una berenjena |
+| 32 | una calabaza |
+| 36 | una lechuga romana |
+| 37 | una sandía pequeña |
+| 38 | una sandía mediana |
+| 39 | una sandía grande |
+| 40 | una sandía muy grande |
+
+La tarjeta de inicio muestra además el peso y la longitud orientativos de la
+semana. `npm run test:copy` vigila que los avisos retirados y la fórmula
+antigua ("Como una ...") no vuelvan a aparecer.
 
 ## Burbuja del asistente
 
