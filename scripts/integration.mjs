@@ -87,6 +87,30 @@ const run = async () => {
   const weeks = await call('/api/weeks/24');
   check('detalle de semana 24', weeks.json.week?.week_number === 24);
 
+  const week37 = await call('/api/weeks/37');
+  check(
+    'semana 37 con sandia pequena',
+    week37.json.week?.size_comparison === 'una sandía pequeña',
+    week37.json.week?.size_comparison,
+  );
+  check(
+    'semana 37 en el tercer trimestre',
+    week37.json.trimester === 'Tercer trimestre',
+    week37.json.trimester,
+  );
+  check('semana 37 pesa 2859 g', week37.json.week?.typical_weight === '2859 g');
+
+  const outOfRange = await call('/api/weeks/41');
+  check('semana fuera de rango da 404', outOfRange.status === 404, String(outOfRange.status));
+
+  const list = await call('/api/weeks');
+  check('listado de 37 semanas', list.json.total === 37, String(list.json.total));
+  check(
+    'el listado trae el trimestre',
+    list.json.weeks?.[0]?.trimester === 'Primer trimestre',
+    list.json.weeks?.[0]?.trimester,
+  );
+
   const gen = await call('/api/reminders/generate', { method: 'POST', token, body: { count: 3 } });
   check('recordatorios generados', gen.json.reminders?.length === 3);
 
