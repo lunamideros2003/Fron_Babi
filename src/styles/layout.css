@@ -1,6 +1,4 @@
-﻿/*
-  Layout: menu lateral plegable en escritorio + barra inferior en movil.
-*/
+﻿
 
 .app-shell {
   min-height: 100vh;
@@ -8,7 +6,6 @@
   align-items: stretch;
 }
 
-/* Enlace para saltar al contenido con el teclado: solo se ve al enfocarlo. */
 .skip-link {
   position: absolute;
   top: -3rem;
@@ -31,8 +28,6 @@
 .app-main:focus {
   outline: none;
 }
-
-/* --------------------------------- lateral --------------------------------- */
 
 .sidebar {
   position: sticky;
@@ -74,10 +69,6 @@
 .sidebar-brand-text {
   opacity: 1;
 }
-
-
-
-/* -------------------------------- navegacion -------------------------------- */
 
 .sidebar-nav {
   display: flex;
@@ -128,9 +119,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
-/* ---------------------------------- pie ------------------------------------ */
 
 .sidebar-foot {
   display: flex;
@@ -189,7 +177,6 @@
   min-width: 0;
 }
 
-
 .sidebar-logout {
   border: none;
   background: none;
@@ -206,8 +193,6 @@
   background: rgba(201, 226, 242, 0.5);
 }
 
-/* ---------------------------------- main ----------------------------------- */
-
 .app-main {
   flex: 1;
   min-width: 0;
@@ -216,8 +201,6 @@
   margin: 0 auto;
   padding: 2rem 1.5rem 4.5rem;
 }
-
-/* ------------------------------- nav inferior ------------------------------- */
 
 .bottom-nav {
   display: none;
@@ -266,9 +249,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-
-/* ------------------------- accesos adicionales ---------------------------- */
 
 .extra-block {
   margin-top: 1.6rem;
@@ -321,8 +301,6 @@
   color: var(--text-muted);
   flex-shrink: 0;
 }
-
-/* ------------------------------- responsive -------------------------------- */
 
 @media (max-width: 860px) {
   .sidebar { display: none; }

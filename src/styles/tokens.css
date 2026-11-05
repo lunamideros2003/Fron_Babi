@@ -1,11 +1,5 @@
-/*
-  BabyTrack IA - design tokens
-  Paleta crema + azul claro. Minimalista, calida y editorial.
-  Solo dos colores principales con tonos derivados para contrastes suaves.
-*/
-
 :root {
-  /* ---- Azules ---- */
+
   --blue-50: #e7f1f8;
   --blue-100: #c9e2f2;
   --blue-200: #aed3e9;
@@ -14,7 +8,6 @@
   --blue-500: #5d92b5;
   --blue-600: #4a7c9e;
 
-  /* ---- Morados del asistente (burbuja flotante) ---- */
   --purple-50: #f5f3ff;
   --purple-100: #ede9fe;
   --purple-200: #ddd6fe;
@@ -26,25 +19,20 @@
   --purple-800: #5b21b6;
   --purple-900: #4c1d95;
 
-  /* ---- Tinta (texto) ---- */
   --ink: #344b5d;
   --ink-soft: #5a6d7a;
   --text-muted: #75818a;
 
-  /* ---- Crema ---- */
   --cream: #faf7f0;
   --cream-soft: #f3eee4;
   --cream-deep: #ece5d7;
 
-  /* ---- Superficies ---- */
   --surface: #fffefa;
   --surface-alt: var(--blue-50);
 
-  /* ---- Bordes ---- */
   --border: #e6e3dc;
   --border-strong: var(--blue-100);
 
-  /* ---- Semantica ---- */
   --bg: var(--cream);
   --text: var(--ink);
   --text-soft: var(--ink-soft);
@@ -53,15 +41,12 @@
   --primary-soft: var(--blue-50);
   --primary-softer: var(--blue-100);
 
-  /* Solo para estados de error, nunca como color decorativo */
   --danger: #a85f57;
   --danger-soft: #f6e6e4;
 
-  /* ---- Tipografia ---- */
   --font-display: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
   --font-body: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
 
-  /* ---- Forma y profundidad ---- */
   --radius-sm: 10px;
   --radius: 14px;
   --radius-lg: 20px;
@@ -72,7 +57,6 @@
   --shadow: 0 2px 10px rgba(52, 75, 93, 0.05);
   --shadow-lg: 0 8px 28px rgba(52, 75, 93, 0.07);
 
-  /* ---- Layout ---- */
   --sidebar-w: 244px;
   --content-max: 720px;
 

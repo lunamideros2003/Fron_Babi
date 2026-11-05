@@ -1,7 +1,4 @@
-﻿/* ---------------------------------- layout --------------------------------- */
-
-/* El contenedor principal, el menu lateral y la barra inferior viven en
-   layout.css. Este archivo solo guarda los estilos que son de la pagina. */
+﻿
 
 .page-head {
   margin-bottom: 1.75rem;
@@ -22,8 +19,6 @@
   margin-top: 0.4rem;
 }
 
-/* El menu lateral y la barra inferior viven en layout.css */
-
 .avatar {
   width: 32px;
   height: 32px;
@@ -35,8 +30,6 @@
   font-size: 0.8rem;
   font-weight: 700;
 }
-
-/* ---------------------------------- cards --------------------------------- */
 
 .card {
   background: var(--surface);
@@ -70,8 +63,6 @@
 .row-between { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .row-wrap { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .spacer { flex: 1; }
-
-/* --------------------------------- buttons -------------------------------- */
 
 .btn {
   display: inline-flex;
@@ -139,8 +130,6 @@
 
 .btn-block { width: 100%; }
 
-/* ---------------------------------- forms --------------------------------- */
-
 .field { display: flex; flex-direction: column; gap: 0.35rem; }
 
 .field label {
@@ -205,8 +194,6 @@
   color: var(--text-muted);
 }
 
-/* ---------------------------------- badges -------------------------------- */
-
 .badge {
   display: inline-flex;
   align-items: center;
@@ -227,8 +214,6 @@
 .badge-danger { background: var(--danger-soft); color: var(--danger); }
 .badge-sand { background: var(--cream-deep); color: var(--ink-soft); }
 
-/* --------------------------------- progress ------------------------------- */
-
 .progress {
   height: 8px;
   background: var(--blue-100);
@@ -242,9 +227,6 @@
   border-radius: var(--radius-full);
   transition: width 600ms ease;
 }
-
-/* --------------------------------- auth page ------------------------------- */
-/* Compact layout: the whole page must fit in one viewport without scrolling. */
 
 .auth-page {
   height: 100vh;
@@ -425,8 +407,6 @@
   opacity: 0.75;
 }
 
-/* --------------------------------- hero card ------------------------------- */
-
 .hero {
   position: relative;
   background: linear-gradient(135deg, var(--blue-500) 0%, var(--blue-600) 60%, var(--ink) 100%);
@@ -509,8 +489,6 @@
   font-size: 0.83rem;
   position: relative;
 }
-
-/* --------------------------------- dashboard ------------------------------ */
 
 .week-card {
   background: var(--surface);
@@ -603,8 +581,6 @@
 
 .empty-state p { font-size: 0.9rem; max-width: 40ch; margin: 0 auto 1rem; }
 
-/* --------------------------------- list items ----------------------------- */
-
 .list { display: flex; flex-direction: column; gap: 0.6rem; }
 
 .list-item {
@@ -680,8 +656,6 @@
 }
 
 .checkbox svg { width: 12px; height: 12px; }
-
-/* ----------------------------------- chat --------------------------------- */
 
 .chat-layout {
   display: grid;
@@ -884,8 +858,6 @@
   color: #fff;
 }
 
-/* -------------------------------- disclaimer ------------------------------ */
-
 .disclaimer {
   display: flex;
   align-items: flex-start;
@@ -900,8 +872,6 @@
 }
 
 .disclaimer svg { flex-shrink: 0; margin-top: 2px; }
-
-/* --------------------------------- timeline ------------------------------- */
 
 .week-nav {
   display: flex;
@@ -974,8 +944,6 @@
   border-radius: var(--radius-full);
 }
 
-/* --------------------------------- modal ---------------------------------- */
-
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -997,8 +965,6 @@
   max-height: 90vh;
   overflow-y: auto;
 }
-
-/* --------------------------------- loading -------------------------------- */
 
 .loader {
   width: 22px;
@@ -1030,8 +996,6 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
-
-/* ----------------------------------- bot ---------------------------------- */
 
 .bot-layout {
   display: grid;
@@ -1230,8 +1194,6 @@
   flex-wrap: wrap;
 }
 
-/* --------------------------------- summary -------------------------------- */
-
 .bot-summary {
   display: flex;
   flex-direction: column;
@@ -1373,7 +1335,6 @@
   .chat-aside { display: none; }
 }
 
-/* Short viewports: compress the login so the form never needs scrolling. */
 @media (min-width: 901px) and (max-height: 720px) {
   .auth-art { padding: 1.5rem 2rem; }
   .auth-art h1 { font-size: 1.85rem; }
