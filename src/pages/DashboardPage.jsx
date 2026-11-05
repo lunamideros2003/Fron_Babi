@@ -79,7 +79,14 @@ export default function DashboardPage() {
           </div>
 
           <div>
-            <div className="today-progress">
+            <div
+              className="today-progress"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={progress}
+              aria-label="Progreso del embarazo"
+            >
               <div className="today-progress-bar" style={{ width: `${progress}%` }} />
             </div>
             <p className="today-progress-label">
