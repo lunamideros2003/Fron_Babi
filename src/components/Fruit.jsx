@@ -1,9 +1,3 @@
-/*
-  Ilustraciones de frutas y verduras para comparar el tamano del bebe.
-  Estilo uniforme: trazos suaves, tonos apagados y un disco de fondo crema-azul.
-  La comparacion se traduce a una clave de `SHAPES` en `utils/fruit.js`.
-*/
-
 import { fruitLabel, resolveFruitKey } from '../utils/fruit.js';
 
 const TONES = {

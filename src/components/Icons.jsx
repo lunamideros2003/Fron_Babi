@@ -1,5 +1,3 @@
-// Line art ornaments echoing the reference artwork: soft blue florals and a
-// mother silhouette drawn with fine navy strokes.
 export function BrandMark({ size = 34, className = '' }) {
   return (
     <svg
@@ -249,8 +247,6 @@ export function CalendarIcon({ size = 15 }) {
     </svg>
   );
 }
-
-/* --------------------------- iconos de navegacion --------------------------- */
 
 export function HomeIcon({ size = 20 }) {
   return (
