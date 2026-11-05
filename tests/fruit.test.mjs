@@ -3,14 +3,14 @@ import assert from 'node:assert/strict';
 
 import { ALIASES, fruitLabel, normalizeComparison, resolveFruitKey } from '../src/utils/fruit.js';
 
-test('normaliza tildes, mayusculas y articulo', () => {
+test('normalizes accents, capitalization and article', () => {
   assert.equal(normalizeComparison('Una Sandía Pequeña'), 'sandia pequena');
   assert.equal(normalizeComparison('  un melón  '), 'melon');
   assert.equal(normalizeComparison('una naranja'), 'naranja');
   assert.equal(normalizeComparison(null), '');
 });
 
-test('reconoce cada fruta del calendario', () => {
+test('recognizes every fruit in the calendar', () => {
   const esperado = {
     'una semilla de amapola': 'semilla',
     'una lenteja': 'semilla',
@@ -49,20 +49,20 @@ test('reconoce cada fruta del calendario', () => {
   }
 });
 
-test('las variantes con adjetivo caen en la misma forma', () => {
+test('variants with an adjective fall into the same shape', () => {
   assert.equal(resolveFruitKey('una sandía mediana'), 'sandia');
   assert.equal(resolveFruitKey('una sandía muy grande'), 'sandia');
   assert.equal(resolveFruitKey('una lechuga romana grande'), 'lechuga');
   assert.equal(resolveFruitKey('un repollo grande'), 'repollo');
 });
 
-test('sin dato o con texto raro dibuja una semilla', () => {
+test('without data or with odd text it draws a seed', () => {
   assert.equal(resolveFruitKey(null), 'semilla');
   assert.equal(resolveFruitKey(''), 'semilla');
   assert.equal(resolveFruitKey('algo que no es una fruta'), 'semilla');
 });
 
-test('todas las claves de los alias existen como forma', () => {
+test('all alias keys exist as a shape', () => {
   const formas = new Set([
     'semilla', 'fresa', 'uva', 'lima', 'mandarina', 'platano', 'aguacate', 'pera',
     'mango', 'zanahoria', 'coco', 'naranja', 'maiz', 'berenjena', 'calabaza',
@@ -76,7 +76,7 @@ test('todas las claves de los alias existen como forma', () => {
   }
 });
 
-test('la etiqueta accesible describe el tamano', () => {
+test('the accessible label describes the size', () => {
   assert.equal(fruitLabel('una sandía pequeña'), 'Del tamaño de una sandía pequeña');
   assert.equal(fruitLabel(null), 'Tamaño por confirmar');
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 
 import { TRIMESTER_LABELS, trimesterNumber, trimesterOf } from '../src/utils/trimester.js';
 
-test('los cortes coinciden con el backend', () => {
+test('the boundaries match the backend', () => {
   assert.equal(trimesterNumber(1), 1);
   assert.equal(trimesterNumber(13), 1);
   assert.equal(trimesterNumber(14), 2);
@@ -12,12 +12,12 @@ test('los cortes coinciden con el backend', () => {
   assert.equal(trimesterNumber(40), 3);
 });
 
-test('la semana 13 sigue en el primer trimestre', () => {
+test('week 13 is still in the first trimester', () => {
   assert.equal(trimesterOf(13), 'Primer trimestre');
   assert.equal(trimesterOf(14), 'Segundo trimestre');
 });
 
-test('devuelve las tres etiquetas', () => {
+test('returns the three labels', () => {
   assert.deepEqual(TRIMESTER_LABELS, [
     'Primer trimestre',
     'Segundo trimestre',
@@ -26,7 +26,7 @@ test('devuelve las tres etiquetas', () => {
   assert.equal(trimesterOf(37), 'Tercer trimestre');
 });
 
-test('una semana invalida no inventa trimestre', () => {
+test('an invalid week does not invent a trimester', () => {
   assert.equal(trimesterNumber(null), null);
   assert.equal(trimesterNumber(''), null);
   assert.equal(trimesterNumber('abc'), null);

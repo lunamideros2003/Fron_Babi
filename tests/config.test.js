@@ -13,11 +13,11 @@ function listenOn(port) {
   });
 }
 
-test('detecta el puerto libre', () => {
+test('detects a free port', () => {
   assert.equal(describePortOwner(5180), null);
 });
 
-test('detecta el proceso que ocupa el puerto', async () => {
+test('detects the process occupying the port', async () => {
   const port = 5199;
   const server = await listenOn(port);
 
@@ -30,14 +30,13 @@ test('detecta el proceso que ocupa el puerto', async () => {
   }
 });
 
-test('no falla cuando la herramienta no existe', () => {
-  // En Linux sin lsof ni ss la comprobacion no debe romper nada.
+test('does not fail when the tool is missing', () => {
+
   assert.doesNotThrow(() => describePortOwner(5180));
 });
 
-test('la comprobacion del puerto no se hace durante el build', () => {
-  // En Vercel no hace falta comprobar nada: no hay otro proyecto local que
-  // pueda estar usando el puerto y las herramientas pueden no existir.
+test('the port check is skipped during build', () => {
+
   const config = configFactory({ mode: 'production', command: 'build' });
 
   assert.ok(config.plugins.length >= 1);
@@ -48,7 +47,7 @@ test('la comprobacion del puerto no se hace durante el build', () => {
   );
 });
 
-test('el commit del build se expone como version', () => {
+test('the build commit is exposed as version', () => {
   const previous = process.env.VERCEL_GIT_COMMIT_SHA;
   process.env.VERCEL_GIT_COMMIT_SHA = 'abcdef1234567890';
 

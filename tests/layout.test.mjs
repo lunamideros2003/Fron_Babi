@@ -1,14 +1,3 @@
-/*
-  Comprueba que la pagina de Inicio no necesita scroll vertical en pantalla.
-
-  Se abre la aplicacion con un navegador sin interfaz, se inicia sesion y se
-  mide la altura del documento en varios tamaños de pantalla. Si el contenido
-  no cabe, la prueba falla.
-
-  Si el navegador no esta disponible, la prueba se salta en lugar de
-  romper: en un entorno de integracion continua puede no haber ninguno.
-*/
-
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import net from 'node:net';
@@ -43,7 +32,6 @@ async function isUp(url) {
   }
 }
 
-/** Crea una cuenta de prueba y devuelve su token. */
 async function createSession() {
   const email = `layout-${Date.now()}@ejemplo.com`;
   const password = 'Test1234!.';
@@ -64,7 +52,6 @@ async function createSession() {
   return body.token ?? null;
 }
 
-/** Abre Chrome sin interfaz y devuelve una funcion para evaluar en la pagina. */
 async function openBrowser(token) {
   const chromePath = findChrome();
   const profile = path.join(process.env.TEMP ?? '.', `babytrack-layout-${Date.now()}`);
@@ -88,7 +75,7 @@ async function openBrowser(token) {
       const list = await (await fetch(`http://127.0.0.1:${PORT}/json/list`)).json();
       target = list.find((item) => item.type === 'page');
     } catch {
-      /* el navegador aun no escucha */
+
     }
   }
 
@@ -146,14 +133,14 @@ async function openBrowser(token) {
   };
 }
 
-test('la pagina de Inicio cabe sin scroll en escritorio', async (t) => {
+test('the Home page fits without scrolling on desktop', async (t) => {
   if (!findChrome()) {
-    t.skip('no hay navegador disponible en esta maquina');
+    t.skip('no browser is available on this machine');
     return;
   }
 
   if (!(await isUp(WEB)) || !(await isUp(`${API}/health`))) {
-    t.skip('hacen falta la app y el backend levantados');
+    t.skip('the app and the backend are required to be running');
     return;
   }
 
