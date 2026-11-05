@@ -6,16 +6,11 @@ import MotherIllustration from '../components/MotherIllustration.jsx';
 import FruitIllustration from '../components/Fruit.jsx';
 import { HeartPulseIcon, CalendarIcon, ChevronRightIcon, BrandMark } from '../components/Icons.jsx';
 import { sizeLabel } from '../utils/size.js';
-
-function trimesterOf(week) {
-  if (week < 13) return 'Primer trimestre';
-  if (week < 28) return 'Segundo trimestre';
-  return 'Tercer trimestre';
-}
+import { trimesterOf } from '../utils/trimester.js';
 
 function milestoneOf(week) {
   if (week >= 40) return 'Casi el día';
-  if (week >= 37) return 'Ya es termino';
+  if (week >= 37) return 'Ya es término';
   if (week >= 28) return 'Último trimestre';
   if (week >= 20) return 'Mitad del camino';
   if (week >= 13) return 'Segundo trimestre';
@@ -100,6 +95,12 @@ export default function DashboardPage() {
               <p className="size-label">El tamaño de tu bebé</p>
               <h3 className="size-title">{sizeLabel(week?.size_comparison)}</h3>
               <p className="size-text">Una comparación visual para imaginar cuánto ha crecido.</p>
+              {(week?.typical_weight || week?.typical_length) && (
+                <p className="size-metrics">
+                  {week.typical_weight && <span>Peso {week.typical_weight}</span>}
+                  {week.typical_length && <span>Longitud {week.typical_length}</span>}
+                </p>
+              )}
             </div>
           </div>
         </section>
