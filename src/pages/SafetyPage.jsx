@@ -1,44 +1,44 @@
 ﻿import { Link } from 'react-router-dom';
 
-const SENALES = [
+const WARNING_SIGNS = [
   {
-    titulo: 'Sangrado vaginal',
-    detalle:
+    title: 'Sangrado vaginal',
+    detail:
       'Cualquier sangrado, aunque sea escaso o con moco, debe consultarse el mismo día.',
   },
   {
-    titulo: 'Pérdida de líquido',
-    detalle:
+    title: 'Pérdida de líquido',
+    detail:
       'Un goteo o un chorro de líquido por la vagina puede indicar rotura de membranas.',
   },
   {
-    titulo: 'Contracciones antes de tiempo',
-    detalle:
+    title: 'Contracciones antes de tiempo',
+    detail:
       'Dolor o endurecimiento del vientre con un ritmo regular antes de la semana 37.',
   },
   {
-    titulo: 'Menos movimientos del bebé',
-    detalle:
+    title: 'Menos movimientos del bebé',
+    detail:
       'Si sientes que el bebé se mueve menos de lo habitual, avisa a tu equipo médico.',
   },
   {
-    titulo: 'Dolor de cabeza intenso',
-    detalle:
+    title: 'Dolor de cabeza intenso',
+    detail:
       'Especialmente si viene con visión borrosa, luces o hinchazón de cara y manos.',
   },
   {
-    titulo: 'Fiebre',
-    detalle:
+    title: 'Fiebre',
+    detail:
       'Temperatura de 38 grados o más, o escalofríos persistentes.',
   },
   {
-    titulo: 'Dolor abdominal muy fuerte',
-    detalle:
+    title: 'Dolor abdominal muy fuerte',
+    detail:
       'Dolor que no cede, que es continuo o que te impide moverte con normalidad.',
   },
   {
-    titulo: 'Vómitos que impiden beber',
-    detalle:
+    title: 'Vómitos que impiden beber',
+    detail:
       'Si no retienes líquidos y te sientes mareada o débil, necesitas valoración.',
   },
 ];
@@ -61,12 +61,12 @@ export default function SafetyPage() {
           <h3>Busca atención médica de inmediato si</h3>
         </div>
         <ul className="safety-list">
-          {SENALES.map((item) => (
-            <li key={item.titulo} className="safety-item">
+          {WARNING_SIGNS.map((item) => (
+            <li key={item.title} className="safety-item">
               <span className="safety-dot" aria-hidden="true" />
               <div>
-                <h4>{item.titulo}</h4>
-                <p>{item.detalle}</p>
+                <h4>{item.title}</h4>
+                <p>{item.detail}</p>
               </div>
             </li>
           ))}
