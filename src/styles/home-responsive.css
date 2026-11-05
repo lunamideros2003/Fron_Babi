@@ -1,9 +1,3 @@
-/*
-  Ajustes de Inicio para pantallas mas estrechas.
-  En una sola columna la guia se coloca antes que la ilustracion, para no
-  tener que bajar hasta el final para llegar a los accesos.
-*/
-
 @media (max-width: 900px) {
   .home {
     grid-template-columns: minmax(0, 1fr);
@@ -14,8 +8,6 @@
     max-width: calc(var(--content-max) + 3rem);
   }
 
-  /* En una sola columna la guia pasa por delante de la ilustracion: es lo que
-     la persona busca primero. */
   .home-col-side {
     display: contents;
   }

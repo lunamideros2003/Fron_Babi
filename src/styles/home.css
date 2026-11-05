@@ -1,9 +1,3 @@
-/*
-  Pagina de Inicio: saludo, ilustracion, tarjeta del embarazo, fruta,
-  dos accesos de guia y aviso de seguridad.
-  Dos columnas para que todo entre en una pantalla sin scrolls largos.
-*/
-
 .home {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
@@ -18,13 +12,9 @@
   min-width: 0;
 }
 
-/* La pagina de Inicio necesita mas ancho que el resto para las dos columnas.
-   :has() lo resuelve sin tocar el resto de paginas. */
 .app-main:has(.home) {
   max-width: calc(var(--content-max) + 13rem);
 }
-
-/* ------------------------------- A. saludo --------------------------------- */
 
 .home-greeting {
   display: flex;
@@ -66,8 +56,6 @@
   flex-shrink: 0;
 }
 
-/* ---------------------------- B. ilustracion ------------------------------- */
-
 .home-art {
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -75,8 +63,6 @@
   background: #f6f0e6;
   line-height: 0;
 }
-
-/* ------------------------- C. tarjeta del embarazo ------------------------- */
 
 .today-card {
   background: var(--surface);
@@ -150,8 +136,6 @@
   margin: 0.45rem 0 0;
 }
 
-/* ------------------------------- D. la fruta ------------------------------- */
-
 .size-block {
   display: flex;
   align-items: center;
@@ -207,8 +191,6 @@
   margin-right: 0.7rem;
   color: var(--border-strong);
 }
-
-/* --------------------------- E. guia de la semana -------------------------- */
 
 .section-title {
   font-size: 1.05rem;
@@ -275,9 +257,6 @@
   flex-shrink: 0;
 }
 
-/* --------------------------- estado sin datos ------------------------------ */
-
-/* Sin datos: el formulario manda y la ilustracion va al lado. */
 .setup-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -285,8 +264,6 @@
   padding: 1.25rem;
   max-width: 520px;
 }
-
-/* --------------------------- senales de alarma ----------------------------- */
 
 .safety-list {
   list-style: none;
