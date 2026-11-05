@@ -1,7 +1,3 @@
-/**
- * Preguntas de arranque. Se ocultan en cuanto la conversación empieza para no
- * dejar la ventana llena de botones.
- */
 export default function ChatSuggestions({ suggestions = [], onPick, disabled = false }) {
   if (suggestions.length === 0) return null;
 

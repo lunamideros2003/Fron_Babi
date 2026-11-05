@@ -1,9 +1,5 @@
 import { SparkleIcon } from '../Icons.jsx';
 
-/**
- * Una burbuja de la conversación. Sirve tanto para la usuaria como para el
- * asistente, y marca los dos casos especiales: urgencia y derivación médica.
- */
 export default function ChatMessage({
   role,
   content,

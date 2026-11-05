@@ -1,6 +1,5 @@
 import { SendIcon } from '../Icons.jsx';
 
-/** Campo de texto y botón de enviar de la ventana flotante. */
 export default function ChatComposer({
   value,
   onChange,

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BrandMark, ChevronRightIcon, CloseIcon } from '../Icons.jsx';
 
-/** Cabecera de la ventana: marca, estado del modelo y botón de cerrar. */
 export default function ChatHeader({ status, week, onClose, onOpenFull }) {
   return (
     <header className="cw-head">

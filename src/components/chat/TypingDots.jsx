@@ -1,6 +1,5 @@
 import { SparkleIcon } from '../Icons.jsx';
 
-/** Tres puntos mientras el modelo piensa. */
 export default function TypingDots() {
   return (
     <div className="cw-msg is-bot">
