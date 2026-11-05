@@ -1,5 +1,3 @@
-// Sirve el build de produccion y redirige /api al backend.
-// Uso: node scripts/serve-dist.mjs   (despues de npm run build)
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,7 +21,7 @@ const MIME = {
 };
 
 if (!fs.existsSync(distDir)) {
-  console.error('No existe dist/. Ejecuta primero: npm run build');
+  console.error('dist/ does not exist. Run first: npm run build');
   process.exit(1);
 }
 
@@ -70,7 +68,7 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`\n  BabyTrack IA - build de produccion`);
+  console.log(`\n  BabyTrack IA - production build`);
   console.log(`  App:      http://localhost:${PORT}`);
   console.log(`  API:      ${API_TARGET}\n`);
 });

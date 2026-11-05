@@ -1,5 +1,3 @@
-// Verifies the frontend dev server proxies /api to the backend correctly.
-// Run with the frontend dev server active: node scripts/integration.mjs
 const WEB = process.env.WEB_URL ?? `http://localhost:${process.env.VITE_PORT ?? 5180}`;
 
 let passed = 0;
@@ -28,7 +26,7 @@ async function call(path, { method = 'GET', body, token } = {}) {
 }
 
 const run = async () => {
-  console.log('\nBabyTrack IA - integracion frontend/backend\n');
+  console.log('\nBabyTrack IA - frontend/backend integration\n');
 
   const index = await fetch(WEB);
   const html = await index.text();
@@ -117,7 +115,7 @@ const run = async () => {
   const timeline = await call('/api/tracking/timeline', { token });
   check('timeline completo', Boolean(timeline.json.week && timeline.json.pregnancy));
 
-  console.log(`\nResultado: ${passed} correctos, ${failed} fallidos\n`);
+  console.log(`\nResult: ${passed} passed, ${failed} failed\n`);
   process.exit(failed === 0 ? 0 : 1);
 };
 
