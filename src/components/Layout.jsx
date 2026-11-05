@@ -64,7 +64,7 @@ export default function Layout({ children }) {
             <span className="sidebar-link-icon">
               <ShieldIcon size={19} />
             </span>
-            <span className="sidebar-link-label">Senales de alarma</span>
+            <span className="sidebar-link-label">Señales de alarma</span>
           </NavLink>
 
           <div className="sidebar-user">
@@ -78,7 +78,7 @@ export default function Layout({ children }) {
           </div>
 
           {BUILD_COMMIT && (
-            <p className="sidebar-build" title="Version desplegada">
+            <p className="sidebar-build" title="Versión desplegada">
               v{BUILD_COMMIT}
             </p>
           )}
