@@ -25,36 +25,36 @@ export default function GuidePage() {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    let vivo = true;
+    let alive = true;
     api.guide
       .get()
       .then((res) => {
-        if (vivo) setData(res);
+        if (alive) setData(res);
       })
       .catch((err) => {
-        if (vivo) setError(err.message);
+        if (alive) setError(err.message);
       });
     return () => {
-      vivo = false;
+      alive = false;
     };
   }, []);
 
-  const categoria = useMemo(
+  const category = useMemo(
     () => data?.categories?.find((c) => c.id === activeId) ?? null,
     [data, activeId],
   );
 
-  const filtrados = useMemo(() => {
-    if (!categoria) return [];
-    const texto = query.trim().toLowerCase();
-    if (!texto) return categoria.items;
-    return categoria.items.filter(
+  const filtered = useMemo(() => {
+    if (!category) return [];
+    const needle = query.trim().toLowerCase();
+    if (!needle) return category.items;
+    return category.items.filter(
       (item) =>
-        item.title.toLowerCase().includes(texto) ||
-        item.content.toLowerCase().includes(texto) ||
-        item.tags.some((tag) => tag.includes(texto)),
+        item.title.toLowerCase().includes(needle) ||
+        item.content.toLowerCase().includes(needle) ||
+        item.tags.some((tag) => tag.includes(needle)),
     );
-  }, [categoria, query]);
+  }, [category, query]);
 
   if (error) {
     return (
@@ -90,7 +90,7 @@ export default function GuidePage() {
         </p>
       </div>
 
-      {!categoria ? (
+      {!category ? (
         <div className="guide-grid">
           {data.categories.map((cat) => {
             const Icon = ICONS[cat.id] ?? BookIcon;
@@ -127,8 +127,8 @@ export default function GuidePage() {
             Todas las categorías
           </button>
 
-          <h2 className="section-title">{categoria.label}</h2>
-          <p className="guide-detail-desc">{categoria.description}</p>
+          <h2 className="section-title">{category.label}</h2>
+          <p className="guide-detail-desc">{category.description}</p>
 
           <label className="guide-search">
             <span className="guide-search-icon" aria-hidden="true">
@@ -140,11 +140,11 @@ export default function GuidePage() {
               placeholder="Buscar en esta categoría"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              aria-label={`Buscar en ${categoria.label}`}
+              aria-label={`Buscar en ${category.label}`}
             />
           </label>
 
-          {filtrados.length === 0 ? (
+          {filtered.length === 0 ? (
             <div className="empty-state">
               <p>No encontramos artículos con esa búsqueda.</p>
               <button type="button" className="btn btn-secondary btn-sm" onClick={() => setQuery('')}>
@@ -153,7 +153,7 @@ export default function GuidePage() {
             </div>
           ) : (
             <ul className="guide-articles">
-              {filtrados.map((item) => (
+              {filtered.map((item) => (
                 <li key={item.id} className={`guide-article ${openId === item.id ? 'is-open' : ''}`}>
                   <button
                     type="button"
