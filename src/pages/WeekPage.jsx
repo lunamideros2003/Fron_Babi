@@ -19,24 +19,24 @@ export default function WeekPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    let activo = true;
+    let alive = true;
 
     api.weeks
       .list()
       .then((data) => {
-        if (!activo) return;
+        if (!alive) return;
         setWeeks(data.weeks ?? []);
         setError('');
       })
       .catch((err) => {
-        if (activo) setError(err.message);
+        if (alive) setError(err.message);
       })
       .finally(() => {
-        if (activo) setLoading(false);
+        if (alive) setLoading(false);
       });
 
     return () => {
-      activo = false;
+      alive = false;
     };
   }, []);
 
@@ -46,9 +46,9 @@ export default function WeekPage() {
   }
 
   const current = weeks.find((w) => w.week_number === selected) ?? weeks[0];
-  const actual = pregnancy?.current_week ?? null;
-  const esActual = actual === current?.week_number;
-  const esFutura = actual !== null && current && current.week_number > actual;
+  const currentWeek = pregnancy?.current_week ?? null;
+  const isCurrent = currentWeek === current?.week_number;
+  const isFuture = currentWeek !== null && current && current.week_number > currentWeek;
 
   useEffect(() => {
     if (!current) return undefined;
@@ -76,15 +76,14 @@ export default function WeekPage() {
       <div className="page-head">
         <p className="eyebrow">Acompañándote semana a semana</p>
         <h1>Mi embarazo</h1>
-        {actual && (
+        {currentWeek && (
           <p className="lede">
-            Vas por la semana {actual}. Puedes mirar cualquier semana de las {weeks.length} que
+            Vas por la semana {currentWeek}. Puedes mirar cualquier semana de las {weeks.length} que
             tenemos guardadas.
           </p>
         )}
       </div>
 
-      {/* Selector compacto */}
       <div className="week-selector">
         <button
           type="button"
@@ -131,7 +130,7 @@ export default function WeekPage() {
           <p className="week-hero-sub">{current.title}</p>
           <p className="week-hero-meta">
             {trimesterOf(current.week_number)}
-            {esActual ? ' · es tu semana actual' : ''}
+            {isCurrent ? ' · es tu semana actual' : ''}
           </p>
         </div>
         <span className="week-hero-fruit">
@@ -139,7 +138,7 @@ export default function WeekPage() {
         </span>
       </header>
 
-      {esFutura && (
+      {isFuture && (
         <p className="week-orientative">
           Esta semana aún no te toca. La información es orientativa: cada embarazo avanza a su
           ritmo.
