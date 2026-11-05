@@ -55,10 +55,9 @@ export default function AppointmentsPage() {
 
   useEffect(() => {
     load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [scope]);
 
-  // Las categorias las define el backend, para que no se desincronicen.
   useEffect(() => {
     api.appointments
       .categories()

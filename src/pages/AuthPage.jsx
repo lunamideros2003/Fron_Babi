@@ -15,8 +15,6 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10);
 }
 
-// Vercel publica el commit con el que se compilo. Se muestra en la pantalla
-// de acceso para saber con certeza que version esta abierta.
 const BUILD_COMMIT = import.meta.env.VITE_BUILD_COMMIT ?? '';
 
 export default function AuthPage() {
